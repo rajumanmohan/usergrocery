@@ -1,0 +1,1172 @@
+<app-header [cartCount]="cartCount" [billing]="billing"></app-header>
+<div class="container list-items">
+	<div class="row">
+		<div class="col-lg-3">
+			<p class="bredcrum">
+				<a routerLink="/">Home</a>&nbsp;>&nbsp;My Account</p>
+			<ul class="list-details">
+				<h4 class="account-header">MY ACCOUNT</h4>
+				<hr>
+				<li [ngClass]="{'active':showProfile || editUserProfile}" (click)="profile()">Profile Details</li>
+				<li [ngClass]="{'active':showDeliveryAddress || showAddAddress|| showEditAddress}" (click)="deliveryAddress()">
+					Delivery
+					Address</li>
+				<li [ngClass]="{'active':showWishlist}" (click)="wishList()">Wishlist</li>
+				<li [ngClass]="{'active':showChangePassword}" (click)="changePassword()">Change Password</li>
+				<li [ngClass]="{'active':showMyOrders || showOrderDetails}" (click)="myOrder()">My Order</li>
+				<li [ngClass]="{'active':showOfferZone}" (click)="offerZone()">Offers Zone</li>
+				<li routerLink="/mysavedlist">My Saved List</li>
+				<li [ngClass]="{'active':showNotifications}" (click)="notifications()">Notifications</li>
+				<li (click)="logout()">Logout</li>
+			</ul>
+		</div>
+		<div class="col-lg-9" *ngIf="showProfile" class="profiledetails">
+			<h3 class="profile-header">My Profile</h3>
+			<br />
+			<div class="row">
+				<div class="col-lg-1"></div>
+				<div class="col-lg-11">
+					<img src="assets/images/user.png" width="80" height="80">
+				</div>
+			</div>
+			<hr />
+			<div class="details">
+				<p>
+					<i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;
+					<span>{{profileData?.first_name}}&nbsp;{{profileData?.last_name}}</span>
+				</p>
+				<p>
+					<i class="fa fa-at" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;
+					<span>
+						{{profileData?.email}}</span>
+				</p>
+				<p>
+					<i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;
+					<span>{{profileData?.mobile_number}}</span>
+				</p>
+				<!-- <p>
+          <img class="shop" src="assets/images/store.png">&nbsp;&nbsp;&nbsp;
+          <span>{{profileData?.bussiness_name}}</span>
+        </p> -->
+				<span class="status-text">
+					<p>
+						<i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; &nbsp;
+						{{profileData?.area}},
+						{{profileData?.city}} {{profileData?.country}}
+					</p>
+				</span>
+			</div>
+			<div class="row">
+				<div class="col align-self-center">
+					<button type="button" class="btn edit-btn cust-editpro" (click)="editProfile()">Edit Profile</button>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- edit Profile -->
+		<div class="col-lg-7" *ngIf="editUserProfile" class="profiledetails">
+			<h3 class="profile-header">Edit Profile</h3>
+			<br />
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<img src="assets/images/user.png" width="100" height="100">
+				</div>
+			</div>
+			<br />
+			<form class="form-details" #formCtrl="ngForm">
+				<div class="form-group row">
+					<label for="inputname1" class="col-sm-3 col-form-label">Name *
+						<span class="float-right">:</span>
+					</label>
+					<div class="col-sm-9">
+						<input alphabetsOnly type="text" class="form-control input-feild" id="inputname1" name="first_name"
+							[(ngModel)]="profileData.first_name" ngControl="passwordCtrl" required>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputEmail3" class="col-sm-3 col-form-label">Email ID *
+						<span class="float-right">:</span>
+					</label>
+					<div class="col-sm-9">
+						<input type="email" class="form-control input-feild" id="inputEmail3" placeholder="tarunkumar321@gmail.com"
+							name="email" [(ngModel)]="profileData.email" ngControl="passwordCtrl" ngControl="email" required
+							pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputphoneno" class="col-sm-3 col-form-label">Phone No *
+						<span class="float-right">:</span>
+					</label>
+					<div class="col-sm-9">
+						<input myNumberOnly type="text" class="form-control input-feild" id="inputphoneno" placeholder="8586854500"
+							[(ngModel)]="profileData.mobile_number" name="mobile_number" ngControl="passwordCtrl" required>
+					</div>
+				</div>
+				<!-- <div class="form-group row">
+          <label for="inputphoneno" class="col-sm-3 col-form-label">Business Name
+            <span class="float-right">:</span>
+          </label>
+          <div class="col-sm-9">
+            <input alphabetsOnly type="text" class="form-control input-feild" id="inputphoneno" placeholder="my business"
+              [(ngModel)]="profileData.bussiness_name" name="bussiness_name" ngControl="bussiness_name" required>
+          </div>
+        </div> -->
+				<div class="form-group row">
+					<label for="inputhouseno" class="col-sm-3 col-form-label">House No
+						<span class="float-right">:</span>
+					</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control input-feild" id="inputhouseno"
+							placeholder="Unispace Bussiness Center #143" name="bussiness_area" [(ngModel)]="profileData.area">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputstate" class="col-sm-3 col-form-label">State
+						<span class="float-right">:</span>
+					</label>
+					<div class="col-sm-3 pad-rt">
+						<input type="text" class="form-control input-feild" id="inputstate" placeholder="Karnataka"
+							[(ngModel)]="profileData.state">
+					</div>
+					<label for="inputcity" class="col-sm-3 col-form-label city-ltpad">City
+						<span class="float-right">:</span>
+					</label>
+					<div class="col-sm-3 pad-lt">
+						<input type="text" class="form-control input-feild" id="inputcity" placeholder="Bangalore"
+							name="bussiness_city" [(ngModel)]="profileData.city">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputpincode" class="col-sm-3 col-form-label">Pin-code
+						<span class="float-right">:</span>
+					</label>
+					<div class="col-sm-9">
+						<input myNumberOnly type="text" class="form-control input-feild" id="inputpincode" placeholder="500038">
+						<div class="row justify-content-center">
+							<div class="col-sm-5 col-lg-5">
+								<button type="button" class="btn save-btn" [disabled]="!formCtrl.form.valid"
+									(click)="updateProfile()">Save</button>
+							</div>
+							<div class="col-sm-2 col-lg-2"></div>
+							<div class="col-sm-5 col-lg-5">
+								<button type="button" class="btn save-btn" (click)="cancel()">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+
+
+		<!-- delivery address -->
+
+		<div class="col-lg-9" *ngIf="showDeliveryAddress" class="profiledetails">
+			<div class="row">
+				<div class="col-lg-4">
+					<h3 class="profile-header">Delivery Address</h3>
+				</div>
+				<div class="col-lg-8 addnew-rtpad">
+					<button type="button" class="btn btn-address" (click)="addAddress()">
+						<i class="fa fa-plus-circle" aria-hidden="true"></i> Add New Address</button>
+				</div>
+			</div>
+
+			<div class="row address-details" *ngFor="let add of getAddData;let i=index">
+				<div class="col-lg-10 ">
+					<h3>{{add.address_type}}</h3>
+					<P>
+						<i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;
+						{{add.landmark}},{{add.house_no}}
+						 {{add.city}} ,{{add.pin_code}}
+						
+					</P>
+					<p>
+						<i class="fa fa-phone" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>{{add.mobile_number}}
+					</p>
+				</div>
+				<div class="col-lg-2 form-check">
+					<div *ngIf="seleOpt==i">
+						<button class="icon-btn">
+							<i class="fa fa-pencil" aria-hidden="true" (click)="showEditAdd(add.address_id)"></i>
+						</button>
+						<button class="icon-btn1">
+							<i class="fa fa-trash" aria-hidden="true" (click)="delAdd(add.address_id)"></i>
+						</button>
+					</div>
+					<i class="far fa-circle" (click)="seleAddOptn(i,add.address_id)" *ngIf="seleOpt!==i"></i>
+					<i class="far fa-dot-circle" *ngIf="seleOpt==i"></i>
+				</div>
+			</div>
+			<div class="col-lg-12 align-self-center">
+				<button type="button" class="btn btn-submit" *ngIf="getAddData" (click)="selectAdd()">Submit</button>
+			</div>
+		</div>
+
+		<div class="col-lg-7 address " *ngIf="showAddAddress" class="profiledetails">
+			<h3 class="profile-header">Delivery Address</h3>
+			<p>
+				<strong>Add New Adrress</strong>
+			</p>
+			<form [formGroup]="addressForm">
+				<div class="form-group row">
+					<label for="inputname1" class="col-sm-2 col-form-label">Full Name
+					</label>
+					<div class="col-sm-10">
+
+						<input alphabetsOnly type="text" class="form-control input-feild" id="inputname1"
+							formControlName="full_name" [ngClass]="{ 'is-invalid': full_name_errors }">
+						<div *ngIf="full_name_errors" class="invalid-feedback">
+							<div *ngIf="full_name_errors">Full Name is required</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputMblnbr" class="col-sm-2 col-form-label">Mobile Number
+					</label>
+					<div class="col-sm-10">
+
+						<input myNumberOnly type="text" class="form-control input-feild" id="inputNumber"
+							formControlName="mobile_number" [ngClass]="{ 'is-invalid': mobile_number_errors }">
+						<div *ngIf="mobile_number_errors" class="invalid-feedback">
+							<div *ngIf="mobile_number_errors">Mobile Number is required</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputhouseno" class="col-sm-2 col-form-label">House No
+					</label>
+					<div class="col-sm-10">
+
+						<input type="text" class="form-control input-feild" id="inputhouseno" formControlName="house_no"
+							[ngClass]="{ 'is-invalid': house_no_errors}">
+						<div *ngIf="house_no_errors" class="invalid-feedback">
+							<div *ngIf="house_no_errors">House Number is required</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputstate" class="col-sm-2 col-form-label">Landmark
+					</label>
+					<div class="col-sm-4">
+
+						<input type="text" class="form-control input-feild" id="inputLand" formControlName="landmark"
+							[ngClass]="{ 'is-invalid': landmark_errors }">
+						<div *ngIf="landmark_errors" class="invalid-feedback">
+							<div *ngIf="landmark_errors">Landmark is required</div>
+						</div>
+
+					</div>
+					<label for="inputcity" class="col-sm-2 col-form-label">City
+					</label>
+					<div class="col-sm-4">
+						<!-- <select id="inputState" class="form-control input-feild" [(ngModel)]="addData.city">
+                      <option selected>Choose City</option>
+                      <option *ngFor="let city of Cities" [ngValue]="city">{{city}}</option>
+                  </select> -->
+						<input alphabetsOnly type="text" class="form-control input-feild" id="inputpincode" formControlName="city"
+							[ngClass]="{ 'is-invalid': city_error }">
+						<div *ngIf="city_error" class="invalid-feedback">
+							<div *ngIf="city_error">City is required</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputstate" class="col-sm-2 col-form-label">Area
+					</label>
+					<div class="col-sm-4">
+						<!-- <select id="inputState" class="form-control input-feild" [(ngModel)]="addData.state">
+                      <option selected>Choose State</option>
+                      <option *ngFor="let state of States" [ngValue]="state">{{state}}</option>
+                  </select> -->
+						<input alphabetsOnly type="text" class="form-control input-feild" id="inputpincode1" formControlName="state"
+							[ngClass]="{ 'is-invalid': state_errors }">
+						<div *ngIf="state_errors" class="invalid-feedback">
+							<div *ngIf="state_errors">state is required</div>
+						</div>
+					</div>
+					<label for="inputcity" class="col-sm-2 col-form-label">Pin-code
+					</label>
+					<div class="col-sm-4">
+
+						<input myNumberOnly type="text" class="form-control input-feild" id="inputpincode2"
+							formControlName="pin_code" [ngClass]="{ 'is-invalid': pincode_errors }">
+						<div *ngIf="pincode_errors" class="invalid-feedback">
+							<div *ngIf="pincode_errors">Pin-Code is required</div>
+						</div>
+
+					</div>
+					<div class="addType">
+						<p>Choose nick name for this address</p>
+						<p class="addresses ">
+							<a (click)="Type('Home')" [ngClass]="{'activeAdd':typeval=='Home'}">Home</a>
+							<a (click)="Type('Office')" [ngClass]="{'activeAdd':typeval=='Office'}">Office</a>
+							<a (click)="Type('Other')" [ngClass]="{'activeAdd':typeval=='Other'}">Other</a>
+						</p>
+					</div>
+				</div>
+			</form>
+
+			<button type="button" class="btn address-btn" (click)="saveAddress()">SUBMIT</button>
+			<button type="button" class="btn address-btn" (click)="cancelAdd()">CANCEL</button>
+
+		</div>
+		<!-- edit address -->
+		<div class="col-lg-7 address " *ngIf="showEditAddress" class="profiledetails">
+			<h3 class="profile-header">Edit Delivery Address</h3>
+			<p>
+				<strong>Edit Adrress</strong>
+			</p>
+			<form class="form-details">
+				<div class="form-group row">
+					<label for="inputname1" class="col-sm-2 col-form-label">Full Name
+					</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control input-feild" id="full_name" name="full_name"
+							[(ngModel)]="editAddData.full_name">
+						<!-- <div *ngIf="submitted && f1.full_name.errors" class="invalid-feedback">
+          <div *ngIf="f1.full_name.errors.required">Full Name is required</div>
+      </div> -->
+
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputMblnbr" class="col-sm-2 col-form-label">Mobile Number
+					</label>
+					<div class="col-sm-10">
+
+						<input myNumberOnly type="text" class="form-control input-feild" id="inputNumber" name="mobile_number"
+							[(ngModel)]="editAddData.mobile_number">
+						<!-- <div *ngIf="submitted && f1.mobile_number.errors" class="invalid-feedback">
+          <div *ngIf="f1.mobile_number.errors.required">Mobile Number is required</div>
+      </div> -->
+
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputhouseno" class="col-sm-2 col-form-label">House: No
+					</label>
+					<div class="col-sm-10">
+
+						<input type="text" class="form-control input-feild" id="inputhouseno" name="house_no"
+							[(ngModel)]="editAddData.house_no">
+						<!-- <div *ngIf="submitted && f1.house_no.errors" class="invalid-feedback">
+          <div *ngIf="f1.house_no.errors.required">House Number is required</div>
+      </div> -->
+
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputstate" class="col-sm-2 col-form-label">Landmark
+					</label>
+					<div class="col-sm-4">
+
+						<input type="text" class="form-control input-feild" id="inputLand" name="landmark"
+							[(ngModel)]="editAddData.landmark">
+						<!-- <div *ngIf="submitted && f1.landmark.errors" class="invalid-feedback">name="house_no" [(ngModel)]="editAddData.house_no"
+          <div *ngIf="f1.landmark.errors.required">Landmark is required</div>
+      </div> -->
+
+					</div>
+					<label for="inputcity" class="col-sm-2 col-form-label">City
+					</label>
+					<div class="col-sm-4">
+						<!-- <select id="inputState" class="form-control input-feild" [(ngModel)]="addData.city">
+      <option selected>Choose City</option>
+      <option *ngFor="let city of Cities" [ngValue]="city">{{city}}</option>
+  </select> -->
+						<input type="text" class="form-control input-feild" id="inputpincode" name="city"
+							[(ngModel)]="editAddData.city">
+						<!-- <div *ngIf="submitted && f1.city.errors" class="invalid-feedback">
+      <div *ngIf="f1.city.errors.required">City is required</div>
+  </div> -->
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputstate" class="col-sm-2 col-form-label">State
+					</label>
+					<div class="col-sm-4">
+						<!-- <select id="inputState" class="form-control input-feild" [(ngModel)]="addData.state">
+      <option selected>Choose State</option>
+      <option *ngFor="let state of States" [ngValue]="state">{{state}}</option>
+  </select> -->
+						<input type="text" class="form-control input-feild" id="inputpincode1" name="state"
+							[(ngModel)]="editAddData.state">
+						<!-- <div *ngIf="submitted && f1.state.errors" class="invalid-feedback">
+      <div *ngIf="f1.state.errors.required">state is required</div>
+  </div> -->
+					</div>
+					<label for="inputcity" class="col-sm-2 col-form-label">Pin-code
+					</label>
+					<div class="col-sm-4">
+
+						<input myNumberOnly type="text" class="form-control input-feild" id="inputpincode2" name="pin_code"
+							[(ngModel)]="editAddData.pin_code">
+						<!-- <div *ngIf="submitted && f1.pin_code.errors" class="invalid-feedback">
+          <div *ngIf="f1.pin_code.errors.required">Pin-Code is required</div>
+      </div> -->
+
+					</div>
+					<div class="addType">
+						<p>Choose nick name for this address</p>
+						<p class="addresses ">
+							<a (click)="Type('Home')" [ngClass]="{'activeAdd':typeval=='Home'}">Home</a>
+							<a (click)="Type('Office')" [ngClass]="{'activeAdd':typeval=='Office'}">Office</a>
+							<a (click)="Type('Other')" [ngClass]="{'activeAdd':typeval=='Other'}">Other</a>
+						</p>
+					</div>
+				</div>
+			</form>
+
+			<button type="button" class="btn address-btn" (click)="UpdateAdd(editAddData.address_id)">SUBMIT</button>
+			<button type="button" class="btn address-btn" (click)="cancelAdd()">CANCEL</button>
+
+		</div>
+		<!-- wishlist -->
+
+		<div class="col-lg-9" *ngIf="showWishlist" class="profiledetails">
+			<div>
+				<h3 class="profile-header">Wishlist</h3>
+			</div>
+			<table class="table">
+				<thead>
+					<tr class="table-headers wishlist-items">
+						<th scope="col" width="40%">Item Name</th>
+						<th scope="col" width="20%">Quantity</th>
+						<th scope="col" width="15%">Price</th>
+						<th scope="col" width="25%">Add To Cart</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="wish-table" *ngFor="let wish of wishData | paginate: { itemsPerPage: 3, currentPage: p };">
+						<td>
+							<div class="row align-items-center">
+								<div class="col-md-4">
+									<img [src]="wish.product_image" class="prod-images" alt="gdksha">
+								</div>
+								<div class="col-md-8 prod-details">
+									<p class="mobile-manu">
+										<strong>{{wish.product_name}}</strong>
+									</p>
+									<p style="margin-top:-15px;">{{wish.size}} :
+										<strong>BD {{wish.selling_price }}</strong>
+									</p>
+
+								</div>
+							</div>
+						</td>
+						<td class="pt-5">
+							<div class="quantity">
+								<button class="minus-btn" type="button" name="button" (click)="itemDecrease(wish.wishlist_id)">
+									<i class="fa fa-minus " aria-hidden="true"></i>
+								</button>
+								<input type="text" name="quantity" [(ngModel)]="wish.quantity" readonly="readonly"
+									value="{{wish.quantity}}" />
+								<button class="plus-btn" type="button" name="button" (click)="itemIncrease(wish.wishlist_id)">
+									<i class="fa fa-plus" aria-hidden="true"></i>
+								</button>
+							</div>
+						</td>
+						<td>
+							<div class="prod-details">
+								<span>
+									<strong>BD {{wish.selling_price * wish.quantity}}</strong>
+								</span>
+							</div>
+						</td>
+						<td>
+							<i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"
+								(click)="delWish(wish.wishlist_id)"></i>
+							<button type="button" class="btn cart-btn" (click)="addtoCart(wish.product_id,wish.skid)">Add To
+								cart</button>
+						</td>
+					</tr>
+					<!-- <tr>
+            <td>
+              <div class="row align-items-center">
+                <div class="col-md-4">
+                  <img src="assets/images/tomato.png" class="prod-images" alt="gdksha">
+                </div>
+                <div class="col-md-8 prod-details">
+                  <p class="mobile-manu">
+                    <strong>Tomato</strong>
+                  </p>
+                  <p style="margin-top:-15px;">1 kg :
+                    <strong>BD 22</strong>
+                  </p>
+
+                </div>
+              </div>
+            </td>
+            <td class="pt-5">
+              <div class="plus-minus mt-3" style="display: inline;">
+                <button class="btn btn-maroon btn-minus" (click)="itemDecrease()">
+                  <span>-</span>
+                </button>
+                <input type="text" value="{{item.quantity}}" [(ngModel)]="item.quantity" disabled>
+                <button class="btn btn-maroon btn-plus" (click)="itemIncrease()">
+                  <span>+</span>
+                </button>
+              </div>
+            </td>
+            <td>
+              <div class="prod-details">
+                <span>
+                  <strong>$ 540.00</strong>
+                </span>
+              </div>
+            </td>
+            <td>
+              <i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"></i>
+              <button type="button" class="btn cart-btn">Add To cart</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="row align-items-center">
+                <div class="col-md-4">
+                  <img src="assets/images/pinapple.png" class="prod-images" alt="gdksha">
+                </div>
+                <div class="col-md-8 prod-details">
+                  <p class="mobile-manu">
+                    <strong>Pineapple</strong>
+                  </p>
+                  <p style="margin-top:-15px;">1 kg :
+                    <strong>BD 22</strong>
+                  </p>
+
+                </div>
+              </div>
+            </td>
+            <td class="pt-5">
+              <div class="plus-minus mt-3" style="display: inline;">
+                <button class="btn btn-maroon btn-minus" (click)="itemDecrease()">
+                  <span>-</span>
+                </button>
+                <input type="text" value="{{item.quantity}}" [(ngModel)]="item.quantity" disabled>
+                <button class="btn btn-maroon btn-plus" (click)="itemIncrease()">
+                  <span>+</span>
+                </button>
+              </div>
+            </td>
+            <td>
+              <div class="prod-details">
+                <span>
+                  <strong>$ 540.00</strong>
+                </span>
+              </div>
+            </td>
+            <td>
+              <i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"></i>
+              <button type="button" class="btn cart-btn">Add To cart</button>
+            </td>
+          </tr> -->
+				</tbody>
+			</table>
+			<pagination-controls class="my-pagination" (pageChange)="p = $event" style="float:right;"></pagination-controls>
+			<!-- <div class="row arrow-btns">
+        <button class="icon-btn">
+          <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+        </button>
+        <button class="icon-btn1">
+          <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div> -->
+		</div>
+
+		<!-- change password -->
+		<div class="col-lg-9" *ngIf="showChangePassword" class="profiledetails">
+			<div>
+				<h3 class="profile-header">Change Password</h3>
+			</div>
+			<form class="form-details" style="margin-top:6%;" [formGroup]="resetForm" (ngSubmit)="onSubmit()">
+				<div class="form-group row">
+					<label for="inputNewPwd" class="col-sm-4 col-form-label">Current Password
+						<span class="float-right">:</span>
+					</label>
+					<div class="col-sm-6">
+						<input type="text" formControlName="password" class="form-control input-feild"
+							[ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+						<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+							<div *ngIf="f.password.errors.required">Current Password is required</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputNewPwd" class="col-sm-4 col-form-label">New Password
+						<span class="float-right">:</span>
+					</label>
+					<div class="col-sm-6">
+						<input type="password" formControlName="new_password" class="form-control input-feild"
+							[ngClass]="{ 'is-invalid': submitted && f.new_password.errors }" />
+						<div *ngIf="submitted && f.new_password.errors" class="invalid-feedback">
+							<div *ngIf="f.new_password.errors.required">new_password is required</div>
+							<div *ngIf="f.new_password.errors.minlength">Password must be at least 6 characters</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputcnfpwd" class="col-sm-4 col-form-label">Confirm Password
+						<span class="float-right">:</span>
+					</label>
+					<div class="col-sm-6 ">
+						<input type="password" formControlName="retype_password" class="form-control input-feild"
+							[ngClass]="{ 'is-invalid': submitted && f.retype_password.errors }" />
+						<div *ngIf="submitted && f.retype_password.errors" class="invalid-feedback">
+							<div *ngIf="f.retype_password.errors.required">Confirm Password is required</div>
+							<div *ngIf="f.retype_password.errors.minlength">Confirm Password must be at least 6 characters
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<div class="row">
+				<div class="col-sm-8 offset-2">
+					<div class="d-flex">
+						<div><button type="button" class="btn save-btn " (click)="onSubmit()">Save</button></div>
+						<div><button type="button" class="btn save-btn" (click)="cancelChange()">Cancel</button></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- my order -->
+
+		<div class="col-lg-9" *ngIf="showMyOrders" class="profiledetails">
+			<div id="multi-item-example6" class="carousel slide" data-ride="carousel">
+				<br />
+				<!--Slides 1-->
+				<div class="carousel-inner cust-inner" role="listbox">
+
+					<!--First slide-->
+					<div class="carousel-item active">
+
+						<div class="row resp-table">
+							<div class="col-lg-6 col-md-6 col-sm-6 cust-vendor">
+								<h3>My Order</h3>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-3">
+								<!-- <div class="cust-filter" data-toggle="modal" data-target="#filter">
+                  <i class="fa fa-filter" aria-hidden="true"></i> Filters
+                </div> -->
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-3">
+								<form class="form-inline form-rt">
+									<i class="fa fa-search item-search" aria-hidden="true"></i>
+									<input class="form-control mr-sm-2 placeholder-padding" type="search" placeholder="Search Id"
+										aria-label="Search" [(ngModel)]="filter" name="filter">
+								</form>
+							</div>
+							<div class="table-responsive my-4">
+								<table class="table cust-table">
+									<thead class="thead-color">
+										<tr>
+											<!-- <th scope="col">S.No</th> -->
+											<th scope="col">Order no</th>
+											<th scope="col">Items</th>
+											<th scope="col">Details</th>
+											<th scope="col">Amount</th>
+											<th scope="col">Status</th>
+										</tr>
+									</thead>
+									<tbody class="cust-tbody">
+										<tr class="cst-topad"
+											*ngFor="let ord of orders | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 3, currentPage: p };let i =index"
+											(click)="showBukedOrderDetails(ord.order_id)">
+											<!-- <th scope="row">{{i+1}}</th> -->
+											<td>
+												{{ord.order_id}}
+											</td>
+											<td>1</td>
+											<td>
+												{{ord.ordered_on}} </td>
+											<td>BD.{{ord.billing_amount}}</td>
+											<td>View</td>
+										</tr>
+									</tbody>
+								</table>
+								<pagination-controls class="my-pagination" (pageChange)="p = $event" style="float:right;">
+								</pagination-controls>
+							</div>
+						</div>
+
+					</div>
+					<!--/.First slide-->
+
+					<!-- Second Slide -->
+					<!-- <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 cust-vendor">
+                            <h3>Vendor Orders</h3>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="cust-filter" data-toggle="modal" data-target="#filter">
+                                <i class="fa fa-filter" aria-hidden="true"></i> Filters
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <form class="form-inline form-rt">
+                                <i class="fa fa-search item-search" aria-hidden="true"></i>
+                                <input class="form-control mr-sm-2 placeholder-padding" type="search" placeholder="Search Id"
+                                    aria-label="Search">
+                            </form>
+                        </div>
+                        <div class="table-responsive my-4">
+                            <table class="table cust-table">
+                                <thead class="thead-color">
+                                    <tr>
+                                        <th scope="col">S.No</th>
+                                        <th scope="col">Order Id</th>
+                                        <th scope="col">Order Date & Time</th>
+                                        <th scope="col">Wholeseller Name</th>
+                                        <th scope="col">Total Amount</th>
+                                        <th scope="col">Order Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="cust-tbody">
+                                    <tr class="cst-topad">
+                                        <th scope="row">1</th>
+                                        <td>
+                                            1441367
+                                        </td>
+                                        <td>24 July 2018,
+                                            <br /> 3:30 PM</td>
+                                        <td>Peter Mark</td>
+                                        <td>BD.107.00</td>
+                                        <td>Placed</td>
+                                    </tr>
+                                    <tr class="cst-topad">
+                                        <th scope="row">2</th>
+                                        <td>
+                                            3713643
+                                        </td>
+                                        <td>4 May 2018,
+                                            <br /> 10:30 PM</td>
+                                        <td>John Park</td>
+                                        <td>
+                                            BD.84.00
+                                        </td>
+                                        <td>Processing</td>
+                                    </tr>
+                                    <tr class="cst-topad">
+                                        <th scope="row">3</th>
+                                        <td>
+                                            3862865
+                                        </td>
+                                        <td>17 Jan 2018,
+                                            <br /> 9:30 PM</td>
+                                        <td>Peter John</td>
+                                        <td>
+                                            BD.266.00
+                                        </td>
+                                        <td>Delivered</td>
+                                    </tr>
+                                    <tr class="cst-topad">
+                                        <th scope="row">4</th>
+                                        <td>
+                                            3862866
+                                        </td>
+                                        <td>17 Jan 2018,
+                                            <br /> 9:30 PM</td>
+                                        <td>Martix John</td>
+                                        <td>
+                                            BD.214.00
+                                        </td>
+                                        <td>Delivered</td>
+                                    </tr>
+                                    <tr class="last-tr cst-topad">
+                                        <th scope="row">5</th>
+                                        <td>
+                                            3862867
+                                        </td>
+                                        <td>17 Jan 2018,
+                                            <br /> 9:30 PM</td>
+                                        <td>Peter John</td>
+                                        <td>
+                                            BD.266.00
+                                        </td>
+                                        <td>Delivered</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div> -->
+					<!-- ./second slide -->
+
+				</div>
+				<!--/.Slides-->
+
+				<!--Controls-->
+				<!-- <div class="controls-top controls arrow-rt">
+                <a class="btn-floating btn-small slider-btn-left" href="#multi-item-example6" data-slide="prev">
+                    <i class="fas fa-long-arrow-alt-left"></i>
+                </a>
+                <a class="btn-floating btn-small slider-btn-right" href="#multi-item-example6" data-slide="next">
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                </a>
+            </div> -->
+				<!--/.Controls-->
+			</div>
+		</div>
+
+
+		<!-- order details -->
+		<div class="col-lg-9" *ngIf="showOrderDetails" class="profiledetails">
+			<div>
+				<h3 class="profile-header">My Order</h3>
+			</div>
+			<div class="order-details">
+				<p>Order no : {{ordId}}</p>
+			</div>
+			<table class="table myorder-details">
+				<thead>
+					<tr>
+						<th scope="col" style="font-size:18px;">Product</th>
+						<th scope="col" style="font-size:18px;">Name</th>
+						<th scope="col" style="font-size:18px;">Size</th>
+						<th scope="col" style="font-size:18px;">Color</th>
+						<th scope="col" style="font-size:18px;">Quantity</th>
+						<th scope="col" style="font-size:18px;">Price</th>
+						<th scope="col" style="font-size:18px;">Status</th>
+					</tr>
+				</thead>
+				<tbody class="table-data myorder-details">
+					<tr *ngFor="let orddata of ordData">
+						<td>
+							<img [src]="orddata.product_image">
+						</td>
+						<td>
+							<p>{{orddata.product_name}}
+							</p>
+						</td>
+						<td>{{orddata.size}}</td>
+						<td>{{orddata.color}}</td>
+						<td>{{orddata.quantity}}</td>
+						<td>BD {{orddata.selling_price}}</td>
+						<td>{{orddata?.order_status}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="order-details">
+				<p>Shipping Address</p>
+			</div>
+			<div class="address-bar">
+				<h4 class="office-header">{{ordAdd.address_type}}</h4>
+				<p>
+					<i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{{ordAdd.house_no}}
+					{{ordAdd.landmark}},
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ordAdd.city}},{{ordAdd.state}} {{ordAdd.pin_code}}
+				</p>
+				<p>
+					<i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;
+					<span>{{ordAdd.mobile_number}}</span>
+				</p>
+			</div>
+			<div class="order-details">
+				<p>Price Details</p>
+			</div>
+			<table class="table">
+				<tbody>
+					<tr>
+						<td style="font-size: 16px;">Payable Amount</td>
+						<td class="prod-price">
+							<strong>BD {{count}}</strong>
+						</td>
+					</tr>
+					<tr>
+						<td style="font-size: 16px;">Delivery Charges</td>
+						<td class="prod-price">
+							<strong>BD ***</strong>
+						</td>
+					</tr>
+					<tr>
+						<td style="font-size: 16px;">Sub Total</td>
+						<td class="prod-price">(COD)
+							<strong>BD {{count}}</strong>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div style="float:right;">
+				<button type="button" class="btn invoice-btn">Email Invoice</button>
+			</div>
+		</div>
+
+		<!-- offer zone -->
+		<div class="col-lg-9" *ngIf="showOfferZone" class="profiledetails">
+
+			<div class="row">
+				<div class="col-md-6">
+					<img src="assets/images/offer-zone-1.jpg" class="img-fluid">
+				</div>
+				<div class="col-md-6">
+					<img src="assets/images/offer-zone-2.jpg" class="img-fluid">
+				</div>
+			</div>
+			<div class="col-md-12 mt-3">
+				<h4>Today's Offer</h4>
+			</div>
+			<div class="row">
+				<div class="col-lg-3 item" *ngFor="let item of fruitArr">
+					<div class="card">
+						<div class="product-image" (click)="showProduxtDetails(item.product_id)">
+							<img class="img-fluid" [src]="item.product_image" alt="Card image cap">
+						</div>
+						<div class="card-block add-to-cart">
+							<h5 class="text-center">{{item.product_name}} </h5>
+							<p class="text-center">
+								<span class="text-green"><strong>BD {{item.selling_price}}</strong></span>&nbsp;
+								<strike>BD {{item.actual_price}}</strike>
+							</p>
+							<p class="text-center">
+								<span class="text-green"><strong>BD
+										{{[(item.actual_price-item.selling_price)/item.selling_price]*100}}%</strong></span>&nbsp;
+								<strike>OFF</strike>
+							</p>
+							<div class="quantity-price text-center">
+								<select (change)="changeSize($event.target.value)">
+									<option [value]="item.skid">{{item.size}}</option>
+								</select>
+							</div>
+							<button type="text" class="btn waves-effect waves-light"
+								(click)="addtoCart(item.product_id,item.skid)">Add
+								To Cart</button>
+						</div>
+					</div>
+					<ul class="expand-button">
+						<li><a (click)="addtoCart(item.product_id,item.skid)"><i class="fas fa-shopping-basket"></i></a></li>
+						<li><a (click)="showProduxtDetails(item.product_id)"><img src="assets/images/maximize.png"></a></li>
+					</ul>
+					<ul class="expand-button2 expand-button-2">
+						<li><a (click)="addtoWish(item.product_id,item.skid)"><i class="fas fa-heart"></i></a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- end deals -->
+		</div>
+		<!-- offer zone -->
+
+		<!-- notofications -->
+
+		<div class="col-lg-9" *ngIf="showNotifications" class="profiledetails">
+			<div class="row">
+				<div class="col-lg-6">
+					<h3 class="profile-header">Notifications</h3>
+				</div>
+				<div class="col-lg-6 clear-option">
+					<p (click)="clearAll()" class="clear">
+						<strong>Clear All</strong>
+					</p>
+				</div>
+			</div>
+			<div class="notification-bar1">
+				<p>
+					<i class="fa fa-bell" aria-hidden="true" style="color:#a7a3a2;"></i>&nbsp;&nbsp; Shop With Your Debit/Credit
+					Card and get 35% Discount</p>
+			</div>
+			<div class="notification-bar2">
+				<p>
+					<i class="fa fa-bell" aria-hidden="true" style="color:#a7a3a2;"></i>&nbsp;&nbsp;&nbsp; Shop Upto 10000/- and
+					get Cashback upto 3000</p>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="row" *ngIf="showOfferZone" class="profiledetails">
+		<div class="col-md-12 mt-3">
+			<h4>Vegetables</h4>
+		</div>
+		<div class="row">
+			<div class="col-lg-3 item" *ngFor="let item of vegArr">
+				<div class="card">
+					<div class="product-image" (click)="showProduxtDetails(item.product_id)">
+						<img class="img-fluid" [src]="item.product_image" alt="Card image cap">
+					</div>
+					<div class="card-block add-to-cart">
+						<h5 class="text-center">{{item.product_name}} </h5>
+						<p class="text-center">
+							<span class="text-green"><strong>BD {{item.selling_price}}</strong></span>&nbsp;
+							<strike>BD {{item.actual_price}}</strike>
+						</p>
+						<p class="text-center">
+							<span class="text-green"><strong>BD
+									{{[(item.actual_price-item.selling_price)/item.selling_price]*100}}%</strong></span>&nbsp;
+							<strike>OFF</strike>
+						</p>
+						<div class="quantity-price text-center">
+							<select (change)="changeSize($event.target.value)">
+								<option [value]="item.skid">{{item.size}}</option>
+							</select>
+						</div>
+						<button type="text" class="btn waves-effect waves-light" (click)="addtoCart(item.product_id,item.skid)">Add
+							To Cart</button>
+					</div>
+				</div>
+				<ul class="expand-button">
+					<li><a (click)="addtoCart(item.product_id,item.skid)"><i class="fas fa-shopping-basket"></i></a></li>
+					<li><a (click)="showProduxtDetails(item.product_id)"><img src="assets/images/maximize.png"></a></li>
+				</ul>
+				<ul class="expand-button2 expand-button-2">
+					<li><a (click)="addtoWish(item.product_id,item.skid)"><i class="fas fa-heart"></i></a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="col-md-12 mt-3">
+			<h4>Fruits</h4>
+		</div>
+		<div class="row">
+			<div class="col-lg-3 item" *ngFor="let item of fruitArr">
+				<div class="card">
+					<div class="product-image" (click)="showProduxtDetails(item.product_id)">
+						<img class="img-fluid" [src]="item.product_image" alt="Card image cap">
+					</div>
+					<div class="card-block add-to-cart">
+						<h5 class="text-center">{{item.product_name}} </h5>
+						<p class="text-center">
+							<span class="text-green"><strong>BD {{item.selling_price}}</strong></span>&nbsp;
+							<strike>BD {{item.actual_price}}</strike>
+						</p>
+						<p class="text-center">
+							<span class="text-green"><strong>BD
+									{{[(item.actual_price-item.selling_price)/item.selling_price]*100}}%</strong></span>&nbsp;
+							<strike>OFF</strike>
+						</p>
+						<div class="quantity-price text-center">
+							<select (change)="changeSize($event.target.value)">
+								<option [value]="item.skid">{{item.size}}</option>
+							</select>
+						</div>
+						<button type="text" class="btn waves-effect waves-light" (click)="addtoCart(item.product_id,item.skid)">Add
+							To Cart</button>
+					</div>
+				</div>
+				<ul class="expand-button">
+					<li><a (click)="addtoCart(item.product_id,item.skid)"><i class="fas fa-shopping-basket"></i></a></li>
+					<li><a (click)="showProduxtDetails(item.product_id)"><img src="assets/images/maximize.png"></a></li>
+				</ul>
+				<ul class="expand-button2 expand-button-2">
+					<li><a (click)="addtoWish(item.product_id,item.skid)"><i class="fas fa-heart"></i></a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- <div class="col-md-3 ">
+      <div class="card">
+        <div class="product-image" (click)="showProduxtDetails()">
+          <img class="img-fluid" src="assets/images/cherry.png" alt="Card image cap">
+        </div>
+        <div class="card-block add-to-cart">
+          <h5 class="text-center">Electric Kettle </h5>
+          <p class="text-center">
+            BD 7.500
+            <strike>BD 8.000</strike>
+          </p>
+          <div class="quantity-price text-center">
+            <select>
+              <option value="" disabled selected>500gms-Rs 20.40</option>
+              <option value="" data-icon="images/sample-1.jpg" class="left">1000gms-Rs 40.80</option>
+              <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80</option>
+              <option value="" data-icon="images/yuna.jpg" class="left">1000gms-Rs 40.80</option>
+            </select>
+          </div>
+          <button type="text" class="btn waves-effect waves-light">Add To Cart</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="product-image" (click)="showProduxtDetails()">
+          <img class="img-fluid" src="assets/images/pinapple.png" alt="Card image cap">
+        </div>
+        <div class="card-block add-to-cart">
+          <h5 class="text-center">Electric Kettle </h5>
+          <p class="text-center">
+            BD 7.500
+            <strike>BD 8.000</strike>
+          </p>
+          <div class="quantity-price text-center">
+            <select>
+              <option value="" disabled selected>500gms-Rs 20.40</option>
+              <option value="" data-icon="images/sample-1.jpg" class="left">1000gms-Rs 40.80</option>
+              <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80</option>
+              <option value="" data-icon="images/yuna.jpg" class="left">1000gms-Rs 40.80</option>
+            </select>
+          </div>
+          <button type="text" class="btn waves-effect waves-light">Add To Cart</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="product-image" (click)="showProduxtDetails()">
+          <img class="img-fluid" src="assets/images/tomato.png" alt="Card image cap">
+        </div>
+        <div class="card-block add-to-cart">
+          <h5 class="text-center">Electric Kettle </h5>
+          <p class="text-center">
+            BD 7.500
+            <strike>BD 8.000</strike>
+          </p>
+          <div class="quantity-price text-center">
+            <select>
+              <option value="" disabled selected>500gms-Rs 20.40</option>
+              <option value="" data-icon="images/sample-1.jpg" class="left">1000gms-Rs 40.80</option>
+              <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80</option>
+              <option value="" data-icon="images/yuna.jpg" class="left">1000gms-Rs 40.80</option>
+            </select>
+          </div>
+          <button type="text" class="btn waves-effect waves-light">Add To Cart</button>
+        </div>
+      </div>
+    </div> -->
+
+
+		<div class="col-md-12 mt-3">
+			<h4>Bakery Cakes & Dairy</h4>
+		</div>
+		<div class="row">
+			<div class="col-lg-3 item" *ngFor="let item of breadArr">
+				<div class="card">
+					<div class="product-image" (click)="showProduxtDetails(item.product_id)">
+						<img class="img-fluid" [src]="item.product_image" alt="Card image cap">
+					</div>
+					<div class="card-block add-to-cart">
+						<h5 class="text-center">{{item.product_name}} </h5>
+						<p class="text-center">
+							<span class="text-green"><strong>BD {{item.selling_price}}</strong></span>&nbsp;
+							<strike>BD {{item.actual_price}}</strike>
+						</p>
+						<p class="text-center">
+							<span class="text-green"><strong>BD
+									{{[(item.actual_price-item.selling_price)/item.selling_price]*100}}%</strong></span>&nbsp;
+							<strike>OFF</strike>
+						</p>
+						<div class="quantity-price text-center">
+							<select (change)="changeSize($event.target.value)">
+								<option [value]="item.skid">{{item.size}}</option>
+							</select>
+						</div>
+						<button type="text" class="btn waves-effect waves-light" (click)="addtoCart(item.product_id,item.skid)">Add
+							To Cart</button>
+					</div>
+				</div>
+				<ul class="expand-button">
+					<li><a (click)="addtoCart(item.product_id,item.skid)"><i class="fas fa-shopping-basket"></i></a></li>
+					<li><a (click)="showProduxtDetails(item.product_id)"><img src="assets/images/maximize.png"></a></li>
+				</ul>
+				<ul class="expand-button2 expand-button-2">
+					<li><a (click)="addtoWish(item.product_id,item.skid)"><i class="fas fa-heart"></i></a></li>
+				</ul>
+			</div>
+		</div>
+
+
+	</div>
+</div>

@@ -1,0 +1,58 @@
+<div class="items-view">
+  <div class="row">
+    <div class="col-md-12 items-header">
+      <h5 class="text-left">Shipment</h5>
+      <ul>
+        <li>{{cartCount}} items</li>
+        <li>Total : {{billing}}</li>
+      </ul>
+      <span class="close" (click)="onCloseCancel()">X</span>
+    </div>
+  </div>
+  <div class="container">
+    <div class="col-md-12">
+      <table class="table ">
+        <thead>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of cartData">
+            <td>
+              <img [src]="item.products.img" class="img-fluid">
+            </td>
+            <td>
+              <b>{{item.prodName}}</b>
+            </td>
+            <td>{{item.products.skuValue}}</td>
+            <td>BD : {{item.products.selling_price}}
+              <strike>{{item.products.actual_price}}</strike>
+            </td>
+          </tr>
+          <!-- <tr>
+            <td>
+              <img src="assets/images/tomato.png" class="img-fluid">
+            </td>
+            <td>
+              <b>Tomatotes</b>
+            </td>
+            <td>1 * 2 Kg</td>
+            <td>BD : 26.00
+              <strike>12.00</strike>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="assets/images/onion.png" class="img-fluid">
+            </td>
+            <td>
+              <b>Onions</b>
+            </td>
+            <td>1 * 2 Kg</td>
+            <td>BD : 26.00
+              <strike>12.00</strike>
+            </td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

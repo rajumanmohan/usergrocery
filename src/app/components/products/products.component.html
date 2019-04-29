@@ -1,0 +1,322 @@
+<app-header [cartCount]="cartCount" [billing]="billing"></app-header>
+<div class="container products">
+  <div class="row">
+    <div class="col-md-3">
+      <h5>Category</h5>
+      <br />
+      <!-- <div class="categories">
+        <div id="panel-group">
+          <div class="panel panel-default" *ngFor="let item of category; let i = index">
+            <div class="panel-heading" (click)="current = i;item.id">
+              <p class="panel-title">
+                <i class="fa fa-plus" aria-hidden="true" *ngIf="i != current"></i>
+                <i class="fa fa-minus" aria-hidden="true" *ngIf="i == current"></i>
+                {{item.category_name}}
+              </p>
+              <hr>
+            </div>
+            <div id="collapse1" class="panel-collapse" [class.collapse]='current != i' *ngFor="let subCat of subCatData">
+              <div class="panel-body subcat" *ngIf="item.id===subCat.category_id">
+                <p class="subCat">{{subCat.sub_category_name}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <!-- <div class="categories" *ngFor="let cat of category; let i = index">
+        <p [ngClass]="{'active':showCategories && i==selectedCat}">
+          <a>
+            <i class="fa fa-plus" aria-hidden="true" *ngIf="!showCategories" (click)="showsubCat(i,cat.id)"></i>
+            <i class="fa fa-plus" aria-hidden="true" *ngIf="showCategories && i!==selectedCat"
+              (click)="showsubCat(i,cat.id)"></i>
+
+            <i class="fa fa-minus" aria-hidden="true" *ngIf="showCategories && i==selectedCat"
+              (click)="closesubSubCat()"></i>
+          </a> &nbsp;&nbsp;<span (click)="getCatProducts(cat.id,cat.name)">{{cat.category_name}}</span>
+        </p>
+        <hr>
+
+        <div class="subCates">
+          <div *ngFor="let subCat of subCategory;let ii = index">
+            <p *ngIf="selectedCat==i && showCategories" id="subCat" [ngClass]="{'active':showSubCategories }">
+              <span (click)="getSubProducts(subCat.id,subCat.sub_category_name)">{{subCat.sub_category_name}}</span>
+            </p>
+          </div>
+        </div>
+      </div> -->
+      <div class="categories" *ngFor="let cat of category; let i = index">
+        <p [ngClass]="{'active':showCategories && i==selectedCat}">
+          <a>
+            <i class="fa fa-plus" aria-hidden="true" *ngIf="!showCategories" (click)="showsubCat(i,cat.id)"></i>
+            <i class="fa fa-plus" aria-hidden="true" *ngIf="showCategories && i!==selectedCat"
+              (click)="showsubCat(i,cat.id)"></i>
+
+            <i class="fa fa-minus" aria-hidden="true" *ngIf="showCategories && i==selectedCat"
+              (click)="closesubSubCat()"></i>
+          </a> &nbsp;&nbsp;<span (click)="getCatProducts(cat.id,cat.category_name)">{{cat.category_name}}</span>
+        </p>
+        <hr>
+        <!-- categories -->
+
+        <div class="subCates">
+          <div *ngFor="let subCat of subCategory;let ii = index">
+            <p *ngIf="selectedCat==i && showCategories" id="subCat" [ngClass]="{'active':showSubCategories }">
+              <span (click)="getSubProducts(subCat.id,subCat.sub_category_name)">{{subCat.sub_category_name}}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <h5>Sort</h5>
+      <div class="sort">
+        <select (change)="ChangeHL($event.target.value)">
+          <!-- <option>Popular</option> -->
+          <option disabled>Select type</option>
+          <option value="1">low to high</option>
+          <option value="0">High to low</option>
+          <option value="2">relevence</option>
+        </select>
+      </div>
+      <h5>Country</h5>
+      <div class="sort">
+        <select (change)="changeCountry($event.target.value)">
+          <option disabled>Select country</option>
+          <option *ngFor="let country of contriesData" [value]="country.country">
+            {{country.country}}</option>
+          <!-- <option>Bangladesh</option>
+          <option>China</option> -->
+        </select>
+      </div>
+      <br>
+      <h5>Price</h5>
+      <div class="price">
+        <!-- <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="defaultUnchecked6">
+          <label class="custom-control-label" for="defaultUnchecked6">Less than 100</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="defaultUnchecked7">
+          <label class="custom-control-label" for="defaultUnchecked7">Less than 200</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="defaultUnchecked8">
+          <label class="custom-control-label" for="defaultUnchecked8">Less than 300</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="defaultUnchecked9">
+          <label class="custom-control-label" for="defaultUnchecked9">Less than 400</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="defaultUnchecked10">
+          <label class="custom-control-label" for="defaultUnchecked10">Less than 500</label>
+        </div> -->
+        <div class="price">
+          <ul class="categories-list brand-filter">
+            <li class="active-category" *ngFor="let brand of priceArr" (click)="selectBrand(brand.price,brand.value)">
+              <div class="custom-control custom-checkbox terms-checkbox">
+                <a class="check-a" [ngClass]="{'active-a':selectedBrnd==brand.price}"><img
+                    *ngIf="selectedBrnd==brand.price" src="assets/images/check-mark.png"
+                    [ngClass]="{'check-img':selectedBrnd==brand.price}"></a>
+                <label>{{brand.price}}</label>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+      <br />
+      <h5>Pack of size</h5>
+      <div class="brands">
+        <!-- <input type="text" placeholder="Search by Pack of size"> -->
+        <!-- <br /> -->
+        <div class="brand-names">
+          <!-- <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+            <label class="custom-control-label" for="defaultUnchecked">100 to 500gms</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="defaultUnchecked1">
+            <label class="custom-control-label" for="defaultUnchecked1">500 to 700 gms</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="defaultUnchecked2">
+            <label class="custom-control-label" for="defaultUnchecked2">700 to 1kg</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="defaultUnchecked3">
+            <label class="custom-control-label" for="defaultUnchecked3">100 to 500gms</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="defaultUnchecked4">
+            <label class="custom-control-label" for="defaultUnchecked4">500 to 700 gms</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="defaultUnchecked5">
+            <label class="custom-control-label" for="defaultUnchecked5">700 to 1kg</label>
+          </div> -->
+          <ul class="categories-list brand-filter">
+            <li class="active-category" *ngFor="let brand of priceArr1" (click)="selectBrand1(brand.price,brand.value)">
+              <div class="custom-control custom-checkbox terms-checkbox">
+                <a class="check-a" [ngClass]="{'active-a':selectedBrnd1==brand.price}"><img
+                    *ngIf="selectedBrnd1==brand.price" src="assets/images/check-mark.png"
+                    [ngClass]="{'check-img':selectedBrnd1==brand.price}"></a>
+                <label>{{brand.price}}</label>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-9 items">
+      <p>
+        <a routerLink="/">Home</a>&nbsp;&nbsp;>&nbsp;
+        <a *ngIf="catName1"><a>{{catName1}}</a>&nbsp;&nbsp;>&nbsp;</a>
+        <a *ngIf="subCatName1"><a>{{subCatName1}}</a></a>
+      </p>
+      <!-- <div class="row" *ngIf="wholeProd">
+        <div class="col-lg-3 item" *ngFor="let item of skuData">
+          <div class="card">
+            <div class="product-image" (click)="showProduxtDetails(item.product_id)">
+              <img class="img-fluid" [src]="item.product_image" alt="Card image cap">
+            </div>
+            <div class="card-block add-to-cart">
+              <h5 class="text-center">{{item.product_name}} </h5>
+              <p class="text-center">
+                BD {{item.selling_price}}
+                <strike>BD {{item.actual_price}}</strike>
+              </p>
+              <div class="quantity-price text-center">
+                <select (change)="changeSize($event.target.value)">
+                  <option [value]="item.skid">{{item.size}}</option>
+                </select>
+              </div>
+              <button type="text" class="btn waves-effect waves-light" (click)="checkProdQuty(item.product_id,item.skid)">Add
+                To Cart</button>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <div class="row" *ngIf="serProd">
+        <div class="col-md-3 item" *ngFor="let data of prodData">
+          <div class="wrapper">
+            <div class="card">
+              <img class="img-fluid gro-img" [src]="data.image" alt="Card image cap"
+                (click)="showProduxtDetails(data.vendor_product_id,data.vendorid_as_owner)">
+              <div class="card-block">
+                <h5 class="text-center">{{data.product_name}} </h5>
+                <p class="text-center">
+                  BD {{data?.selling_price}}
+                  <strike>BD {{data?.actual_price}}</strike>
+                </p>
+                <div class="sort">
+                  <select (change)="changeSize($event.target.value)">
+                    <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}}-BD
+                      {{data?.selling_price}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn cart-btn"
+                (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)">Add
+                To
+                Cart
+              </button>
+            </div>
+            <ul class="expand-button">
+              <li><a
+                  (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)"><i
+                    class="fas fa-shopping-basket"></i></a>
+              </li>
+              <li><a (click)="openNew(data.skid)"><img src="assets/images/maximize.png"></a></li>
+            </ul>
+            <ul class="expand-button2 expand-button-2">
+              <li><a (click)="addtoWish(data.product_id,data.skid)"><i class="fas fa-heart"
+                    [ngStyle]="{'color':data.wish_list == 'true' ? 'yellow'  :  '#dfdfdf'}"></i></a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+      <div *ngIf="noData">
+        No Products Found
+      </div>
+      <div class="row" *ngIf="showVendorProds">
+        <div class="col-md-3 item" *ngFor="let data of prodData">
+          <div class="wrapper">
+            <div class="card">
+              <img class="img-fluid gro-img" [src]="data.image" alt="Card image cap"
+                (click)="showProduxtDetails(data.vendor_product_id,data.vendorid_as_owner)">
+              <div class="card-block">
+                <h5 class="text-center">{{data.product_name}} </h5>
+                <p class="text-center">
+                  BD {{data?.selling_price}}
+                  <strike>BD {{data?.actual_price}}</strike>
+                </p>
+                <div class="sort">
+                  <select (change)="changeSize($event.target.value)">
+                    <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}}-BD
+                      {{data?.selling_price}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn cart-btn"
+                (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)">Add
+                To
+                Cart
+              </button>
+            </div>
+            <ul class="expand-button">
+              <li><a
+                  (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)"><i
+                    class="fas fa-shopping-basket"></i></a>
+              </li>
+              <li><a (click)="openNew(data.skid)"><img src="assets/images/maximize.png"></a></li>
+            </ul>
+            <ul class="expand-button2 expand-button-2">
+              <li><a (click)="addtoWish(data.product_id,data.skid)"><i class="fas fa-heart"
+                    [ngStyle]="{'color':data.wish_list == 'true' ? 'yellow'  :  '#dfdfdf'}"></i></a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+      <div *ngIf="noData1">
+        No Products Found
+      </div>
+    </div>
+  </div>
+  <!-- zoom model -->
+  <div class="modal fade" id="enlargeImg" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="modal-dialog modal-dialog-centered modal-popup-fullimage" role="document">
+            <div class="modal-content enlargeImg">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body large-body">
+                <div class="">
+                  <img class="img-fluid" [src]="enlargeImg" alt="Card image cap"
+                    (click)="showProduxtDetails(data.vendor_product_id,data.vendorid_as_owner)">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- zoom model -->
+</div>

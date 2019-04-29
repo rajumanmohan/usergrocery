@@ -1,0 +1,271 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~bootstrap/dist/css/bootstrap.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+body {
+  min-height: 75rem;
+  /* padding-top: 4.5rem; */
+}
+body.modal-open {
+  padding-right: 40px !important;
+}
+.place-order button{
+      background: #7eba00;
+}
+a {
+  cursor: pointer;
+}
+
+body {
+  font-family: roboto;
+  padding-right: 0 !important;
+}
+
+.carousel-multi-item .controls-top {
+  text-align: right !important;
+}
+
+h4 {
+  font-weight: bold !important;
+  color: #454545 !important;
+}
+
+h4 a {
+  font-size: 14px;
+  font-weight: normal;
+  color: #4a84c3 !important;
+}
+
+.btn-maroon {
+  background-color: #801323;
+  border-radius: 9px !important;
+}
+
+.carousel-inner {
+  height: 315px;
+}
+
+.fa-chevron-right {
+  background-color: #801323;
+}
+
+.fa-chevron-left {
+  background-color: #801323;
+}
+
+.mat-dialog-container {
+  padding: 60px !important;
+  border-radius: 11px !important;
+}
+
+/* vamshi css */
+.card {
+  cursor: pointer;
+  box-shadow:none;
+  padding-bottom:12px;
+}
+.card:hover{
+  box-shadow: 0px 0px 9px 4px #e6e6e6;
+  border-top-right-radius: 13px;
+  border-top-left-radius: 13px;
+}
+.card:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 35%;
+  /* margin-top: 70px; */
+  width: 29%;
+  align-items: center;
+  text-align: center;
+  margin: 0px auto;
+  height: 5px;
+  display: inline-block;
+  background: #7eba00;
+}
+.product-image{
+  background: #f7f6f2;
+  text-align: center;
+  padding-top: 14%;
+  height:220px;
+  padding-bottom: 12%;
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+}
+.card-block{
+  padding:5px;
+}
+.add-to-cart button{
+  width: 100%;
+  background: #7eba00 !important;
+  color: #ffffff;
+  margin: 0px;
+  margin-top: 12px;
+  box-shadow: none;
+  text-align: center;
+}
+.quantity-price select{
+  width: 100%;
+  padding: 6px;
+  outline:none;
+  cursor:pointer;
+  box-shadow:none;
+}
+
+
+
+/* media queries */
+
+@media screen and (max-width:768px) {
+  .card {
+    width: 160px;
+  }
+}
+
+@media screen and (max-width:760px) {
+  .card {
+    width: 220px;
+  }
+}
+
+@media screen and (max-width:520px) {
+  .card {
+    width: 210px;
+  }
+}
+
+@media screen and (max-width:490px) {
+  .card {
+    width: 420px;
+  }
+}
+
+@media screen and (max-width:460px) {
+  .card {
+    width: 390px;
+  }
+}
+
+@media screen and (max-width:430px) {
+  .card {
+    width: 368px;
+  }
+}
+
+@media screen and (max-width:360px) {
+  .card {
+    width: 300px;
+  }
+  .carousel-inner {
+    height: auto;
+  }
+}
+.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: auto !important;
+}
+@media screen and (max-width:375px) {
+  .card {
+    width: 300px;
+  }
+  .carousel-inner {
+    height: auto;
+  }
+}
+.cdk-overlay-pane {
+  overflow-y: auto !important; 
+}
+.mydp {
+  border:none !important;
+}
+.my-date-picker {
+  margin-top: -22px !important;
+  margin-left: 24px !important;
+  border: none !important;
+  font-size: 9px !important;
+}
+/* Datepicker popup icon */
+
+button.calendar, button.calendar:active {
+  width: 2.75rem;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEUSURBVEiJ7ZQxToVAEIY/YCHGxN6XGOIpnpaEsBSeQC9ArZbm9TZ6ADyBNzAhQGGl8Riv4BLAWAgmkpBYkH1b8FWT2WK/zJ8ZJ4qiI6XUI3ANnGKWBnht2/ZBDRK3hgVGNsCd7/ui+JkEIrKtqurLpEWaphd933+IyI3LEIdpCYCiKD6HcuOa/nwOa0ScJEnk0BJg0UTUWJRl6RxCYEzEmomsIlPU3IPW+grIAbquy+q6fluy/28RIBeRMwDXdXMgXLj/B2uimRXpui4D9sBeRLKl+1N+L+t6RwbWrZliTTTr1oxYtzVWiTQAcRxvTX+eJMnlUDaO1vpZRO5NS0x48sIwfPc87xg4B04MCzQi8hIEwe4bl1DnFMCN2zsAAAAASUVORK5CYII=') !important;
+  background-repeat: no-repeat;
+  background-size: 23px;
+  background-position: center;
+}
+
+/* Sortable table demo */
+
+th[sortable] {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+th[sortable].desc:before, th[sortable].asc:before {
+  content: '';
+  display: block;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAmxJREFUeAHtmksrRVEUx72fH8CIGQNJkpGUUmakDEiZSJRIZsRQmCkTJRmZmJgQE0kpX0D5DJKJgff7v+ru2u3O3vvc67TOvsdatdrnnP1Y///v7HvvubdbUiIhBISAEBACQkAICAEhIAQ4CXSh2DnyDfmCPEG2Iv9F9MPlM/LHyAecdyMzHYNwR3fdNK/OH9HXl1UCozD24TCvILxizEDWIEzA0FcM8woCgRrJCoS5PIwrANQSMAJX1LEI9bqpQo4JYNFFKRSvIgsxHDVnqZgIkPnNBM0rIGtYk9YOOsqgbgepRCfdbmFtqhFkVEDVPjJp0+Z6e6hRHhqBKgg6ZDCvYBygVmUoEGoh5JTRvIJwhJo1aUOoh4CLPMyvxxi7EWOMgnCGsXXI1GIXlZUYX7ucU+kbR8NW8lh3O7cue0Pk32MKndfUxQFAwxdirk3fHappAnc0oqDPzDfGTBrCfHP04dM4oTV8cxr0SVzH9FF07xD3ib6xCDE+M+aUcVygtWzzbtGX2rPBrEUYfecfQkaFzYi6HjVnGBdtL7epqAlc1+jRdAap74RrnPc4BCijttY2tRcdN0g17w7HqZrXhdJTYAuS3hd8z+vKgK3V1zWPae0mZDMykadBn1hTQBLnZNwVrJpSe/NwEeDsEwCctEOsJTsgxLvCqUl2ACftEGvJDgjxrnBqkh3ASTvEWrIDQrwrnJpkB3DSDrGW7IAQ7wqnJtkBnLRztejXXVu4+mxz/nQ9jR1w5VB86ejLTFcnnDwhzV+F6T+CHZlx6THSjn76eyyBIOPHyDakhBAQAkJACAgBISAEhIAQYCLwC8JxpAmsEGt6AAAAAElFTkSuQmCC') no-repeat;
+  background-size: 22px;
+  width: 22px;
+  height: 22px;
+  float: left;
+  margin-left: -22px;
+}
+
+th[sortable].desc:before {
+  transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+}
+
+/* Filtering table demo */
+ngbd-table-filtering span.ngb-highlight {
+  background-color: yellow;
+}
+
+/* Complete table demo */
+ngbd-table-complete span.ngb-highlight {
+  background-color: yellow;
+}
+.ngb-tp {
+  position: relative;
+  right: 286px;
+  top: 26px;
+  padding: 13px;
+}
+.selectiongroup{
+  margin-top: -22px;
+      margin-left: 24px;
+      border: none !important;
+      font-size: 9px;
+  }
+  .input.selection.ng-untouched.ng-pristine.ng-valid{
+    display: none !important;
+}
+.mydp.selection {
+  display: none !important;
+}
+.mydp .selection {
+  display:none;
+}
+.mydp .selbtngroup {
+  width: auto!important;
+}
+
+.mydp .btnclear, .mydp .btndecrease, .mydp .btnincrease, .mydp .btnpicker, .mydp .headertodaybtn{
+  background-color: #7eba00!important;
+}
+.terms-p {
+  font-size: 18px;
+  font-weight: 600;
+}
+.cat-drop .subcatcat{
+  position: absolute;
+  top: -2px;
+  left: 56px;
+  padding: 7px;
+  width: 100%;
+  z-index: -1;
+  height: 100px;
+}

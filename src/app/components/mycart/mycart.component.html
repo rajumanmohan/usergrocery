@@ -1,0 +1,537 @@
+<app-header [cartCount]="cartCount" [billing]="billing"></app-header>
+<div class="container cart-payment">
+    <div class="row">
+        <h5 (click)="showCart()">
+            <span>
+                <img src="assets/images/1.png" *ngIf="!showCartItems">
+                <img src="assets/images/checked.png" *ngIf="showCartItems">
+                <!-- <i class="fa fa-plus" aria-hidden="true"></i>
+                <i class="fa fa-minus" aria-hidden="true"></i> -->
+            </span>&nbsp;&nbsp;My Cart</h5>
+        <div class="container mycart" *ngIf="showCartItems">
+            <div class="row">
+                <h4 class="text-center"> My Cart</h4>
+                <div class="col-md-12 cart-1">
+                    <div class="cart-item">
+                        <div class="row items align-items-center" *ngFor="let data of cartData">
+
+                            <div class="col-md-3 text-center">
+                                <div class="wish-list">
+                                    <a (click)="addtoWish(data.product_id,data.skid)"></a>
+                                </div>
+                                <img [src]="data.img">
+                            </div>
+                            <div class="col-md-4">
+                                <h6>{{data.prodName}}</h6>
+                                <div class="sort">
+                                    <select>
+                                        <option [value]="data.skid" (change)="changeSize($event.target.value)">
+                                            {{data.skuValue}}-
+                                            {{data.selling_price }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <h6>Price : BD {{data.selling_price}}
+                                    <span>
+                                        <strike>BD {{data.actual_price}}</strike>
+                                    </span>
+                                </h6>
+                                <div class="custom-control custom-radio mahali-radio">
+                                    <input type="radio" id="customRadio3" name="customRadio3"
+                                        class="custom-control-input mahali-input" checked>
+                                    <label data-toggle="modal" data-target="#myModal"
+                                        class="custom-control-label mahali-label" for="customRadio3">Use
+                                        Promocode to get 20% Cashback</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <div class="quantity">
+                                    <button class="btn btn-icon btn-maroon btn-minus"
+                                        (click)="itemDecrease(data.cart_id)">
+                                        <span>
+                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                    <input type="text" value="1" name="quantity" [(ngModel)]="data.quantity"
+                                        readonly="readonly" value="{{data.quantity}}" class="text-center" disabled>
+                                    <button class="btn btn-icon btn-maroon btn-plus"
+                                        (click)="checkProdQuty(data.cart_id,data.product_id,data.sku_id,data.quantity,data.vendorid_as_owner)">
+                                        <span>
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <img class="del-img" (click)="delCart(data.cart_id)" src="assets/images/close.png">
+                                <!-- <h6>You Save: BD. {{data.offer_price}}</h6> -->
+                                <h6>Total : BD.{{data.selling_price * data.quantity}}</h6>
+                            </div>
+                            <div class="col-md-12 text-right">
+
+                            </div>
+
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="sub-total">
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr class="text-right">
+
+                                    <td>Sub-Total</td>
+                                    <td> : BD.{{billing}}</td>
+                                </tr>
+                                <tr class="text-right">
+                                    <td>Delivery charges </td>
+                                    <td> : ***</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <span class="text-right promo">*Apply Promocode to this order</span><br />
+                        <button class="btn btn-maroon" value="Checkout" (click)="checkout()">Checkout</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <!-- promo code  -->
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog Promocode-dialog">
+                <div class="modal-content Promocode-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Apply Promocode </h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="row" *ngFor="let data of voucherData">
+                            <div class="col-lg-2">
+                                <h1>{{data.voucher_code}}</h1>
+                            </div>
+                            <div class="col-lg-8">
+                                <p> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
+                                    an
+                                    unknown printer took
+                                </p>
+                                <div class="row">
+                                    <div class="col-lg-6 expiry">
+                                        <p>{{data.end_date}}</p>
+                                    </div>
+                                    <div class="col-lg-6 terms">
+                                        <a>Terms & Conditions</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <button _ngcontent-c2="" class="btn apply-promo" value="apply"
+                                    (click)="applyVoucher(data.voucher_code)">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <h5 (click)="showAddress()">
+            <span>
+                <img src="assets/images/2.png" *ngIf="!showDeliveryAddress">
+                <img src="assets/images/checked.png" *ngIf="showDeliveryAddress">
+            </span>&nbsp;&nbsp;Delivery Address
+
+        </h5>
+        <div class="container mycart" *ngIf="showDeliveryAddress">
+            <div class="row">
+                <h4 class="text-center"> Delivery Address</h4>
+
+                <div class="col-md-12 cart-2">
+                    <a (click)="addAddress()" *ngIf="showAddresses" class="addnew-del">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp;Add new delivery address</a>
+                    <!-- delivery address -->
+                    <div *ngIf="showAddresses">
+                        <div class="row del-address" *ngFor="let data of getAddData">
+                            <div class="col-md-6">
+                                <br />
+                                <div>
+                                    <h6>{{data.address_type}}</h6>
+                                    <p>{{data.house_no}}, {{data.landmark}},
+                                        <br /> {{data.state}}
+                                        <br /> {{data.pin_code}}
+                                    </p>
+                                    <p>Ph : {{data.mobile_number}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-maroon" (click)="shipmentType(data.address_id)">Delivery
+                                    Here</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row del-address" *ngIf="showAddresses">
+							<div class="col-md-6">
+								<br />
+								<div>
+									<h6>Office</h6>
+									<p>Uni Space Business Center, Modern Tech park,
+										<br /> Bangalore
+										<br /> 500038
+									</p>
+									<p>Ph : 1234567891</p>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<button class="btn btn-maroon" (click)="shipmentType()">Proceed To Pay</button>
+							</div>
+						</div> -->
+                    <!-- delivery address -->
+                    <!-- add address -->
+                    <div class=" row addaddress " *ngIf="addresses ">
+                        <div class="col-md-12 ">
+                            <form class="details login-fields register-fields " [formGroup]="addressForm"
+                                (ngSubmit)="saveAddress()">
+                                <div class="form-group row ">
+                                    <label class="col-sm-4 col-md-4 col-form-label ">Full Name
+                                        <span>:</span>
+                                    </label>
+                                    <div class="col-sm-8 col-md-8 ">
+                                        <input type="text" formControlName="full_name" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.full_name.errors }">
+                                        <div *ngIf="submitted && f.full_name.errors" class="invalid-feedback">
+                                            <div *ngIf="f.full_name.errors.required">Full Name is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row ">
+                                    <label class="col-sm-4 col-md-4 col-form-label ">Mobile Number
+                                        <span>:</span>
+                                    </label>
+                                    <div class="col-sm-8 col-md-8 ">
+                                        <input myNumberOnly type="text " formControlName="mobile_number"
+                                            class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors }">
+                                        <div *ngIf="submitted && f.mobile_number.errors" class="invalid-feedback">
+                                            <div *ngIf="f.mobile_number.errors.required">Mobile Number is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row ">
+                                    <label class="col-sm-4 col-md-4 col-form-label ">House No.
+                                        <span>:</span>
+                                    </label>
+                                    <div class="col-sm-8 col-md-8 ">
+                                        <input type="text " formControlName="house_no" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.house_no.errors }">
+                                        <div *ngIf="submitted && f.house_no.errors" class="invalid-feedback">
+                                            <div *ngIf="f.house_no.errors.required">House Number is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row ">
+                                    <label class="col-sm-4 col-md-4 col-form-label ">City
+                                        <span>:</span>
+                                    </label>
+                                    <div class="col-sm-8 col-md-8 ">
+                                        <!-- <select class="form-control ">
+												<option></option>
+											</select> -->
+                                        <input type="text " formControlName="city" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
+                                        <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                            <div *ngIf="f.city.errors.required">City is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row ">
+                                    <label class="col-sm-4 col-md-4 col-form-label ">state
+                                        <span>:</span>
+                                    </label>
+                                    <div class="col-sm-8 col-md-8 ">
+                                        <!-- <select class="form-control ">
+												<option>Select state</option>
+												<option *ngFor="let state of states" [(ngModel)]="addData.state">{{state}}</option>
+											</select>  -->
+                                        <input type="text " formControlName="state" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.state.errors }">
+                                        <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                            <div *ngIf="f.state.errors.required">state is required</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group row ">
+                                    <label class="col-sm-4 col-md-4 col-form-label ">Landmark
+                                        <span>:</span>
+                                    </label>
+                                    <div class="col-sm-8 col-md-8 ">
+                                        <input type="text " formControlName="landmark" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.landmark.errors }">
+                                        <div *ngIf="submitted && f.landmark.errors" class="invalid-feedback">
+                                            <div *ngIf="f.landmark.errors.required">landmark is required</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-sm-4 col-md-4 col-form-label ">Pincode
+                                        <span>:</span>
+                                    </label>
+                                    <div class="col-sm-8 col-md-8 ">
+                                        <input myNumberOnly type="text " formControlName="pin_code" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.pin_code.errors }">
+                                        <div *ngIf="submitted && f.pin_code.errors" class="invalid-feedback">
+                                            <div *ngIf="f.pin_code.errors.required">Pin code is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p>Choose nick name for this address</p>
+                                    <p class="addresses ">
+                                        <a (click)="Type('Home')" [ngClass]="{'activeAdd':type=='Home'}">Home</a>
+                                        <a (click)="Type('Office')" [ngClass]="{'activeAdd':type=='Office'}">Office</a>
+                                        <a (click)="Type('Other')" [ngClass]="{'activeAdd':type=='Other'}">Other</a>
+                                    </p>
+                                    <div class="custom-control custom-checkbox ">
+                                        <input type="checkbox " class="custom-control-input " id="defaultUnchecked5 ">
+                                        <label class="custom-control-label " for="defaultUnchecked5 ">Set this as my
+                                            default
+                                            address
+                                        </label>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="form-group row ">
+                                    <div class="col-sm-12 submit text-right ">
+                                        <button class="btn btn-maroon submit " type="submit "
+                                            (click)="saveAddress()">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- add address -->
+                    <!-- delvery type -->
+                    <div class="row addaddress mt-5 mb-5" *ngIf="showDeliveryType">
+                        <div class="col-md-6 text-center">
+                            <h4>shipment 1</h4>
+                            <div class="shippipng">
+                                <h4>Immediate Delivery</h4>
+                                <p>{{selAdd.house_no}}, {{selAdd.landmark}},
+                                    <br /> {{selAdd.state}}
+                                    <br /> {{selAdd.pin_code}}
+                                </p>
+                                <p>Ph : {{selAdd.mobile_number}}</p>
+                                <p>
+                                    <a (click)="showItems()">{{cartCount}} Items</a>@ BD {{billing}}</p>
+                                <p>Delivery Charge: BD ***
+                                    <img src="assets/images/!.png">
+                                </p>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8">
+                                        <select (change)="changeSlot($event.target.value)">
+                                            <option *ngFor="let slot of delSlots" [value]="slot.id">{{slot.start_time}}
+                                                -
+                                                {{slot.end_time}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-maroon" (click)="proceed()">Proceed To Pay</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <h4>shipment 2</h4>
+                            <!-- <div class="shippipng">
+                                <h4>Scheduled Delivery</h4>
+                                <p>{{selAdd.house_no}}, {{selAdd.landmark}},
+                                    <br /> {{selAdd.state}}
+                                    <br /> {{selAdd.pin_code}}
+                                </p>
+                                <p>Ph : {{selAdd.mobile_number}}</p>
+                                <p>
+                                    <p>
+                                        <a (click)="showItems()">{{cartCount}} Items</a>@ BD
+                                        {{slotData.bill}}
+                                    </p>
+                                    <p>Delivery Charge: BD ***
+                                        <img src="assets/images/!.png">
+                                    </p>
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-8">
+                                            <select data-toggle="modal" data-target="#shipModel">
+                                                <option>With in next 10minutes</option>
+                                                <option *ngFor="let slot of delSlots">{{slot.start_time}} -
+                                                    {{slot.end_time}}
+                                                </option>
+                                                <option>3:00 PM - 4:00 PM</option>
+												<option>4:00 PM - 5:00 PM</option>
+												<option>5:00 PM - 6:00 PM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-maroon" (click)="proceed()">Proceed To Pay</button>
+                            </div> -->
+                            <div class="shippipng">
+                                <h4>Immediate Delivery</h4>
+                                <p>{{selAdd.house_no}}, {{selAdd.landmark}},
+                                    <br /> {{selAdd.state}}
+                                    <br /> {{selAdd.pin_code}}
+                                </p>
+                                <p>Ph : {{selAdd.mobile_number}}</p>
+                                <p>
+                                    <a (click)="showItems()">{{cartCount}} Items</a>@ BD {{billing}}</p>
+                                <p>Delivery Charge: BD ***
+                                    <img src="assets/images/!.png">
+                                </p>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8">
+                                        <select (change)="changeSlot($event.target.value)">
+                                            <option *ngFor="let slot of delSlots" [value]="slot.id">{{slot.start_time}}
+                                                -
+                                                {{slot.end_time}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-maroon" (click)="proceed()">Proceed To Pay</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- delivery type -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row " [ngClass]="{ 'margin':showPaymentMethode || !showPaymentMethode} ">
+        <h5 (click)="showPayment() ">
+            <span>
+                <img src="assets/images/3.png" *ngIf="!showPaymentMethode">
+                <img src="assets/images/checked.png" *ngIf="showPaymentMethode">
+            </span>&nbsp;&nbsp;Payment Method
+        </h5>
+        <div class="container mycart paymentMethode " *ngIf="showPaymentMethode ">
+
+            <h4> Payment Method</h4>
+            <!-- total amount -->
+            <div class="row justify-content-center mb-5 ">
+                <div class="col-md-9 payment first">
+                    <div class="row ">
+                        <div class="col-md-6 ">
+                            <h4>Total</h4>
+                        </div>
+                        <div class="col-md-6 prices">
+                            <h4>
+                                <span>BD.{{billing}}</span>
+                            </h4>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-md-6 ">
+                            <h4>Total Payable Amount</h4>
+                        </div>
+                        <div class="col-md-6 prices">
+                            <h4>
+                                <span>BD.{{billing}}</span>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- total amount -->
+            <!-- payment option -->
+            <div class="row justify-content-center">
+                <div class="col-md-9 payment sec">
+                    <p class="">Select Payment Option</p>
+
+                    <div class="row options" *ngFor="let pay of payOptions;let i= index">
+                        <div class="col-md-12 payment-cursor">
+                            <i class="far fa-circle" (click)="selePayOptn(i,pay.id)" *ngIf="seleOpt!==i"></i>
+                            <i class="far fa-dot-circle" *ngIf="seleOpt==i" [ngClass]="{'activePay':seleOpt=='i'}"></i>
+                            &nbsp;
+                            &nbsp; {{pay.payment_option}}
+                        </div>
+                        <hr>
+                    </div>
+
+                    <!-- <div class="row ">
+						<div class="col-md-12">
+							<div class="custom-control custom-radio mahali-radio">
+								<input type="radio" id="customRadio2" name="customRadio" class="custom-control-input mahali-input" checked>
+								<label class="custom-control-label mahali-label" for="customRadio2">Cash On Delivery</label>
+							</div>
+						</div>
+					</div> -->
+                </div>
+            </div>
+            <!-- payment option -->
+            <div class="row mt-5 justify-content-center place-order">
+                <div class="col-md-9 text-right">
+                    <button class="btn btn-maroon" (click)="orderPlace()">Place Order</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-sm" id="shipModel" tabindex="-1" role="dialog"
+        aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog modal-sm date-time">
+            <div class="modal-content">
+                <div class="modal-header date-and-time-header">
+                    <!-- <div class="row"> -->
+                    <div class="col-md-6 date-header" (click)="Date()" [ngClass]="{'active':showDate}"
+                        style="padding:1px;">
+                        <ul>
+                            <li class="date-header no-border">
+                                <!-- <div> -->
+                                <my-date-picker [options]="myDatePickerOptions" (dateChanged)="onDateChanged($event)">
+                                </my-date-picker>
+                                <!-- </div> -->
+                            </li>
+                            <!-- <li class="date-header no-border">
+                                Date
+                            </li> -->
+                        </ul>
+
+
+                    </div>
+                    <div class="col-md-6 date-header" (click)="Time()" [ngClass]="{'active':showTime}">
+                        <ul>
+                            <li class="date-header no-border">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                Time
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div *ngIf="showTime">
+                        <ngb-timepicker [(ngModel)]="time" [meridian]="meridian" *ngIf="showTime"></ngb-timepicker>
+                    </div>
+
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1126 @@
+<!--Main layout-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <ul class="navbar-nav flex-row mr-lg-0 col-xs-12 acount-details">
+                <li class="nav-item">
+                    <a class="nav-link pr-2" data-toggle="modal" data-target="#loginmodal" *ngIf="showLoginScreen"
+                        (click)="showLoginPop()">
+                        <i class="fa fa-user-o" aria-hidden="true"></i>
+                        {{"common.login"|translate}}
+                    </a>
+                </li>
+                <li class="nav-item cust-bar" *ngIf="showLoginScreen">
+                    |
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link pr-2" data-toggle="modal" data-target="#signupmodal" *ngIf="showRegistration">
+                        {{"common.signup"|translate}}
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="modal" data-target="#myaccountmdl" *ngIf="myAccount">
+                    <a dropdownToggle mdbRippleRadius type="button" class="nav-link dropdown-toggle waves-light"
+                        mdbRippleRadius>
+                        <i class="fa fa-user" aria-hidden="true"></i> &nbsp;{{userName}}
+                        <span class="caret"></span>
+                    </a>
+                    <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary cust-menu" role="menu">
+                        <a class="dropdown-item waves-light" mdbRippleRadius
+                            href="http://fansadda.mobi/mahaliuserecommerse/#/">{{"common.eCommerce"|translate}}
+                        </a>
+                        <hr />
+                        <a class="dropdown-item waves-light" mdbRippleRadius
+                            routerLink="/myaccount">{{"common.myProfile"|translate}}
+                        </a>
+                        <hr />
+                        <a class="dropdown-item waves-light" mdbRippleRadius>{{"common.myProducts"|translate}}</a>
+                        <hr />
+                        <a class="dropdown-item waves-light" mdbRippleRadius>{{"common.addProducts"|translate}}
+                        </a>
+                        <hr />
+                        <a class="dropdown-item waves-light" mdbRippleRadius
+                            routerLink="/myorders">{{"common.vendorOrder"|translate}}
+                        </a>
+                        <hr />
+                        <a class="dropdown-item waves-light" mdbRippleRadius
+                            routerLink="/notifications">{{"common.changePassword"|translate}}
+                        </a>
+                        <hr />
+                        <a class="dropdown-item waves-light" mdbRippleRadius href="#"
+                            (click)="signOut()">{{"common.signout"|translate}}</a>
+                    </div>
+                </li>
+                <!-- Modal -->
+            </ul>
+            <ul class="navbar-nav flex-row mr-lg-0 col-xs-12 acount-details">
+                <li class="nav-item cust-item1" *ngIf="phone">
+                    <a class="nav-link pr-2">
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        +97317555666
+                    </a>
+                </li>
+                <li class="nav-item" (click)="showLocation1()">
+                    <a class="nav-link pr-2">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        {{Area}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--nav class="navbar cust-navbar navbar-expand-md sticky-top navbar-dark">
+    <a routerLink="/" href="#/" class="navbar-brand">
+        <img src="assets/images/logo1.png" class="img-fluid cust-logo" alt="Responsive image">
+    </a>
+    <button class="navbar-toggler togl-btn" type="button" data-toggle="collapse" data-target="#navbar5">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="navbar5">
+        <form class="mx-2 my-auto d-inline w-100">
+            <div class="input-group">
+                <input type="text" class="form-control cust-srch border border-right-0" name="product1"
+                    [(ngModel)]="product1" placeholder="Search for products...">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-secondary cust-srchbtn border border-left-0" type="button"
+                        (click)="search(product1,'search')">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+
+        <ul class="navbar-nav cust-navbarnav">
+            <li class="nav-item cart">
+                <span class="crtt-items cust-cartitem" data-toggle="modal" data-target="#cartmodal">
+                    <a>
+                        <i class="fa fa-shopping-cart" aria-hidden="true" (click)="getCart()">
+                        </i>
+                    </a>
+                </span>
+            </li>
+            <li class="nav-item cust-itm2">
+                <span class="items cust-2">{{cartCount}}</span>
+            </li>
+            <li class="nav-item cust-cost">
+                <span class="cost">BD.{{billing}}</span>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#itemdesc" (click)="hidesub()">
+                    <i class="fa fa-navicon cust-navcon"></i>
+                </a>
+            </li>
+            <!-- <li class="nav-item" (click)="hidesub()">
+                <a class="nav-link">
+                    <i class="fa fa-navicon cust-navcon"></i>
+                </a>
+            </li> -->
+<!--  </ul>
+    </div>
+</nav>-->
+<nav class="navbar cust-navbar navbar-expand-md sticky-top navbar-dark" id="navbar-desktop">
+
+    <a routerLink="/" href="#/" class="navbar-brand">
+        <img src="assets/images/logo.png" class="img-fluid cust-logo" alt="Responsive image">
+    </a>
+    <button class="navbar-toggler togl-btn" type="button" data-toggle="collapse" data-target="#navbar5">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="navbar5">
+        <form class="mx-2 my-auto d-inline w-100">
+            <div class="input-group">
+                <input type="text" class="form-control cust-srch border border-right-0" name="product1"
+                    [(ngModel)]="product1" placeholder="Search for products...">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-secondary cust-srchbtn border border-left-0" type="button"
+                        (click)="search(product1,'search')">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+
+        <ul class="navbar-nav cust-navbarnav">
+            <li class="nav-item cart">
+                <span class="crtt-items cust-cartitem" data-toggle="modal" data-target="#cartmodal">
+                    <a>
+                        <i class="fa fa-shopping-cart" aria-hidden="true" (click)="getCart()">
+                        </i>
+                    </a>
+                </span>
+            </li>
+            <li class="nav-item cust-itm2">
+                <span class="items cust-2">{{cartCount}}</span>
+            </li>
+            <li class="nav-item cust-cost">
+                <span class="cost">BD.{{billing}}</span>
+            </li>
+            <li class="nav-item" id="menuicon1">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#itemdesc" (click)="hidesub()">
+                    <i class="fa fa-navicon cust-navcon"></i>
+                </a>
+            </li>
+            <li class="nav-item" id="menuicon2">
+                <a class="nav-link" href="#collapseExample" data-toggle="collapse">
+                    <i class="fa fa-navicon cust-navcon"></i>
+                </a>
+            </li>
+            <!-- <li class="nav-item" (click)="hidesub()">
+        <a class="nav-link">
+          <i class="fa fa-navicon cust-navcon"></i>
+        </a>
+      </li> -->
+        </ul>
+    </div>
+</nav>
+<nav class="navbar cust-navbar navbar-expand-md sticky-top navbar-dark" id="navbar-mobile">
+
+    <a routerLink="/" href="#/" class="navbar-brand">
+        <img src="assets/images/logo.png" class="img-fluid cust-logo" alt="Responsive image">
+    </a>
+    <ul class="navbar-nav cust-navbarnav">
+        <li class="nav-item cart">
+            <span class="crtt-items cust-cartitem" data-toggle="modal" data-target="#cartmodal">
+                <a>
+                    <i class="fa fa-shopping-cart" aria-hidden="true" (click)="getCart()">
+                    </i>
+                </a>
+            </span>
+        </li>
+        <li class="nav-item cust-itm2">
+            <span class="items cust-2">{{cartCount}}</span>
+        </li>
+        <li class="nav-item cust-cost">
+            <span class="cost">BD.{{billing}}</span>
+        </li>
+        <li class="nav-item" id="menuicon1">
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#itemdesc" (click)="hidesub()">
+                <i class="fa fa-navicon cust-navcon"></i>
+            </a>
+        </li>
+        <li class="nav-item" id="menuicon2">
+            <a class="nav-link" href="#collapseExample" data-toggle="collapse" href="#collapseExample" role="button"
+                aria-expanded="false" aria-controls="collapseExample">
+                <i class="fa fa-navicon cust-navcon"></i>
+            </a>
+        </li>
+        <!-- <li class="nav-item" (click)="hidesub()">
+    <a class="nav-link">
+      <i class="fa fa-navicon cust-navcon"></i>
+    </a>
+  </li> -->
+    </ul>
+    <!--<button class="navbar-toggler togl-btn" type="button" data-toggle="collapse" data-target="#navbar5">
+        <span class="navbar-toggler-icon"></span>
+    </button>-->
+    <div class="navbar-collapse" id="navbar5">
+        <form class="my-auto d-inline" id="searchbox">
+            <div class="input-group">
+                <input type="text" class="form-control cust-srch border border-right-0" name="product1"
+                    [(ngModel)]="product1" placeholder="Search for products...">
+                <span class="input-group-append">
+                    <button class="btn btn-outline-secondary cust-srchbtn border border-left-0" type="button"
+                        (click)="search(product1,'search')">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+
+
+    </div>
+</nav>
+<div class="collapse" id="collapseExample">
+    <div class="card card-body card-accordion">
+        <div class="accordion category-accordion" id="accordion">
+            <h5 class="text-center">Categories</h5>
+            <div class="card">
+                <div class="card-header" id="heading-1">
+                    <h5 class="mb-0">
+                        <a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true"
+                            aria-controls="collapse-1">
+                            Fruits & Vegetables
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapse-1" class="collapse" data-parent="#accordion" aria-labelledby="heading-1">
+                    <div class="card-body">
+
+                        <div id="accordion-1">
+                            <div class="card">
+                                <div class="card-header" id="heading-1-1">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-1-1"
+                                            aria-expanded="false" aria-controls="collapse-1-1">
+                                            Fruits
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapse-1-1" class="collapse" data-parent="#accordion-1"
+                                    aria-labelledby="heading-1-1">
+                                    <div class="card-body">
+
+                                        <div id="accordion-1-1">
+                                            <div class="card">
+                                                <div class="card-header" id="heading-1-1-1">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed" role="button" data-toggle="collapse"
+                                                            href="#collapse-1-1-1" aria-expanded="false"
+                                                            aria-controls="collapse-1-1-1">
+                                                            Mangoes
+                                                        </a>
+                                                    </h5>
+                                                </div>
+
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" id="heading-1-1-2">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed" role="button" data-toggle="collapse"
+                                                            href="#collapse-1-1-2" aria-expanded="false"
+                                                            aria-controls="collapse-1-1-2">
+                                                            Apples
+                                                        </a>
+                                                    </h5>
+                                                </div>
+
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" id="heading-1-1-3">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed" role="button" data-toggle="collapse"
+                                                            href="#collapse-1-1-3" aria-expanded="false"
+                                                            aria-controls="collapse-1-1-3">
+                                                            Bananas
+                                                        </a>
+                                                    </h5>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="heading-1-2">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-1-2"
+                                            aria-expanded="false" aria-controls="collapse-1-2">
+                                            Vegetables
+                                        </a>
+                                    </h5>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="heading-2">
+                    <h5 class="mb-0">
+                        <a role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="true"
+                            aria-controls="collapse-2">
+                            Dry Fruits
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapse-2" class="collapse" data-parent="#accordion" aria-labelledby="heading-2">
+                    <div class="card-body">
+
+                        <div id="accordion-2">
+                            <div class="card">
+                                <div class="card-header" id="heading-2-1">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-2-1"
+                                            aria-expanded="false" aria-controls="collapse-2-2">
+                                            Almonds
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapse-2-2" class="collapse" data-parent="#accordion-2"
+                                    aria-labelledby="heading-2-1">
+                                    <div class="card-body">
+
+                                        <div id="accordion-2-1">
+                                            <div class="card">
+                                                <div class="card-header" id="heading-2-1-1">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed" role="button" data-toggle="collapse"
+                                                            href="#collapse-2-1-1" aria-expanded="false"
+                                                            aria-controls="collapse-2-1-1">
+                                                            Mangoes
+                                                        </a>
+                                                    </h5>
+                                                </div>
+
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" id="heading-1-1-2">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed" role="button" data-toggle="collapse"
+                                                            href="#collapse-1-1-2" aria-expanded="false"
+                                                            aria-controls="collapse-1-1-2">
+                                                            Apples
+                                                        </a>
+                                                    </h5>
+                                                </div>
+
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" id="heading-1-1-3">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed" role="button" data-toggle="collapse"
+                                                            href="#collapse-1-1-3" aria-expanded="false"
+                                                            aria-controls="collapse-1-1-3">
+                                                            Bananas
+                                                        </a>
+                                                    </h5>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="heading-1-2">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-1-2"
+                                            aria-expanded="false" aria-controls="collapse-1-2">
+                                            Vegetables
+                                        </a>
+                                    </h5>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<!-- My account modal -->
+<div class="modal" id="myaccountmdl" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content cust-myaactmdl">
+            <div class="modal-body">
+                <div id="triangle-up"></div>
+                <div>
+                    <a class="waves-light" mdbRippleRadius
+                        href="http://fansadda.mobi/mahaliuserecommerse/#/">{{"common.eCommerce"|translate}}
+                    </a>
+                    <!-- <hr class="cust-hr" />
+              <a class="waves-light" data-dismiss="modal" mdbRippleRadius routerLink="/myaccount">{{"common.myProfile"|translate}}
+              </a> -->
+                    <hr class="cust-hr" />
+                    <!-- <a class="waves-light" data-dismiss="modal" mdbRippleRadius>{{"common.myProducts"|translate}}</a>
+                    <hr class="cust-hr" /> -->
+                    <a class="waves-light" data-dismiss="modal" mdbRippleRadius
+                        routerLink="/myorders">{{"common.myOrders"|translate}}
+                    </a>
+                    <hr class="cust-hr" />
+                    <a class="waves-light" data-dismiss="modal" mdbRippleRadius
+                        routerLink="/changePw">{{"common.changePassword"|translate}}
+                    </a>
+                    <hr class="cust-hr" />
+                    <a class="waves-light" data-dismiss="modal" mdbRippleRadius
+                        routerLink="/deliveryAddr">{{"common.myAddress"|translate}}
+                    </a>
+                    <hr class="cust-hr" />
+                    <a class="waves-light" data-dismiss="modal" mdbRippleRadius href="#"
+                        (click)="signOut()">{{"common.signout"|translate}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cart Modal-->
+<div class="modal fade" id="cartmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content cust-cnt">
+            <div class="modal-body cart">
+                <div class="cart-mod">
+                    <div class="row cart-division" *ngFor="let item of cartData">
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <span class="delete">
+                                <!-- <i class="fa fa-times-circle-o cust-del" (click)="delCart(item.cart_id)"></i> -->
+                                <img class="cust-del img" src="assets/images/error.png" (click)="delCart(item.cart_id)">
+                            </span>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                            <div class="cust-img1">
+                                <img src="{{item.products.img}}" (click)="showProduxtDetails()" height="80px"
+                                    width="80px">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 product-cart">
+                            <p>{{item.prodName}}</p>
+                            <select class="cust-slct" (change)="skuChange()">
+                                <option value="{{item.products.skid}}">{{item.products.skuValue}} - BD
+                                    {{item.products.selling_price }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 text-right mt-3">
+                            <div class="quantity">
+                                <button class="minus-btn" type="button" name="button"
+                                    (click)="itemDecrease(item.cart_id)">
+                                    <i class="fa fa-minus " aria-hidden="true"></i>
+                                </button>
+
+                                <input type="text" name="quantity" [(ngModel)]="item.quantity" readonly="readonly"
+                                    value="{{item.quantity}}" />
+                                <button class="plus-btn" type="button" name="button"
+                                    (click)="checkProdQuty(item.cart_id,item.product_id,item.sku_id,item.quantity,item.vendorid_as_owner)">
+                                    <i class=" fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="cust-potatos">
+                                <h6>Price :
+                                    <span style="color: #7eba00">BD
+                                        {{item.products.selling_price * item.quantity}}</span>
+                                </h6>
+                                <!-- <span class="text-actual">BD&nbsp;{{item.products.offer_price}}</span> -->
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="nodata" *ngIf="cartData.length<1">
+                        Your basket is empty. Start shopping now!
+                    </div>
+                </div>
+                <div class="row sub" *ngIf="cartData.length>0">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="cust-potatos">
+                            <h5>
+                                <span class="sub-title">Sub Total</span>
+                            </h5>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4">
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <div class="cust-potatos">
+                            <h5>
+                                <span class="sub-tot">BD {{billing}}</span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="row del" *ngIf="cartData.length>0">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="delivery">
+                            <p> *Delivery will be added at checkout</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="checkout" data-dismiss="modal" (click)="viewCart()">
+                            <a>View cart & Checkout</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ./ cart modal -->
+
+<!-- address modal -->
+<!-- Modal -->
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content cust-content">
+            <div class="modal-header cust-mdlhdr">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times-circle cls-icon" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group cust-group">
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option>Choose Your Location</option>
+                            <option>Location 2</option>
+                            <option>Location 3</option>
+                            <option>Location 4</option>
+                            <option>Location 5</option>
+                        </select>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a href="" class="cust-anchr">
+                            <i class="fa fa-location-arrow cust-arr" aria-hidden="true"></i> &nbsp;Choose Current
+                            Location
+                        </a>
+                    </div>
+                </div>
+                <div class="row cust-btnpad">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn cust-button">SUBMIT</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div> -->
+<div class="loaction loaction-fade" id="exampleModal" tabindex="-1" aria-hidden="true" *ngIf="showLocation">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="" role="document">
+                <div class=" cust-content">
+                    <div class="cust-mdlhdr">
+                        <button type="button" class="close loc-close" (click)="hideLocation()">
+                            <i class="fa fa-times-circle cls-icon" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="logo-popup">
+                        <img _ngcontent-c3="" alt="Responsive image" class="img-fluid cust-logo"
+                            src="assets/images/logo1.png">
+                    </div>
+                    <div class="modal-body best-store">
+                        <h4>FIND YOUR BEST STORE</h4>
+                        <p>Choose the area or enter the block number to find your Nearest Stores</p>
+                        <form>
+                            <!-- <div class="form-group cust-group">
+                                <input type="text" class="google-place-input form-control orange-border" google-place
+                                    (onSelect)="setAddress($event)" placeholder="Enter location">
+                            </div> -->
+                            <div class="form-group cust-group">
+                                <!-- 
+                                <span class="input-group-append">
+                                    <button class="btn btn-outline-secondary  border border-left-0" type="button">
+
+                                    </button>
+                                </span> -->
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="text" class="google-place-input form-control gps orange-border"
+                                    google-place (onSelect)="setAreaAddress($event)"
+                                    placeholder="Enter Block Number or Area">
+                                <div class="input-group-append">
+                                    <button class=" gps-image" type="button" (click)="getGeoLocation()"><img
+                                            src="assets/images/gps.png"></button>
+
+                                    <button class="btn btn-outline-secondary cust-srchbtn " type="button"
+                                        (click)="submitLocation()">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- <div class="row">
+                            <div class="col-sm-12">
+                                <a href="#" class="cust-anchr" (click)="geoLocation()">
+                                    <i class="fa fa-location-arrow cust-arr" aria-hidden="true"></i> &nbsp;Choose
+                                    Current
+                                    Location
+                                </a>
+                            </div>
+                        </div> -->
+                        <!-- <div class="row cust-btnpad">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn cust-button" (click)="submitLocation()">SUBMIT</button>
+                            </div>
+                        </div> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- ./address modal -->
+
+<!-- login modal -->
+<!-- Modal -->
+<div class="modal fade" [hidden]="IsmodelShow" id="loginmodal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header cust-mdlhdr">
+                <h5 class="modal-title login-title text-center" id="exampleModalLabel">Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times-circle cls-icon" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form [formGroup]="loginForm">
+                            <div class="form-group cust-frmgrp1 row">
+                                <label class="col-sm-5 col-md-5 col-form-label">Email Id
+                                    <span class="float-right">:</span>
+                                </label>
+                                <div class="col-sm-7 col-md-7">
+                                    <input type="text" formControlName="email" class="form-control"
+                                        [ngClass]="{ 'is-invalid': loginSubmitted && f1.email.errors }" />
+                                    <div *ngIf="loginSubmitted && f1.email.errors" class="invalid-feedback">
+                                        <div *ngIf="f1.email.errors.required">Email Id is required</div>
+                                        <div *ngIf="f1.email.errors.email">Email must be a valid email address</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group cust-frmgrp1 row">
+                                <label class="col-sm-5 col-md-5 col-form-label">Password
+                                    <span class="float-right">:</span>
+                                </label>
+                                <div class="col-sm-7 col-md-7">
+                                    <input type="password" formControlName="password" class="form-control"
+                                        [ngClass]="{ 'is-invalid': loginSubmitted && f1.password.errors }" />
+                                    <div *ngIf="loginSubmitted && f1.password.errors" class="invalid-feedback">
+                                        <div *ngIf="f1.password.errors.required">Password is required</div>
+                                        <div *ngIf="f1.password.errors.minlength">Password must be at least 6
+                                            characters
+                                        </div>
+                                    </div>
+                                    <a href="#" data-toggle="modal" data-target="#forgotpass" data-dismiss="modal"
+                                        class="frgt-a">
+                                        <small>Forgot Password</small>
+                                    </a>
+
+                                    <div class="form-group cust-frmgrp">
+                                        <div class="col-sm-12">
+                                            <button type="submit" class="btn btn-danger cust-logbtn"
+                                                (click)="login()">login</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="cust-acnt text-center">
+                            <p class="text-center">Dont have an account ?
+                                <span style="color: blue;">
+                                    <a href="" data-toggle="modal" data-target="#signupmodal" data-dismiss="modal">Sign
+                                        Up
+                                        now
+                                    </a>
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="linebeside-text">
+                            <h5>Or</h5>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="p-2"><a href=""><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="p-2"><a href=""><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="p-2"><a href=""><i class="fa fa-google-plus-official"
+                                        aria-hidden="true"></i></a></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ./login modal -->
+
+<!-- signup modal -->
+<div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" *ngIf="showRegistration">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header cust-mdlhdr">
+                <h5 class="modal-title login-title text-center" id="exampleModalLabel">Sign Up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times-circle cls-icon" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form [formGroup]="registerForm" (ngSubmit)="registration()">
+                            <div class="form-group cust-frmgrp1 row">
+                                <label class="col-sm-5 col-md-5 col-form-label">First Name
+                                    <span class="float-right">:</span>
+                                </label>
+                                <div class="col-sm-7 col-md-7">
+                                    <input alphabetsOnly type="text" formControlName="first_name" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }" />
+                                    <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
+                                        <div *ngIf="f.first_name.errors.required">First Name is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group cust-frmgrp1 row">
+                                <label class="col-sm-5 col-md-5 col-form-label">Last Name
+                                    <span class="float-right">:</span>
+                                </label>
+                                <div class="col-sm-7 col-md-7">
+                                    <input alphabetsOnly type="text" formControlName="last_name" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }" />
+                                    <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
+                                        <div *ngIf="f.last_name.errors.required">Last Name is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group cust-frmgrp1 row">
+                                <label class="col-sm-5 col-md-5 col-form-label">Email ID
+                                    <span class="float-right">:</span>
+                                </label>
+                                <div class="col-sm-7 col-md-7">
+                                    <input type="text" formControlName="email" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                        <div *ngIf="f.email.errors.required">Email is required</div>
+                                        <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group cust-frmgrp1 row">
+                                <label class="col-sm-5 col-md-5 col-form-label">Mobile Number
+                                    <span class="float-right">:</span>
+                                </label>
+                                <div class="col-sm-7 col-md-7">
+                                    <input myNumberOnly type="text" class="form-control" formControlName="mobile_number"
+                                        class="form-control" maxlength="10"
+                                        [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors }">
+                                    <div *ngIf="submitted && f.mobile_number.errors" class="invalid-feedback">
+                                        <div *ngIf="f.mobile_number.errors.required">Mobile number is required</div>
+                                        <div *ngIf="f.mobile_number.errors.minlength">Mobile Number must be 10
+                                            Numbers</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group cust-frmgrp1 row">
+                                <label class="col-sm-5 col-md-5 col-form-label">Password
+                                    <span class="float-right">:</span>
+                                </label>
+                                <div class="col-sm-7 col-md-7">
+                                    <input type="password" formControlName="password" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                        <div *ngIf="f.password.errors.required">Password is required</div>
+                                        <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group cust-frmgrp1 row">
+                                <label class="col-sm-5 col-md-5 col-form-label">Confirm Password
+                                    <span class="float-right">:</span>
+                                </label>
+                                <div class="col-sm-7 col-md-7">
+                                    <input type="password" formControlName="retype_password" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                                    <div *ngIf="submitted && f.retype_password.errors" class="invalid-feedback">
+                                        <div *ngIf="f.retype_password.errors.required">Confirm Password is required
+                                        </div>
+                                        <div *ngIf="f.retype_password.errors.minlength">Confirm Password must be at
+                                            least 6
+                                            characters</div>
+                                    </div>
+                                    <div class="form-group cust-frmgrp">
+                                        <div class="col-sm-12">
+                                            <button class="btn btn-danger cust-logbtn">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="cust-acnt text-center">
+                            <p class="text-center">Have an account ?
+                                <span style="color: blue;">
+                                    <a href="" data-toggle="modal" data-target="#loginmodal" data-dismiss="modal">login
+                                        now
+                                    </a>
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="linebeside-text">
+                            <h5>Or</h5>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="p-2"><a href=""><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="p-2"><a href=""><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="p-2"><a href=""><i class="fa fa-google-plus-official"
+                                        aria-hidden="true"></i></a></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ./signup modal -->
+<!-- forgot password modal -->
+<div class="modal fade" id="forgotpass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header cust-mdlhdr">
+                <h5 class="modal-title login-title text-center" id="exampleModalLabel">Forgot Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times-circle cls-icon" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form>
+
+                            <div class="form-group cust-frmgrp1 row">
+                                <label class="col-sm-5 col-md-5 col-form-label frgot-size">Enter Mobile Number
+                                    <span class="float-right">:</span>
+                                </label>
+
+                                <div class="col-sm-7 col-md-7">
+                                    <form [formGroup]="forgotForm" (ngSubmit)="forgot()">
+                                        <input myNumberOnly type="text" formControlName="mob_number"
+                                            class="form-control"
+                                            [ngClass]="{ 'is-invalid': forgotSubmitted && f2.mob_number.errors }" />
+                                        <div *ngIf="forgotSubmitted && f2.mob_number.errors" class="invalid-feedback">
+                                            <div *ngIf="f2.mob_number.errors.required">Mobile number is required</div>
+                                        </div>
+                                        <div class="form-group cust-frmgrp">
+                                            <div class="col-sm-12">
+                                                <button class="btn btn-danger cust-logbtn submt-btn">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<!-- ./forgot password modal -->
+
+<!-- otp model -->
+<div class="modal fade" id="otpScreen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header cust-mdlhdr">
+                <h5 class="modal-title login-title text-center" id="exampleModalLabel">OTP verification</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times-circle cls-icon" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form>
+
+                            <div class="form-group cust-frmgrp1 row">
+                                <label class="col-sm-5 col-md-5 col-form-label frgot-size">Enter OTP
+                                    <span class="float-right">:</span>
+                                </label>
+
+                                <div class="col-sm-7 col-md-7">
+                                    <form>
+                                        <input type="text" [(ngModel)]="otpNumber" name="otpNumber" />
+                                        <!-- <div *ngIf="forgotSubmitted && f2.otp_number.errors" class="invalid-feedback">
+                                                <div *ngIf="f2.otp_number.errors.required">Mobile number is required</div>
+                                            </div> -->
+                                        <!-- 
+                                            <input type="text" formControlName="mob_number" class="form-control" [ngClass]="{ 'is-invalid': forgotSubmitted && f2.mob_number.errors }" />
+                                            <div *ngIf="forgotSubmitted && f2.mob_number.errors" class="invalid-feedback">
+                                                <div *ngIf="f2.mob_number.errors.required">Mobile number is required</div>
+                                            </div> -->
+                                        <div class="form-group cust-frmgrp">
+                                            <div class="col-sm-12">
+                                                <button class="btn btn-danger cust-logbtn submt-btn"
+                                                    (click)="otpScreen()">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- otp model -->
+<!--  -->
+<div class="modal fade cat-model" id="itemdesc" tabindex="-1" role="dialog" aria-labelledby="itemdescLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg category-popup" role="document">
+        <div class="modal-content cust-subcarcont">
+            <div class="modal-body">
+                <div class="cat-drop" role="menu">
+                    <h5 class="text-center">Categories</h5>
+                    <ul *ngFor="let cat of category">
+                        <li>
+                            <i class="fas fa-angle-left sub-cat" aria-hidden="true"></i> &nbsp;&nbsp;&nbsp;
+                            <a (mouseenter)="showSubCat(cat.id)"
+                                (click)="showProbyCat(cat.id,'category',cat.category_name)">{{cat.category_name}}</a>
+                            <div class="subcatcat" *ngIf="showSubCats">
+                                <div class="subcatsCat row">
+                                    <div class="col-md-12">
+                                        <ul *ngFor="let sub of subCatData">
+
+                                            <li>
+                                                <i class="fas fa-angle-left sub-cat"></i>
+                                                <a (click)="showProbySubCat(sub.id,'subCategory',cat.category_name,sub.sub_category_name)"
+                                                    (mouseenter)="showProds(sub.id)">{{sub.sub_category_name}}</a>
+                                                <div class="product-name">
+                                                    <div class="product-name-div row">
+                                                        <ul>
+                                                            <li *ngFor="let product of productArr">
+                                                                <a (click)="showProduxtDetails(product.vendor_product_id,product.vendorid_as_owner)"
+                                                                    class=" prodName-li">{{product.product_name}}</a>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- <div class="col-md-6">
+                                          <ul>
+                                              <h6>Fruits</h6>
+                                              <li>
+                                                  <a>Mangoes</a>
+                                              </li>
+                                              <li>
+                                                  <a>Jack Fruit</a>
+                                              </li>
+                                              <li>
+                                                  <a>Apple</a>
+                                              </li>
+                                              <li>
+                                                  <a>Banana</a>
+                                              </li>
+                                              <li>
+                                                  <a>Cherry</a>
+                                              </li>
+                                          </ul>
+                                      </div> -->
+                                    <!-- <div class="col-md-6">
+                                          <ul>
+                                              <h6>ladies finger</h6>
+                                              <li>
+                                                  <a>Brinjal</a>
+                                              </li>
+                                              <li>
+                                                  <a>Tomato</a>
+                                              </li>
+                                              <li>
+                                                  <a>cauliflower</a>
+                                              </li>
+                                              <li>
+                                                  <a>Onions</a>
+                                              </li>
+                                              <li>
+                                                  <a>carrot</a>
+                                              </li>
+                                          </ul>
+                                      </div> -->
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- change password -->
+<div class="modal fade" id="changepwd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header cust-mdlhdr">
+                <h5 class="modal-title login-title text-center" id="exampleModalLabel">Change password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times-circle cls-icon" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form>
+                            <div class="form-group cust-frmgrp1 row">
+                                <label class="col-sm-5 col-md-5 col-form-label frgot-size">Enter Password
+                                    <span class="float-right">:</span>
+                                </label>
+
+                                <div class="col-sm-7 col-md-7">
+                                    <form [formGroup]="changePassForm" (ngSubmit)="ChangePw()">
+                                        <input type="text" formControlName="password" class="form-control"
+                                            [ngClass]="{ 'is-invalid': changePwSubmitted && f4.password.errors }" />
+                                        <div *ngIf="changePwSubmitted && f4.password.errors" class="invalid-feedback">
+                                            <div *ngIf="f4.password.errors.required">Password is required</div>
+                                            <div *ngIf="f4.password.errors.minlength">Password must be atleast 6
+                                                characters</div>
+                                        </div>
+
+                                        <div class="form-group cust-frmgrp">
+                                            <div class="col-sm-12">
+                                                <button class="btn btn-danger cust-logbtn submt-btn">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- change password -->
+<script>
+    // Material Select Initialization
+    $(document).ready(function () {
+        $('.mdb-select').material_select();
+    });
+
+</script>

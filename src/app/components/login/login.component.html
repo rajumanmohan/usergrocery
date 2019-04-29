@@ -1,0 +1,95 @@
+<div class="row login">
+  <div class="col-md-12" *ngIf="showLogin">
+    <h5 class="text-center">{{"common.login"|translate}}</h5>
+    <span class="close" (click)="onCloseCancel()">X</span>
+  </div>
+
+  <div class="col-md-12" *ngIf="showLogin">
+
+    <form class="details login-fields register-fields">
+      <div class="form-group row">
+        <label class="col-sm-4 col-md-4 col-form-label">Email ID
+          <span>:</span>
+        </label>
+        <div class="col-sm-8 col-md-8">
+          <input type="text" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-4  col-md-4 col-form-label">Password
+          <span>:</span>
+        </label>
+        <div class="col-sm-8  col-md-8">
+          <input type="password" class="form-control">
+        </div>
+
+      </div>
+
+      <div class="form-group row">
+        <div class="col-md-12">
+          <a class="frgtPasswrd" (click)="showforgotPasswrdScreen()">Forgot Password ?</a>
+        </div>
+
+        <div class="col-sm-12 submit text-right">
+          <button class="btn btn-danger" type="submit">Login</button>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-md-12">
+          <p class="text-center">Dont have an account ?
+            <a class="signup" (click)="showRegistration()">Sign Up now</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="hr-sect">Or</div>
+      <div class="form-group row social">
+        <div class="col-md-12">
+          <a href="" target="_blank">
+            <img src="assets/images/fb.png">
+          </a>
+          <a href="" target="_blank">
+            <img src="assets/images/twitter.png">
+          </a>
+          <a href="" target="_blank">
+            <img src="assets/images/google.png">
+          </a>
+        </div>
+      </div>
+
+    </form>
+
+
+  </div>
+
+  <div class="col-md-12" *ngIf="showFrgtPswrd">
+    <h5 class="text-center">{{"common.forgotPswrd"|translate}}</h5>
+    <span class="close" (click)="onCloseCancel()">X</span>
+
+  </div>
+
+  <div class="col-md-12 frgt-pswrd-div" *ngIf="showFrgtPswrd">
+    <p class="text-center">Enter your Email Address to Re-send your Password</p>
+
+    <form class="details login-fields register-fields">
+      <div class="form-group row">
+        <label class="col-sm-4 col-md-4 col-form-label">Email ID
+          <span>:</span>
+        </label>
+        <div class="col-sm-8 col-md-8">
+          <input type="text" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-12 submit text-right">
+          <button class="btn btn-danger frgt-btn" type="submit">Submit</button>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+</div>
