@@ -1,0 +1,457 @@
+<app-header [cartCount]="cartCount" [billing]=billing></app-header>
+<div class="container cart-payment">
+    <div class="row">
+        <h5 (click)="showCart()">
+            <span>
+                <i class="fa fa-plus" aria-hidden="true" *ngIf="!showCartItems"></i>
+                <i class="fa fa-minus" aria-hidden="true" *ngIf="showCartItems"></i>
+            </span>&nbsp;&nbsp;My Cart</h5>
+        <div class="container mycart" *ngIf="showCartItems">
+            <div class="row">
+                <h4 class="text-center"> My Cart</h4>
+                <div class="col-md-12 cart-1">
+                    <div class="cart-item">
+                        <div class="row items align-items-center cartData" *ngFor="let item of cartData">
+
+                            <div class="col-md-3 text-center">
+                                <img src="{{item.products.img}}">
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h6>{{item.prodName}}</h6>
+                                <div class="sort">
+                                    <select (change)="changeData($event.target.value)">
+                                        <option value="{{item.products.skid}}">{{item.products.skuValue}} - BD
+                                            {{item.products.selling_price  /  item.quantity}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-3">
+                                <div class="sort">
+                                    <select (change)="changeData($event.target.value)">
+                                        <option value="{{item.products.skid}}">{{item.products.skuValue}} - BD {{item.products.selling_price}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div> -->
+                            <div class="col-md-3 text-center">
+                                <div class="quantity">
+                                    <button class="btn btn-icon btn-maroon btn-minus"
+                                        (click)="itemDecrease(item.cart_id)">
+                                        <span>
+                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                    <input type="text" value="1" name="quantity" [(ngModel)]="item.quantity"
+                                        readonly="readonly" value="{{item.quantity}}" class="text-center" disabled>
+                                    <button class="btn btn-icon btn-maroon btn-plus"
+                                        (click)="checkProdQuty(item.cart_id,item.product_id,item.sku_id,item.quantity)">
+                                        <span>
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-2 cust-ltrt">
+                                <p>Price:{{item.products.selling_price}} &nbsp;&nbsp;
+                                    <img class="del-img" (click)="delCart(item.cart_id)" src="assets/images/close.png">
+                                </p>
+                            </div>
+                        </div>
+                        <!-- <div class="row items align-items-center">
+							<div class="col-md-3 text-center">
+								<img src="assets/images/tomatoes.png">
+							</div>
+							<div class="col-md-2 text-center">
+								<h6>Tomatoes</h6>
+							</div>
+							<div class="col-md-3">
+								<div class="sort">
+									<select>
+										<option>100gms</option>
+										<option>200 gms</option>
+										<option>300 gms</option>
+										<option>500 gms</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-4 cust-ltrt">
+								<p>Price: BD.2561 &nbsp;&nbsp;
+									<i class="fa fa-times-circle cust-circle" aria-hidden="true"></i>
+								</p>
+							</div>
+						</div> -->
+                        <!-- <hr> -->
+                    </div>
+                    <div class="sub-total">
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr>
+
+                                    <td>Sub-Total</td>
+                                    <td>: BD.{{billing}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Delivery charges </td>
+                                    <td> : ***</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>*Sold by Goodluck retail stores</p>
+                        <button class="btn btn-maroon" value="Checkout" (click)="checkout()">Checkout</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+    <div class="row">
+        <h5 (click)="showAddress()">
+            <span>
+                <i class="fa fa-plus" aria-hidden="true" *ngIf="!showDeliveryAddress"></i>
+                <i class="fa fa-minus" aria-hidden="true" *ngIf="showDeliveryAddress"></i>
+            </span>&nbsp;&nbsp;Delivery Address
+
+        </h5>
+        <div class="container mycart" *ngIf="showDeliveryAddress">
+            <div class="row">
+                <h4 class="text-center"> Delivery Address</h4>
+
+                <div class="col-md-12 cart-2">
+                    <a (click)="addAddress()" *ngIf="showAddresses" class="addnew-del">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp;Add new delivery address</a>
+                    <!-- delivery address -->
+                    <div *ngIf="showAddresses">
+                        <div class="row del-address" *ngFor="let data of getAddData">
+                            <div class="col-md-6">
+                                <br />
+                                <div>
+                                    <h6>{{data.address_type}}</h6>
+                                    <p>{{data.house_no}}, {{data.landmark}},
+                                        <br /> {{data.state}}
+                                        <br /> {{data.pin_code}}
+                                    </p>
+                                    <p>Ph : {{data.mobile}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-maroon" (click)="shipmentType(data.address_id)">Proceed To
+                                    Pay</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row del-address" *ngIf="showAddresses">
+						<div class="col-md-6">
+							<br />
+							<div>
+								<h6>Office</h6>
+								<p>Uni Space Business Center, Modern Tech park,
+									<br /> Bangalore
+									<br /> 500038
+								</p>
+								<p>Ph : 1234567891</p>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<button class="btn btn-maroon" (click)="shipmentType()">Proceed To Pay</button>
+						</div>
+					</div> -->
+                    <!-- delivery address -->
+                    <!-- add address -->
+                    <div class=" row addaddress " *ngIf="addresses ">
+                        <div class="col-md-12 ">
+                            <form class="details login-fields register-fields " [formGroup]="addressForm"
+                                (ngSubmit)="saveAddress()">
+                                <div class="form-group row ">
+                                    <label class="col-sm-4 col-md-4 col-form-label ">Full Name
+                                        <span>:</span>
+                                    </label>
+                                    <div class="col-sm-8 col-md-8 ">
+                                        <input type="text" formControlName="full_name" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.full_name.errors }">
+                                        <div *ngIf="submitted && f.full_name.errors" class="invalid-feedback">
+                                            <div *ngIf="f.full_name.errors.required">Full Name is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row ">
+                                    <label class="col-sm-4 col-md-4 col-form-label ">Mobile Number
+                                        <span>:</span>
+                                    </label>
+                                    <div class="col-sm-8 col-md-8 ">
+                                        <input myNumberOnly type="text " formControlName="mobile_number"
+                                            class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors }">
+                                        <div *ngIf="submitted && f.mobile_number.errors" class="invalid-feedback">
+                                            <div *ngIf="f.mobile_number.errors.required">Mobile Number is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row ">
+                                    <label class="col-sm-4 col-md-4 col-form-label ">House No.
+                                        <span>:</span>
+                                    </label>
+                                    <div class="col-sm-8 col-md-8 ">
+                                        <input type="text " formControlName="house_no" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.house_no.errors }">
+                                        <div *ngIf="submitted && f.house_no.errors" class="invalid-feedback">
+                                            <div *ngIf="f.house_no.errors.required">House Number is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row ">
+                                    <label class="col-sm-4 col-md-4 col-form-label ">City
+                                        <span>:</span>
+                                    </label>
+                                    <div class="col-sm-8 col-md-8 ">
+                                        <!-- <select class="form-control ">
+                                            <option></option>
+                                        </select> -->
+                                        <input type="text " formControlName="city" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
+                                        <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                            <div *ngIf="f.city.errors.required">City is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row ">
+                                    <label class="col-sm-4 col-md-4 col-form-label ">state
+                                        <span>:</span>
+                                    </label>
+                                    <div class="col-sm-8 col-md-8 ">
+                                        <!-- <select class="form-control ">
+                                            <option>Select state</option>
+                                            <option *ngFor="let state of states" [(ngModel)]="addData.state">{{state}}</option>
+                                        </select>  -->
+                                        <input type="text " formControlName="state" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.state.errors }">
+                                        <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                            <div *ngIf="f.state.errors.required">state is required</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group row ">
+                                    <label class="col-sm-4 col-md-4 col-form-label ">Landmark
+                                        <span>:</span>
+                                    </label>
+                                    <div class="col-sm-8 col-md-8 ">
+                                        <input type="text " formControlName="landmark" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.landmark.errors }">
+                                        <div *ngIf="submitted && f.landmark.errors" class="invalid-feedback">
+                                            <div *ngIf="f.landmark.errors.required">landmark is required</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-sm-4 col-md-4 col-form-label ">Pincode
+                                        <span>:</span>
+                                    </label>
+                                    <div class="col-sm-8 col-md-8 ">
+                                        <input myNumberOnly type="text " formControlName="pin_code" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.pin_code.errors }">
+                                        <div *ngIf="submitted && f.pin_code.errors" class="invalid-feedback">
+                                            <div *ngIf="f.pin_code.errors.required">Pin code is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p>Choose nick name for this address</p>
+                                    <p class="addresses ">
+                                        <a (click)="Type('Home')" [ngClass]="{'activeAdd':type=='Home'}">Home</a>
+                                        <a (click)="Type('Office')" [ngClass]="{'activeAdd':type=='Office'}">Office</a>
+                                        <a (click)="Type('Other')" [ngClass]="{'activeAdd':type=='Other'}">Other</a>
+                                    </p>
+                                    <div class="custom-control custom-checkbox ">
+                                        <input type="checkbox " class="custom-control-input " id="defaultUnchecked5 ">
+                                        <label class="custom-control-label " for="defaultUnchecked5 ">Set this as my
+                                            default
+                                            address
+                                        </label>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="form-group row ">
+                                    <div class="col-sm-12 submit text-right ">
+                                        <button class="btn btn-maroon submit " type="submit "
+                                            (click)="saveAddress()">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- add address -->
+                    <!-- delvery type -->
+                    <div class="row mt-5 cust-form mb-5 " *ngIf="showDeliveryType ">
+                        <form>
+                            <div class="form-group row ">
+                                <div class="col-sm-6 ">
+                                    <div class="row ">
+                                        <label for="inputEmail3 " class="col-sm-4 col-form-label ">Full Name:</label>
+                                        <div class="col-sm-8 ">
+                                            <input type="text " class="form-control " id="inputEmail3 "
+                                                placeholder="full name ">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 ">
+                                    <div class="row ">
+                                        <label for="inputEmail3 " class="col-sm-4 col-form-label ">Mobile
+                                            Number:</label>
+                                        <div class="col-sm-8 ">
+                                            <input type="number " class="form-control " id="inputEmail3 "
+                                                placeholder="mobile number ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row ">
+                                <div class="col-sm-6 ">
+                                    <div class="row ">
+                                        <label for="inputEmail3 " class="col-sm-4 col-form-label ">House no:</label>
+                                        <div class="col-sm-8 ">
+                                            <input type="text " class="form-control " id="inputEmail3 "
+                                                placeholder="house no ">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 ">
+                                    <div class="row ">
+                                        <label for="inputEmail3 " class="col-sm-4 col-form-label ">City</label>
+                                        <div class="col-sm-8 ">
+                                            <select id="inputState " class="form-control ">
+                                                <option selected>Choose...</option>
+                                                <option>Hyderabad</option>
+                                                <option>Bangalore</option>
+                                                <option>Chennai</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row ">
+                                <div class="col-sm-4 ">
+                                    <div class="row ">
+                                        <label for="inputEmail3 " class="col-sm-4 col-form-label ">Area</label>
+                                        <div class="col-sm-8 ">
+                                            <select id="inputState " class="form-control ">
+                                                <option selected>Choose...</option>
+                                                <option>Hyderabad</option>
+                                                <option>Bangalore</option>
+                                                <option>Chennai</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 ">
+                                    <div class="row ">
+                                        <label for="inputEmail3 " class="col-sm-4 col-form-label ">Landmark</label>
+                                        <div class="col-sm-8 ">
+                                            <input type="text " class="form-control " id="inputEmail3 "
+                                                placeholder="house no ">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 ">
+                                    <div class="row ">
+                                        <label for="inputEmail3 " class="col-sm-4 col-form-label ">Pin-code</label>
+                                        <div class="col-sm-8 ">
+                                            <input type="text " class="form-control " id="inputEmail3 "
+                                                placeholder="house no ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row ">
+                                <div class="col-sm-12 cust-btn ">
+                                    <button type="button " class="btn ">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- delivery type -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row " [ngClass]="{ 'margin':showPaymentMethode || !showPaymentMethode} ">
+        <h5 (click)="showPayment() ">
+            <span>
+                <i class="fa fa-plus " aria-hidden="true " *ngIf="!showPaymentMethode "></i>
+                <i class="fa fa-minus " aria-hidden="true " *ngIf="showPaymentMethode "></i>
+            </span>&nbsp;&nbsp;Payment Method
+        </h5>
+        <div class="container mycart paymentMethode " *ngIf="showPaymentMethode ">
+
+            <h4> Payment Method</h4>
+            <!-- total amount -->
+            <div class="row justify-content-center mb-5 ">
+                <div class="col-md-9 payment first">
+                    <div class="row ">
+                        <div class="col-md-6 ">
+                            <h4>Total</h4>
+                        </div>
+                        <div class="col-md-6 ">
+                            <h4>
+                                <span>BD.{{billing}}</span>
+                            </h4>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-md-6 ">
+                            <h4>Total Payable Amount</h4>
+                        </div>
+                        <div class="col-md-6 ">
+                            <h4>
+                                <span>BD.{{billing}}</span>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- total amount -->
+            <!-- payment option -->
+            <div class="row justify-content-center">
+                <div class="col-md-9 payment sec">
+                    <h5 class="payment">Select Payment Option</h5>
+
+                    <div class="row" *ngFor="let pay of payOptions;let i= index">
+                        <div class="col-md-12">
+                            <i class="far fa-circle" (click)="selePayOptn(i,pay.id)" *ngIf="seleOpt!==i"></i>
+                            <i class="far fa-dot-circle" *ngIf="seleOpt==i"></i> &nbsp; &nbsp; {{pay.payment_option}}
+                        </div>
+                        <hr>
+                    </div>
+
+                    <!-- <div class="row ">
+						<div class="col-md-12">
+							<div class="custom-control custom-radio mahali-radio">
+								<input type="radio" id="customRadio2" name="customRadio" class="custom-control-input mahali-input" checked>
+								<label class="custom-control-label mahali-label" for="customRadio2">Cash On Delivery</label>
+							</div>
+						</div>
+					</div> -->
+                </div>
+            </div>
+            <!-- payment option -->
+            <div class="row mt-5 justify-content-center place-order">
+                <div class="col-md-9 text-right">
+                    <button class="btn btn-maroon" (click)="orderPlace()">Place Order</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

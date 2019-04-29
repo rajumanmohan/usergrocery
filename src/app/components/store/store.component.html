@@ -1,0 +1,58 @@
+<app-header></app-header>
+<div class="container-fluid">
+  <div class="row">
+    <div class="store-banner">
+      <img src="assets/images/store-banner.jpg" alt="Store Banner">
+    </div>
+  </div>
+</div>
+<br />
+<br />
+<div class="container product-innerpage">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="spar-store">
+        <img [src]="wholeData.image_one" alt="Spar store" class="img-thumbnail img-fluid">
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="cld-str">
+        <!-- <h5 class="">Spar
+                </h5> -->
+        <h4>{{wholeData.bussiness_name}}</h4>
+      </div>
+
+      <i class="fas fa-map-marker-alt"></i>
+      &nbsp; {{wholeData.bussiness_area}}, {{wholeData.bussiness_city}}
+      {{wholeData.bussiness_country}}
+
+      <br />
+      <i class="fa fa-clock-o" aria-hidden="true"></i>
+      &nbsp;
+      <span class="cust-time">{{wholeData.bussiness_from_time}} To {{wholeData.bussiness_end_time}}</span>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="grid-container">
+            <div class="grid-item">
+              <img [src]="wholeData.image_one">
+            </div>
+            <div class="grid-item">
+              <img [src]="wholeData.image_two">
+            </div>
+            <div class="grid-item">
+              <img [src]="wholeData.image_three">
+            </div>
+            <div class="grid-item">
+              <img [src]="wholeData.image_four">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="shop-now">
+    <button type="sumbit" class="btn cust-shop" (click)="shopNow('whole')">SHOP NOW</button>
+  </div>
+</div>

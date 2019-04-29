@@ -1,0 +1,40 @@
+<app-header></app-header>
+<div class="container mt-5 mb-5">
+  <div class="row mb-3">
+    <div class="col-md-12 text-center order-success">
+      <img src="assets/images/success.png" class="mb-3">
+      <h4>{{"common.orderplaced" | translate}}</h4>
+    </div>
+  </div>
+  <div class="row order-details">
+    <div class="col-md-5 ">
+      <table class="table table-borderless responsive">
+        <tbody>
+          <tr>
+            <td>Your Order Number is</td>
+            <td>: {{ordid}}</td>
+          </tr>
+          <!-- <tr>
+            <td>From</td>
+            <td>: GoodLuck Retail Store</td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-12">
+      <h6>Billing and Shipping Address is :</h6>
+      <p>{{ordSum.landmark}}
+        <br /> {{ordSum.house_no}}
+        <br /> {{ordSum.city}}, {{ordSum.pin_code}}
+        <br /> {{ordSum.state}}
+      </p>
+      <p>Ph: {{ordSum.mobile_number}}</p>
+    </div>
+  </div>
+  <!--all -->
+  <div class="row mt-5 justify-content-center place-order">
+    <div class="col-md-9 text-right">
+      <button class="btn btn-maroon" routerLink="/" href="#">Continue Shopping</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,490 @@
+<app-header [cartCount]="cartValue" [billing]="billing"></app-header>
+<main role="main">
+    <!--Carousel Wrapper-->
+    <div id="carousel-example-1z" class="carousel slide carousel-fade slider" data-ride="carousel">
+        <!--Indicators-->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-1z" data-slide-to="1"></li>
+            <li data-target="#carousel-example-1z" data-slide-to="2"></li>
+        </ol>
+        <!--/.Indicators-->
+        <!--Slides-->
+        <div class="carousel-inner" role="listbox">
+            <!--First slide-->
+            <div class="carousel-item" *ngFor="let item of mainBannerData; let i =index;" [ngClass]="{'active':i == 0}">
+                <img class="d-block w-100 banImg" src="{{item.website_banner}}" alt="First slide"
+                    (click)="getBanProds(item.image_id)">
+            </div>
+        </div>
+        <!--/.Slides-->
+        <!--Controls-->
+        <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+        <!--/.Controls-->
+    </div>
+    <!--/.Carousel Wrapper-->
+</main>
+<br />
+<!-- delas -->
+<div class="container-fluid cust-productcat">
+
+    <div class="container whole-sellers">
+        <div class="cust-buy">
+            <h4>Buy a Products</h4>
+            <p>Wholeseller </p>
+        </div>
+        <div class="container">
+
+            <div id="demo" class="carousel slide" data-ride="carousel">
+
+                <!-- Indicators -->
+                <ul class="carousel-indicators mb-0 pb-0">
+                    <li data-target="#demo" data-slide-to="0" class="active"></li>
+                    <li data-target="#demo" data-slide-to="1"></li>
+                    <li data-target="#demo" data-slide-to="2"></li>
+                </ul>
+
+                <!-- The slideshow -->
+                <div class="carousel-inner no-padding my-3">
+                    <div class="carousel-item " *ngFor="let item of wholeData;let i=index;"
+                        [ngClass]="{'active':i===0}">
+                        <div class="col-xs-4 col-sm-4 col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img class="img-fluid" [src]="wholeData[i]?.image_one" alt="Card image cap"
+                                        (click)="showStore(wholeData[i]?.id)">
+                                </div>
+                                <div class="card-block col-md-6 recmded">
+                                    <h4>{{wholeData[i]?.bussiness_name}}</h4>
+                                    <p>
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        &nbsp; {{wholeData[i]?.bussiness_area}}, {{wholeData[i]?.bussiness_city}}
+                                        {{wholeData[i]?.bussiness_country}}
+                                    </p>
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    &nbsp;
+                                    <span class="cust-time">{{wholeData[i]?.bussiness_from_time}} To
+                                        {{wholeData[i]?.bussiness_end_time}}
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- <div class="col-xs-4 col-sm-4 col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img class="img-fluid" [src]="wholeData[1]?.image_one" alt="Card image cap" (click)="showStore(wholeData[1]?.id)">
+                                </div>
+                                <div class="card-block col-md-6 recmded">
+                                    <h4>{{wholeData[1]?.bussiness_name}}</h4>
+                                    <p>
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        &nbsp; {{wholeData[1]?.bussiness_area}}, {{wholeData[1]?.bussiness_city}} {{wholeData[1]?.bussiness_country}}
+                                    </p>
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    &nbsp;
+                                    <span class="cust-time">{{wholeData[1]?.bussiness_from_time}} To {{wholeData[1]?.bussiness_end_time}}
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div> -->
+                    </div>
+                    <!-- <div *ngIf="item.length==0">
+                        No Wholeselers
+                    </div> -->
+                </div>
+                <!-- Left and right controls -->
+                <div class="whole-icons controls-top" *ngIf="!noData1">
+                    <a class="btn-floating btn-small slider-btn-left" href="#demo" data-slide="prev">
+                        <i class="fas fa-long-arrow-alt-left"></i>
+                    </a>
+                    <a class="btn-floating btn-small slider-btn-right1" href="#demo" data-slide="next">
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div *ngIf="noData1">
+                <h3>No Wholeselers Found</h3>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container prod-data">
+        <div class="sell-products">
+            <h4>Trending Products</h4>
+        </div>
+        <div class="container-fluid">
+            <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="9000" *ngIf="!noData">
+                <div class="carousel-inner row w-100 mx-auto add-product" role="listbox">
+                    <div class="carousel-item col-md-3  active" *ngIf="product[0]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 1" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[0]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[0]?.product_id)" class="img-fluid">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[0]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[0]?.product_id,product[0]?.sku_row[0].skid,product[0]?.sku_row[0].selling_price,product[0]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3 " *ngIf="product[1]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 3" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[1]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[1]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[1]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[1]?.product_id,product[1]?.sku_row[0].skid,product[1]?.sku_row[0].selling_price,product[1]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3 " *ngIf="product[2]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 4" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[2]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[2]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[2]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[2]?.product_id,product[2]?.sku_row[0].skid,product[2]?.sku_row[0].selling_price,product[2]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3 " *ngIf="product[3]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 5" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[3]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[3]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[3]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[3]?.product_id,product[3]?.sku_row[0].skid,product[3]?.sku_row[0].selling_price,product[3]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3 " *ngIf="product[4]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 6" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[4]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[4]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[4]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[4]?.product_id,product[4]?.sku_row[0].skid,product[4]?.sku_row[0].selling_price,product[4]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3 " *ngIf="product[5]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 7" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[5]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[5]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[5]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[5]?.product_id,product[5]?.sku_row[0].skid,product[5]?.sku_row[0].selling_price,product[5]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3 " *ngIf="product[6]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 7" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[6]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[5]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[6]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[6]?.product_id,product[6]?.sku_row[0].skid,product[6]?.sku_row[0].selling_price,product[6]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3" *ngIf="product[7]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 2" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[7]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[7]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[7]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[7]?.product_id,product[7]?.sku_row[0].skid,product[7]?.sku_row[0].selling_price,product[7]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3" *ngIf="product[8]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 2" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[8]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[8]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[8]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[8]?.product_id,product[8]?.sku_row[0].skid,product[8]?.sku_row[0].selling_price,product[8]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3 " *ngIf="product[9]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 2" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[9]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[9]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[9]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[9]?.product_id,product[9]?.sku_row[0].skid,product[9]?.sku_row[0].selling_price,product[9]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3  " *ngIf="product[10]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 2" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[10]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[10]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[10]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[10]?.product_id,product[10]?.sku_row[0].skid,product[10]?.sku_row[0].selling_price,product[10]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3  " *ngIf="product[11]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 2" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[11]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[11]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[11]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[11]?.product_id,product[11]?.sku_row[0].skid,product[11]?.sku_row[0].selling_price,product[11]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3  " *ngIf="product[12]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 2" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[12]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[12]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[12]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[12]?.product_id,product[12]?.sku_row[0].skid,product[12]?.sku_row[0].selling_price,product[12]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3  " *ngIf="product[13]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 2" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[13]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[13]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[13]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[13]?.product_id,product[13]?.sku_row[0].skid,product[13]?.sku_row[0].selling_price,product[13]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3  " *ngIf="product[14]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 2" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[14]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[14]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[14]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[14]?.product_id,product[14]?.sku_row[0].skid,product[14]?.sku_row[0].selling_price,product[14]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3  " *ngIf="product[15]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 2" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[15]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[15]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[15]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[15]?.product_id,product[15]?.sku_row[0].skid,product[15]?.sku_row[0].selling_price,product[15]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3  " *ngIf="product[16]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 2" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[16]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[16]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[16]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[16]?.product_id,product[16]?.sku_row[0].skid,product[16]?.sku_row[0].selling_price,product[16]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3  " *ngIf="product[17]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 2" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[17]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[17]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[17]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[17]?.product_id,product[17]?.sku_row[0].skid,product[17]?.sku_row[0].selling_price,product[17]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3  " *ngIf="product[18]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 2" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[18]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[18]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[18]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[18]?.product_id,product[18]?.sku_row[0].skid,product[18]?.sku_row[0].selling_price,product[18]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3  " *ngIf="product[19]?.approval==='Active'">
+                        <div class="panel panel-default">
+                            <div class="panel-thumbnail">
+                                <a title="image 2" class="thumb">
+                                    <img class="img-fluid mx-auto d-block"
+                                        src="{{product[19]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[19]?.product_id)">
+                                </a>
+                            </div>
+                            <h6 class="text-center prod-txt">{{product[19]?.product_name}}
+                            </h6>
+                            <button type="text" class="btn waves-effect waves-light"
+                                (click)="checkProdQuty(product[19]?.product_id,product[19]?.sku_row[0].skid,product[19]?.sku_row[0].selling_price,product[19]?.wholesaler_id)">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="whole-icons controls-top whole-icons2">
+                    <a class="btn-floating btn-small slider-btn-left" href="#carouselExample" data-slide="prev">
+                        <i class="fas fa-long-arrow-alt-left"></i>
+                    </a>
+                    <a class="btn-floating btn-small slider-btn-right1" href="#carouselExample" data-slide="next">
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </a>
+                </div>
+                <!-- <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a> -->
+            </div>
+            <div *ngIf="noData">
+                <h3>No Products Found</h3>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <div class="container prod-data">
+        <div class="sell-products">
+            <h4>Sell Products</h4>
+        </div>
+        <div ng2-carouselamos class="slides-wrapper" [items]="product" [width]="1400" [$prev]="prev" [$next]="next" [$item]="item">
+        </div>
+        <ng-template #item let-item let-i="index">
+            <div class="proitems">
+                <img *ngIf="item.product_image===''" src="assets/images/dummy-pro.png" (click)="showProduxtDetails(item.product_id)" class="img-fluid">
+                <img *ngIf="item.product_image!==''" src="{{item.product_image}}" (click)="showProduxtDetails(item.product_id)" class="img-fluid">
+                <p>{{item.brand}}</p>
+                <button type="text" class="btn waves-effect waves-light" (click)="checkProdQuty(item.product_id,item.sku_details[0].skid)">Add</button>
+            </div>
+        </ng-template>
+
+
+        <div class="controls-top col-lg-12 float-right">
+            <ng-template #prev>
+                <a class="btn-floating btn-small slider-btn-left" href="#multi-item-example" data-slide="prev">
+                    <i class="fas fa-long-arrow-alt-left"></i>
+                </a>
+            </ng-template>
+            <ng-template #next>
+                <a class="btn-floating btn-small slider-btn-right1" href="#multi-item-example" data-slide="next">
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                </a>
+            </ng-template>
+        </div>
+
+        <div id="multi-item-example" class="carousel slide carousel-multi-item container" data-ride="carousel">
+            <br />
+
+        </div>
+    </div> -->
+</div>
+
+<br /><br /><br />

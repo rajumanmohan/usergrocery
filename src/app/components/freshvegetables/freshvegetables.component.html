@@ -1,0 +1,373 @@
+<app-header [cartCount]="cartCount" [billing]="billing"></app-header>
+<div class="container products">
+    <div class="fresh-veg">
+        <h4>{{catName}}</h4>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-12 col-12">
+            <h5>Category</h5>
+            <br />
+            <div class="categories" *ngFor="let cat of category; let i = index">
+                <p [ngClass]="{'active':showCategories && i==selectedCat}">
+                    <a>
+                        <i class="fa fa-plus" aria-hidden="true" *ngIf="!showCategories" (click)="showsubCat(i,cat.id)"></i>
+                        <i class="fa fa-plus" aria-hidden="true" *ngIf="showCategories && i!==selectedCat" (click)="showsubCat(i,cat.id)"></i>
+
+                        <i class="fa fa-minus" aria-hidden="true" *ngIf="showCategories && i==selectedCat" (click)="closesubSubCat()"></i>
+                    </a> &nbsp;&nbsp;<span (click)="getCatProducts(cat.id,cat.name)">{{cat.category_name}}</span>
+                </p>
+                <hr>
+                <!-- categories -->
+
+                <div class="subCates">
+                    <div *ngFor="let subCat of subCategory;let ii = index">
+                        <p *ngIf="selectedCat==i && showCategories" id="subCat" [ngClass]="{'active':showSubCategories }">
+                            <span (click)="getSubProducts(subCat.id,subCat.sub_category_name)">{{subCat.sub_category_name}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <h5>Country</h5>
+            <div class="sort">
+                <select>
+                    <option>Select Country</option>
+                    <option>India</option>
+                    <option>Dubai</option>
+                    <option>US</option>
+                </select>
+            </div>
+            <br />
+            <h5>Pack Size</h5>
+            <div class="md-form mt-0">
+                <input type="text" class="form-control search-input" id="inputPassword3MD" placeholder="&nbsp;&nbsp;Search For Package size">
+            </div>
+            <br />
+            <div class="price">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="defaultUnchecked1">
+                    <label class="custom-control-label" for="defaultUnchecked1">10Kgs to 30Kgs</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="defaultUnchecked2">
+                    <label class="custom-control-label" for="defaultUnchecked2">30Kgs to 50Kgs</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="defaultUnchecked3">
+                    <label class="custom-control-label" for="defaultUnchecked3">50Kgs to 70Kgs</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="defaultUnchecked4">
+                    <label class="custom-control-label" for="defaultUnchecked4">70Kgs to 90Kgs</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="defaultUnchecked5">
+                    <label class="custom-control-label" for="defaultUnchecked5">90Kgs to 100Kgs</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="defaultUnchecked6">
+                    <label class="custom-control-label" for="defaultUnchecked6">100Kgs to 130Kgs</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="defaultUnchecked7">
+                    <label class="custom-control-label" for="defaultUnchecked7">130Kgs to 150Kgs</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="defaultUnchecked8">
+                    <label class="custom-control-label" for="defaultUnchecked8">130Kgs to 150Kgs</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="defaultUnchecked9">
+                    <label class="custom-control-label" for="defaultUnchecked9">130Kgs to 150Kgs</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="defaultUnchecked10">
+                    <label class="custom-control-label" for="defaultUnchecked10">130Kgs to 150Kgs</label>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-9 col-sm-12 col-md-8 items">
+            <p>
+                <a routerLink="/">Home</a>&nbsp;&nbsp;>&nbsp;
+                <a>{{catName}}</a>&nbsp;&nbsp;>&nbsp;
+                <a>{{sunCatName}}</a>
+            </p>
+            <div class="row">
+                <!-- <div class="col-lg-3 col-md-6 col-sm-6 item" *ngFor="let data of prodData;let i=index">
+                    <div class="card">
+                        <img class="img-fluid" [src]="data.image" alt="Card image cap" (click)="showProduxtDetails(data.product_id)">
+                        <div class="card-block">
+                            <h5 class="text-center">{{data.product_name}} </h5>
+                            <p class="text-center">
+                                BD {{data?.selling_price}}
+                                <strike>BD {{data?.actual_price}}</strike>
+                            </p>
+                            <div class="sort">
+                                <select (change)="changeSize($event.target.value)">
+                                    <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" class="btn cart-btn" (click)="addtoCart(data.product_id)">Add To Cart
+                        </button>
+                    </div>
+                </div> -->
+                <div class="col-lg-3 col-md-6 col-sm-6 item" *ngFor="let data of prodData;let i=index">
+                    <div class="card">
+                        <img class="img-fluid" [src]="data.image" alt="Card image cap" (click)="showProduxtDetails(data.product_id)">
+                        <div class="card-block">
+                            <h5 class="text-center">{{data.product_name}} </h5>
+                            <p class="text-center">
+                                BD {{data?.selling_price}}
+                                <strike>BD {{data?.actual_price}}</strike>
+                            </p>
+                            <div class="sort">
+                                <select (change)="changeSize($event.target.value)">
+                                    <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" class="btn cart-btn" (click)="addtoCart(data.product_id)">Add To Cart
+                        </button>
+                    </div>
+                </div>
+                <div *ngIf="noData">
+                    No Products Found
+                </div>
+            </div>
+            <!-- <div class="row">
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12  item">
+            <div class="card" (click)="showProduxtDetails()">
+              <img class="img-fluid" src="assets/images/tomoto.png" alt="Card image cap">
+              <div class="card-block">
+                <h5 class="text-center">Tomato-Hybrid </h5>
+                <div class="sort">
+                  <select>
+                    <option>20kgs - BD 2000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn cart-btn">Add To Cart</button>
+            </div>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12  item potato-item">
+            <div class="card" (click)="showProduxtDetails()">
+              <img class="img-fluid image-potato" src="assets/images/potato.png" alt="Card image cap">
+              <div class="card-block">
+                <h5 class="text-center">Potato </h5>
+                <div class="sort">
+                  <select>
+                    <option>20kgs - BD 2000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn cart-btn">Add To Cart</button>
+            </div>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12  item">
+            <div class="card" (click)="showProduxtDetails()">
+              <img class="img-fluid image-finger" src="assets/images/ladies-finger.png" alt="Card image cap">
+              <div class="card-block ladiesfinger-price">
+                <h5 class="text-center">Ladies Finger </h5>
+                <div class="sort">
+                  <select>
+                    <option>20kgs - BD 2000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn cart-btn">Add To Cart</button>
+            </div>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12  item">
+            <div class="card" (click)="showProduxtDetails()">
+              <img class="img-fluid image-carrot" src="assets/images/carrot.png" alt="Card image cap">
+              <div class="card-block carrot-price">
+                <h5 class="text-center">Carrot</h5>
+                <div class="sort">
+                  <select>
+                    <option>20kgs - BD 2000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn cart-btn">Add To Cart</button>
+            </div>
+          </div>
+        </div> -->
+
+            <!-- <div class="row">
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12  item">
+            <div class="card" (click)="showProduxtDetails()">
+              <img class="img-fluid" src="assets/images/tomoto.png" alt="Card image cap">
+              <div class="card-block">
+                <h5 class="text-center">Tomato-Hybrid </h5>
+                <div class="sort">
+                  <select>
+                    <option>20kgs - BD 2000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn cart-btn">Add To Cart</button>
+            </div>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12  item potato-item">
+            <div class="card" (click)="showProduxtDetails()">
+              <img class="img-fluid image-potato" src="assets/images/potato.png" alt="Card image cap">
+              <div class="card-block">
+                <h5 class="text-center">Potato </h5>
+                <div class="sort">
+                  <select>
+                    <option>20kgs - BD 2000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn cart-btn">Add To Cart</button>
+            </div>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12 item">
+            <div class="card" (click)="showProduxtDetails()">
+              <img class="img-fluid image-finger" src="assets/images/ladies-finger.png" alt="Card image cap">
+              <div class="card-block ladiesfinger-price">
+                <h5 class="text-center">Ladies Finger </h5>
+                <div class="sort">
+                  <select>
+                    <option>20kgs - BD 2000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn cart-btn">Add To Cart</button>
+            </div>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12 item">
+            <div class="card" (click)="showProduxtDetails()">
+              <img class="img-fluid image-carrot" src="assets/images/carrot.png" alt="Card image cap">
+              <div class="card-block carrot-price">
+                <h5 class="text-center">Carrot</h5>
+                <div class="sort">
+                  <select>
+                    <option>20kgs - BD 2000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn cart-btn">Add To Cart</button>
+            </div>
+          </div>
+        </div> -->
+
+            <!-- <div class="row">
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12 item">
+            <div class="card" (click)="showProduxtDetails()">
+              <img class="img-fluid" src="assets/images/tomoto.png" alt="Card image cap">
+              <div class="card-block">
+                <h5 class="text-center">Tomato-Hybrid </h5>
+                <div class="sort">
+                  <select>
+                    <option>20kgs - BD 2000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn cart-btn">Add To Cart</button>
+            </div>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12 item potato-item">
+            <div class="card" (click)="showProduxtDetails()">
+              <img class="img-fluid image-potato" src="assets/images/potato.png" alt="Card image cap">
+              <div class="card-block">
+                <h5 class="text-center">Potato </h5>
+                <div class="sort">
+                  <select>
+                    <option>20kgs - BD 2000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn cart-btn">Add To Cart</button>
+            </div>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12 item">
+            <div class="card" (click)="showProduxtDetails()">
+              <img class="img-fluid image-finger" src="assets/images/ladies-finger.png" alt="Card image cap">
+              <div class="card-block ladiesfinger-price">
+                <h5 class="text-center">Ladies Finger </h5>
+                <div class="sort">
+                  <select>
+                    <option>20kgs - BD 2000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn cart-btn">Add To Cart</button>
+            </div>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12 item">
+            <div class="card" (click)="showProduxtDetails()">
+              <img class="img-fluid image-carrot" src="assets/images/carrot.png" alt="Card image cap">
+              <div class="card-block carrot-price">
+                <h5 class="text-center">Carrot</h5>
+                <div class="sort">
+                  <select>
+                    <option>20kgs - BD 2000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                    <option>30Kgs - BD 3000</option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn cart-btn">Add To Cart</button>
+            </div>
+          </div>
+        </div>  -->
+
+        </div>
+
+    </div>
+    <!-- <div class="row slider-buttons">
+      <div class="controls-top">
+        <a class="btn-floating btn-small slider-btn-left" href="#multi-item-example" data-slide="prev">
+          <i class="fas fa-long-arrow-alt-left"></i>
+        </a>
+        <a class="btn-floating btn-small slider-btn-right" href="#multi-item-example" data-slide="next">
+          <i class="fas fa-long-arrow-alt-right"></i>
+        </a>
+      </div>
+    </div> -->
+</div>
