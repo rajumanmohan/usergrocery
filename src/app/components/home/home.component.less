@@ -308,6 +308,7 @@ p strike {
         width: 40%;
         font-size: 18px;
     }
+    .carousel-item .card{width:100%;}
 }
 
 @media screen and (max-width:760px) {
@@ -439,6 +440,8 @@ p strike {
         width: 100%;
         padding: 6px;
         cursor:pointer;
+        background: #ffffff;
+        color: #000;
     }
 }
 .noData{
@@ -462,6 +465,7 @@ p strike {
     text-align: center;
 }
 /*Ulka CSs*/
+div#multi-item-example6 .carousel-item{height:270px;}
 @media screen and (min-width:360px) and (max-width:520px) {
     div#multi-item-example1 {margin-bottom: 0 !important;}
     .deals {height: auto !important;}
@@ -471,8 +475,8 @@ p strike {
 }
 @media screen and (max-width:520px) {
     .slider .carousel-inner{height:300px !important;}
+    #multi-item-example6 .carousel-item {height: 560px !important;}
     
-   
 }
 @media screen and (min-width: 521px) and (max-width:767px){
     div#multi-item-example1 {margin-bottom: 0 !important;}
@@ -497,14 +501,18 @@ p strike {
 } 
 @media screen and (max-width: 767px){
     .carousel, .carousel-multi-item, .carousel-thumbnails{margin-bottom:10px !important;}
-    .col-md-3.recProds {width: 50%;float: left;margin: 10px 0;}
+    .col-md-3.recProds {width: 50%;float: left;/*margin: 10px 0;*/padding: 0 5px;}
     .container.product-cat .card {width: 100%;}
     .carousel-multi-item img {max-width: 100%;width: 100%;margin-top: 0;}
     .carousel .card-block.col-md-6.recmded {text-align: center;}
-    .carousel-item .card{width:100%;}    
+    .carousel-item .card{width:100%;} 
+    
 }
 @media screen and (max-width: 991px){
-   
+    .btn.cart-btn{padding:10px 0;}
     .carousel-inner.product-slider .carousel-item.active {height: auto;}
+    .product-cat h5 {margin: 5px 0;}
+    div#multi-item-example {display: none;}
+    div#multi-item-example6 {margin: 0 auto;}
 }
 

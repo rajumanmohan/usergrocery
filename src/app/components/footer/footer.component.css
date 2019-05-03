@@ -10,7 +10,10 @@
 .cust-span2{
   margin-left: 22px;
 }
-
+.back-color{
+  background: #ece8d7;
+  padding-top: 90px;
+}
 
 h4 {
   font-weight: normal !important;
@@ -88,4 +91,8 @@ a {
 }
 .footer-background{
   background:#f7f6f2;
+}
+
+@media screen and (max-width:520px) {
+  .bottom-cont p {float: unset;text-align:center;}
 }
