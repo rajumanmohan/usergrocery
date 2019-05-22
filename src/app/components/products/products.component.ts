@@ -229,7 +229,7 @@ export class ProductsComponent implements OnInit {
         })
     }
     checkProdQuty(prodId, skuId, price, venId, vProdID, udisc) {
-        this.appService.checkQuty(prodId, skuId, 0, venId).subscribe(res => {
+        this.appService.checkQuty(prodId, skuId, 0, venId, vProdID).subscribe(res => {
             if (res.json().status === 200) {
                 this.addtoCart(prodId, skuId, price, venId, vProdID, udisc);
             }
@@ -243,7 +243,7 @@ export class ProductsComponent implements OnInit {
     }
     addtoWish(Id, skId) {
         var inData = {
-            "user_id": JSON.parse(sessionStorage.userId),
+            "user_id": (sessionStorage.userId),
             "product_id": Id,
             "sku_id": skId,
             "item_type": "grocery"
@@ -252,11 +252,8 @@ export class ProductsComponent implements OnInit {
             if (sessionStorage.userId === undefined) {
                 swal("Please Login", "", "error");
             } else if (res.json().status === 400) {
-                swal(res.json().wishlist, "", "error");
+                swal(res.json().message, "", "error");
             } else {
-
-
-                console.log(res.json());
                 swal(res.json().message, "", "success");
                 this.getWish();
             }
@@ -284,10 +281,16 @@ export class ProductsComponent implements OnInit {
     }
     serProducts: any;
     search(product) {
+        let params = {
+            "country": sessionStorage.country,
+            "pin_code": sessionStorage.pinCode === "undefined" ? "null" : sessionStorage.pinCode,
+            "area": sessionStorage.Area === "undefined" ? "null" : sessionStorage.Area,
+            "user_id": sessionStorage.userId
+        }
         this.skuData = [];
-        this.catName1 = this.subCatName1 = '';
-        this.appService.searchProducts(product).subscribe(res => {
-            this.prodData = res.json().data;
+        // this.catName1 = this.subCatName1 = '';
+        this.appService.searchProducts(product, params).subscribe(res => {
+            this.prodData = res.json().vendor_products;
             // if (this.serProducts == "No products found with your search") {
             //     this.noData = true;
             // } else {

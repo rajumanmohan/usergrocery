@@ -40,8 +40,8 @@
                                     <input type="radio" id="customRadio3" name="customRadio3"
                                         class="custom-control-input mahali-input" checked>
                                     <label data-toggle="modal" data-target="#myModal"
-                                        class="custom-control-label mahali-label" for="customRadio3">Use
-                                        Promocode to get 20% Cashback</label>
+                                        class="custom-control-label mahali-label" for="customRadio3">Apply
+                                        Promocode</label>
                                 </div>
                             </div>
                             <div class="col-md-3 text-center">
@@ -55,7 +55,7 @@
                                     <input type="text" value="1" name="quantity" [(ngModel)]="data.quantity"
                                         readonly="readonly" value="{{data.quantity}}" class="text-center" disabled>
                                     <button class="btn btn-icon btn-maroon btn-plus"
-                                        (click)="checkProdQuty(data.cart_id,data.product_id,data.sku_id,data.quantity,data.vendorid_as_owner)">
+                                        (click)="checkProdQuty(data.cart_id,data.product_id,data.sku_id,data.quantity,data.vendorid_as_owner,data.vendor_product_id)">
                                         <span>
                                             <i class="fa fa-plus" aria-hidden="true"></i>
                                         </span>
@@ -122,7 +122,9 @@
                                 </p>
                                 <div class="row">
                                     <div class="col-lg-6 expiry">
-                                        <p>{{data.end_date}}</p>
+                                        <p>{{data.start_date |  date:'yyyy-MM-dd'}} -
+                                            {{data.end_date | date:'yyyy-MM-dd'}}
+                                        </p>
                                     </div>
                                     <div class="col-lg-6 terms">
                                         <a>Terms & Conditions</a>
@@ -400,7 +402,7 @@
                                 <p>Delivery Charge: BD ***
                                     <img src="assets/images/!.png">
                                 </p>
-                                <div class="row justify-content-center">
+                                <!-- <div class="row justify-content-center">
                                     <div class="col-md-8">
                                         <select (change)="changeSlot($event.target.value)">
                                             <option *ngFor="let slot of delSlots" [value]="slot.id">{{slot.start_time}}
@@ -409,6 +411,16 @@
                                             </option>
                                         </select>
                                     </div>
+                                </div> -->
+                                <div class="example-wrapper">
+                                    <!-- <h2>Basic</h2> -->
+
+                                    <label class="example-input-wrapper">
+                                        <!-- Date Time: -->
+                                        <input placeholder="Date Time:" [(ngModel)]="dateTime" [owlDateTimeTrigger]="dt"
+                                            [owlDateTime]="dt">
+                                        <owl-date-time #dt></owl-date-time>
+                                    </label>
                                 </div>
                                 <button class="btn btn-maroon" (click)="proceed()">Proceed To Pay</button>
                             </div>

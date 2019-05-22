@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { appService } from './../../services/mahaliServices/mahali.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+declare var jQuery: any;
+declare var $: any;
 @Component({
   selector: 'app-mysavedlist',
   templateUrl: './mysavedlist.component.html',
@@ -12,25 +14,28 @@ export class MysavedlistComponent implements OnInit {
   constructor(public appService: appService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    // this.getCategories();
+    this.getCategories();
     // this.getCatProducts(this.catId);
     this.VegetablesData();
+    this.getWish();
   }
   category = [];
   prodData = [];
   skuData = [];
   catId;
-  // getCategories() {
-  //   let params = {
-  //     "country": sessionStorage.country,
-  //     "pin_code": sessionStorage.pinCode === "undefined" ? "null" : sessionStorage.pinCode,
-  //     "area": sessionStorage.Area === "undefined" ? "null" : sessionStorage.Area,
-  //   }
-  //   this.appService.getCategories(params).subscribe(resp => {
-  //     this.category = resp.json().categories;
-  //     // this.showSubCat(this.subId);
-  //   })
-  // }
+  skid;
+  enlargeImg;
+  getCategories() {
+    let params = {
+      "country": sessionStorage.country,
+      "pin_code": sessionStorage.pinCode === "undefined" ? "null" : sessionStorage.pinCode,
+      "area": sessionStorage.Area === "undefined" ? "null" : sessionStorage.Area,
+    }
+    this.appService.getCategories(params).subscribe(resp => {
+      this.category = resp.json().categories;
+      // this.showSubCat(this.subId);
+    })
+  }
   // getCatProducts(id) {
   //   this.catId = id;
   //   this.skuData = [];
@@ -54,51 +59,30 @@ export class MysavedlistComponent implements OnInit {
   // }
   cartDetails = [];
   cartCount = [];
-  addtoCart(Id, skId) {
-    var inData = {
-      "products": [{
-        product_id: Id,
-        sku_id: skId
-      }],
-      "user_id": JSON.parse(sessionStorage.getItem('userId')),
-      "item_type": "grocery"
-    }
-    this.appService.addtoCart(inData).subscribe(res => {
-      if (res.json().status === 400) {
-        swal(res.json().message, "", "error");
-      } else {
-        this.cartDetails = res.json().selling_price_total;
-        this.cartCount = res.json().count;
-        this.getCart();
-        swal(res.json().message, "", "success");
-      }
 
-    }, err => {
-
-    })
-  }
   addtoWish(Id, skId) {
     var inData = {
-      "user_id": JSON.parse(sessionStorage.userId),
+      "user_id": (sessionStorage.userId),
       "product_id": Id,
       "sku_id": skId,
       "item_type": "grocery"
     }
     this.appService.addToWish(inData).subscribe(res => {
-      console.log(res.json());
-      swal(res.json().message, "", "success");
-      this.getWish();
+      if (sessionStorage.userId === undefined) {
+        swal("Please Login", "", "error");
+      } else if (res.json().status === 400) {
+        swal(res.json().message, "", "error");
+      } else {
+        swal(res.json().message, "", "success");
+        // this.getWish();
+        // this.getProduct();
+        // this.allProductsData();
+      }
     }, err => {
 
     })
   }
-  getWish() {
-    this.appService.getWish().subscribe(res => {
-      console.log(res.json());
-    }, err => {
 
-    })
-  }
   billing;
   getCart() {
     var inData = sessionStorage.getItem('userId');
@@ -110,8 +94,9 @@ export class MysavedlistComponent implements OnInit {
 
     })
   }
-  showProduxtDetails(prodId) {
-    this.router.navigate(['/productdetails'], { queryParams: { prodId: prodId } });
+  showProduxtDetails(prodId, venId1) {
+    alert(prodId)
+    this.router.navigate(['/productdetails'], { queryParams: { prodId: prodId, venId1: venId1 } });
   }
   vegetablesData = [];
   VegetablesData() {
@@ -126,5 +111,93 @@ export class MysavedlistComponent implements OnInit {
       }
     }, err => {
     })
+  }
+  wishData = [];
+  wishListData = [];
+  wishArr = [];
+  getWish() {
+    this.wishArr = [];
+    this.appService.getWish().subscribe(res => {
+      if (res.json().message === "Success") {
+        this.wishData = res.json().wishlist;
+        this.wishData.sort(function (a, b) {
+          var keyA = new Date(a.created_on),
+            keyB = new Date(b.created_on)
+          if (keyA < keyB) return - 1;
+          if (keyA > keyB) return 1;
+          return 0;
+        });
+        // this.wishData = res.json().vendor_products;
+        if (this.wishData != undefined) {
+          for (var i = 0; i < this.wishData.length; i++) {
+            for (var j = 0; j < this.wishData[i].products.sku_details.length; j++) {
+              this.wishData[i].selling_price = this.wishData[i].products.updated_price - this.wishData[i].products.updated_discount;
+              this.wishData[i].actual_price = this.wishData[i].products.updated_price;
+              this.wishData[i].image = this.wishData[i].products.sku_details[0].sku_images[0].sku_image;
+              this.wishData[i].skid = this.wishData[i].products.sku_details[0].skid;
+            }
+
+          }
+          // this.noData = false;
+          // this.noData1 = false;
+        }
+        if (res.json().message === "No records Found") {
+          // this.noData = true;
+          // this.noData1 = false;
+        }
+      }
+    }, err => {
+
+    })
+  }
+  addtoCart(id, skuId, price, venId, vProdID, udisc) {
+    var inData = {
+      "products": [{
+        product_id: id,
+        sku_id: skuId
+      }],
+      "user_id": JSON.parse(sessionStorage.getItem('userId')),
+      "item_type": "grocery",
+      "price": price,
+      "vendor_product_id": vProdID,
+      "updated_discount": udisc,
+      "vendorid_as_owner": venId,
+
+    }
+    this.appService.addtoCart(inData).subscribe(res => {
+      if (res.json().status === 400) {
+        swal(res.json().message, "", "error");
+      } else {
+        this.getCart();
+        swal(res.json().message, "", "success");
+      }
+
+    }, err => {
+
+    })
+  }
+  checkProdQuty(prodId, skuId, price, venId, vProdID, udisc) {
+    this.appService.checkQuty(prodId, this.skid, 0, venId, vProdID).subscribe(res => {
+      if (res.json().status === 200) {
+        this.addtoCart(prodId, skuId, price, venId, vProdID, udisc);
+      }
+      else {
+        swal(res.json().message, "", "error");
+        // this.NoStockMsg = res.json().data;
+      }
+      // this.addtoCart(prodId);
+    })
+  }
+  open(skid): void {
+    for (var i = 0; i < this.wishData.length; i++) {
+      for (var j = 0; j < this.wishData[i].products.sku_details.length; j++) {
+        if (skid == this.wishData[i].products.sku_details[j].skid) {
+          this.enlargeImg = this.wishData[i].products.sku_details[j].sku_images[0].sku_image;
+          jQuery("#enlargeImg").modal("show");
+        }
+      }
+
+    }
+
   }
 }

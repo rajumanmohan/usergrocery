@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { appService } from './../../services/mahaliServices/mahali.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import swal from 'sweetalert';
 @Component({
   selector: 'app-useraccount',
   templateUrl: './useraccount.component.html',
@@ -36,7 +37,9 @@ export class UseraccountComponent implements OnInit {
       this.showMyOrders = true;
       this.getOrders();
     } else if (this.page === 'notifications') {
+      alert('hay');
       this.showNotifications = true;
+      this.notifications();
     } else if (this.page === 'offerzone') {
       this.showOfferZone = true;
     } else if (this.page === 'changePw') {
@@ -192,6 +195,7 @@ export class UseraccountComponent implements OnInit {
   }
 
   notifications() {
+    alert('hi');
     this.showNotifications = true;
     this.showOrderDetails = false;
     this.showMyOrders = false;
@@ -203,6 +207,9 @@ export class UseraccountComponent implements OnInit {
     this.showProfile = false;
     this.showOfferZone = false;
     this.showEditAddress = false;
+    this.appService.getNotifications1().subscribe(res => {
+      console.log(res.json())
+    })
   }
 
   showBukedOrderDetails(ordId) {

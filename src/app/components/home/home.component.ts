@@ -23,10 +23,12 @@ export class HomeComponent implements OnInit {
   skid;
   btnType;
   page;
+  noVen;
   brandsData1 = [];
   brandsData2;
   // allProductsData = [];
   noData;
+  noData1;
   product: ProductsData = {
     name: "Utpal Kumar Das"
   };
@@ -111,7 +113,7 @@ export class HomeComponent implements OnInit {
     })
   }
   checkProdQuty(prodId, skuId, price, venId, vProdID, udisc) {
-    this.appService.checkQuty(prodId, skuId, 0, venId).subscribe(res => {
+    this.appService.checkQuty(prodId, skuId, 0, venId, vProdID).subscribe(res => {
       if (res.json().status === 200) {
         this.addtoCart(prodId, skuId, price, venId, vProdID, udisc);
       }
@@ -191,7 +193,10 @@ export class HomeComponent implements OnInit {
             this.skid = this.allproductsData[i].sku_row[0].skid;
           }
         }
-
+        this.noData = false;
+      }
+      if (res.json().status === 400) {
+        this.noData = true;
       }
 
     }, err => {
@@ -226,7 +231,7 @@ export class HomeComponent implements OnInit {
       if (sessionStorage.userId === undefined) {
         swal("Please Login", "", "error");
       } else if (res.json().status === 400) {
-        swal(res.json().wishlist, "", "error");
+        swal(res.json().message, "", "error");
       } else {
         swal(res.json().message, "", "success");
         this.getWish();
@@ -275,6 +280,10 @@ export class HomeComponent implements OnInit {
     }
     this.appService.getVendors(params).subscribe(res => {
       this.vendorData = res.json().data;
+      this.noVen = false;
+      if (res.json().message === "No records Found") {
+        this.noVen = true;
+      }
     })
   }
   getuserCats() {
@@ -295,7 +304,6 @@ export class HomeComponent implements OnInit {
     this.appService.productByCatId(catId, params).subscribe(res => {
       this.allProductsData = res.json().vendor_products;
       if (this.allProductsData != undefined) {
-        this.noData = false;
         for (var i = 0; i < this.allProductsData.length; i++) {
           for (var j = 0; j < this.allProductsData[i].sku_row.length; j++) {
             this.allProductsData[i].selling_price = this.allProductsData[i].sku_row[0].selling_price;
@@ -306,11 +314,15 @@ export class HomeComponent implements OnInit {
           }
 
         }
-        // this.noData = false;
+        this.noData = false;
+        this.noData1 = false;
       }
-      if (res.json().message == "No records Found") {
-        this.noData = true;
+      if (res.json().status === 400) {
+        this.noData = false;
+        this.noData1 = true;
+
       }
+
     }, err => {
 
     })

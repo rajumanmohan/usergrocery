@@ -1,4 +1,5 @@
-const baseUrl = 'http://192.169.243.70:3000/v1/';
+// const baseUrl = 'http://192.169.243.70:3000/v1/';//(local)
+const baseUrl = 'https://www.mahalli.com/v1/';//(https)
 
 export const AppSettings = {
     registrationUrl: baseUrl + 'users/registration',
@@ -27,7 +28,7 @@ export const AppSettings = {
     orderSummary: baseUrl + "place_order/order_summary",
     productByCatId: baseUrl + "vendor/products/categoryproducts",
     productBySubCatId: baseUrl + "vendor/products/subcategoryproducts",
-    searchProducts: baseUrl + 'products/search',
+    searchProducts: baseUrl + 'vendor/products/searchuserproducts',
     wholeProducts: baseUrl + "/products/wholesaler_products",
     ordById: baseUrl + "place_order/order_products",
     reqProducts: baseUrl + "place_order/request_products/vendor",
@@ -79,5 +80,10 @@ export const AppSettings = {
     sortBySizeVendor: baseUrl + "vendor/products/filtervedproductstoshowinuser/size",
     getBannerProds: baseUrl + "banners/userbannerproducts",
     checkQuty: baseUrl + "vendor/cart_details/userstockavailable",
-    getBrandCats: baseUrl + "banners/getbanners/2"
+    getBrandCats: baseUrl + "banners/getbanners/2",
+    getDetailsById: baseUrl + "users/getby",
+    socialLogin: baseUrl + "users/sociallogin",
+    forgotwithEmail: baseUrl + "users/forgot_passwordbyemail",
+    getNotifications: baseUrl + "vendor/cart_details/usernotifications",
+    getoffersGro: baseUrl + "vendor/products/gettopoffersproducts/grocery"
 }

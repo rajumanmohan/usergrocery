@@ -20,7 +20,7 @@
 				<li (click)="logout()">Logout</li>
 			</ul>
 		</div>
-		<div class="col-lg-9" *ngIf="showProfile" class="profiledetails">
+		<div class="col-lg-9 profiledetails" *ngIf="showProfile">
 			<h3 class="profile-header">My Profile</h3>
 			<br />
 			<div class="row">
@@ -65,7 +65,7 @@
 
 
 		<!-- edit Profile -->
-		<div class="col-lg-7" *ngIf="editUserProfile" class="profiledetails">
+		<div class="col-lg-7 profiledetails" *ngIf="editUserProfile">
 			<h3 class="profile-header">Edit Profile</h3>
 			<br />
 			<div class="row">
@@ -76,12 +76,21 @@
 			<br />
 			<form class="form-details" #formCtrl="ngForm">
 				<div class="form-group row">
-					<label for="inputname1" class="col-sm-3 col-form-label">Name *
+					<label for="inputname1" class="col-sm-3 col-form-label">First Name *
 						<span class="float-right">:</span>
 					</label>
 					<div class="col-sm-9">
 						<input alphabetsOnly type="text" class="form-control input-feild" id="inputname1" name="first_name"
 							[(ngModel)]="profileData.first_name" ngControl="passwordCtrl" required>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputname1" class="col-sm-3 col-form-label">Last Name *
+						<span class="float-right">:</span>
+					</label>
+					<div class="col-sm-9">
+						<input alphabetsOnly type="text" class="form-control input-feild" id="inputname1" name="last_name"
+							[(ngModel)]="profileData.last_name" ngControl="passwordCtrl" required>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -162,7 +171,7 @@
 
 		<!-- delivery address -->
 
-		<div class="col-lg-9" *ngIf="showDeliveryAddress" class="profiledetails">
+		<div class="col-lg-9 profiledetails" *ngIf="showDeliveryAddress">
 			<div class="row">
 				<div class="col-lg-4">
 					<h3 class="profile-header">Delivery Address</h3>
@@ -179,8 +188,8 @@
 					<P>
 						<i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;
 						{{add.landmark}},{{add.house_no}}
-						 {{add.city}} ,{{add.pin_code}}
-						
+						{{add.city}} ,{{add.pin_code}}
+
 					</P>
 					<p>
 						<i class="fa fa-phone" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>{{add.mobile_number}}
@@ -204,7 +213,7 @@
 			</div>
 		</div>
 
-		<div class="col-lg-7 address " *ngIf="showAddAddress" class="profiledetails">
+		<div class="col-lg-7 address profiledetails" *ngIf="showAddAddress">
 			<h3 class="profile-header">Delivery Address</h3>
 			<p>
 				<strong>Add New Adrress</strong>
@@ -315,7 +324,7 @@
 
 		</div>
 		<!-- edit address -->
-		<div class="col-lg-7 address " *ngIf="showEditAddress" class="profiledetails">
+		<div class="col-lg-7 address profiledetails" *ngIf="showEditAddress">
 			<h3 class="profile-header">Edit Delivery Address</h3>
 			<p>
 				<strong>Edit Adrress</strong>
@@ -427,7 +436,7 @@
 		</div>
 		<!-- wishlist -->
 
-		<div class="col-lg-9" *ngIf="showWishlist" class="profiledetails">
+		<div class="col-lg-9 profiledetails" *ngIf="showWishlist">
 			<div>
 				<h3 class="profile-header">Wishlist</h3>
 			</div>
@@ -481,90 +490,92 @@
 						<td>
 							<i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"
 								(click)="delWish(wish.wishlist_id)"></i>
-							<button type="button" class="btn cart-btn" (click)="addtoCart(wish.product_id,wish.skid)">Add To
+							<button type="button" class="btn cart-btn"
+								(click)="checkProdQuty(wish.product_id,wish.skid,wish.selling_price,wish.vendorid_as_owner,wish.vendor_product_id,wish.updated_discount)">Add
+								To
 								cart</button>
 						</td>
 					</tr>
 					<!-- <tr>
             <td>
-              <div class="row align-items-center">
-                <div class="col-md-4">
-                  <img src="assets/images/tomato.png" class="prod-images" alt="gdksha">
-                </div>
-                <div class="col-md-8 prod-details">
-                  <p class="mobile-manu">
-                    <strong>Tomato</strong>
-                  </p>
-                  <p style="margin-top:-15px;">1 kg :
-                    <strong>BD 22</strong>
-                  </p>
+              <div class=" row align-items-center">
+								<div class="col-md-4">
+									<img src="assets/images/tomato.png" class="prod-images" alt="gdksha">
+								</div>
+								<div class="col-md-8 prod-details">
+									<p class="mobile-manu">
+										<strong>Tomato</strong>
+									</p>
+									<p style="margin-top:-15px;">1 kg :
+										<strong>BD 22</strong>
+									</p>
 
-                </div>
-              </div>
-            </td>
-            <td class="pt-5">
-              <div class="plus-minus mt-3" style="display: inline;">
-                <button class="btn btn-maroon btn-minus" (click)="itemDecrease()">
-                  <span>-</span>
-                </button>
-                <input type="text" value="{{item.quantity}}" [(ngModel)]="item.quantity" disabled>
-                <button class="btn btn-maroon btn-plus" (click)="itemIncrease()">
-                  <span>+</span>
-                </button>
-              </div>
-            </td>
-            <td>
-              <div class="prod-details">
-                <span>
-                  <strong>$ 540.00</strong>
-                </span>
-              </div>
-            </td>
-            <td>
-              <i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"></i>
-              <button type="button" class="btn cart-btn">Add To cart</button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="row align-items-center">
-                <div class="col-md-4">
-                  <img src="assets/images/pinapple.png" class="prod-images" alt="gdksha">
-                </div>
-                <div class="col-md-8 prod-details">
-                  <p class="mobile-manu">
-                    <strong>Pineapple</strong>
-                  </p>
-                  <p style="margin-top:-15px;">1 kg :
-                    <strong>BD 22</strong>
-                  </p>
+								</div>
+		</div>
+		</td>
+		<td class="pt-5">
+			<div class="plus-minus mt-3" style="display: inline;">
+				<button class="btn btn-maroon btn-minus" (click)="itemDecrease()">
+					<span>-</span>
+				</button>
+				<input type="text" value="{{item.quantity}}" [(ngModel)]="item.quantity" disabled>
+				<button class="btn btn-maroon btn-plus" (click)="itemIncrease()">
+					<span>+</span>
+				</button>
+			</div>
+		</td>
+		<td>
+			<div class="prod-details">
+				<span>
+					<strong>$ 540.00</strong>
+				</span>
+			</div>
+		</td>
+		<td>
+			<i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"></i>
+			<button type="button" class="btn cart-btn">Add To cart</button>
+		</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="row align-items-center">
+					<div class="col-md-4">
+						<img src="assets/images/pinapple.png" class="prod-images" alt="gdksha">
+					</div>
+					<div class="col-md-8 prod-details">
+						<p class="mobile-manu">
+							<strong>Pineapple</strong>
+						</p>
+						<p style="margin-top:-15px;">1 kg :
+							<strong>BD 22</strong>
+						</p>
 
-                </div>
-              </div>
-            </td>
-            <td class="pt-5">
-              <div class="plus-minus mt-3" style="display: inline;">
-                <button class="btn btn-maroon btn-minus" (click)="itemDecrease()">
-                  <span>-</span>
-                </button>
-                <input type="text" value="{{item.quantity}}" [(ngModel)]="item.quantity" disabled>
-                <button class="btn btn-maroon btn-plus" (click)="itemIncrease()">
-                  <span>+</span>
-                </button>
-              </div>
-            </td>
-            <td>
-              <div class="prod-details">
-                <span>
-                  <strong>$ 540.00</strong>
-                </span>
-              </div>
-            </td>
-            <td>
-              <i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"></i>
-              <button type="button" class="btn cart-btn">Add To cart</button>
-            </td>
-          </tr> -->
+					</div>
+				</div>
+			</td>
+			<td class="pt-5">
+				<div class="plus-minus mt-3" style="display: inline;">
+					<button class="btn btn-maroon btn-minus" (click)="itemDecrease()">
+						<span>-</span>
+					</button>
+					<input type="text" value="{{item.quantity}}" [(ngModel)]="item.quantity" disabled>
+					<button class="btn btn-maroon btn-plus" (click)="itemIncrease()">
+						<span>+</span>
+					</button>
+				</div>
+			</td>
+			<td>
+				<div class="prod-details">
+					<span>
+						<strong>$ 540.00</strong>
+					</span>
+				</div>
+			</td>
+			<td>
+				<i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"></i>
+				<button type="button" class="btn cart-btn">Add To cart</button>
+			</td>
+		</tr> -->
 				</tbody>
 			</table>
 			<pagination-controls class="my-pagination" (pageChange)="p = $event" style="float:right;"></pagination-controls>
@@ -579,7 +590,7 @@
 		</div>
 
 		<!-- change password -->
-		<div class="col-lg-9" *ngIf="showChangePassword" class="profiledetails">
+		<div class="col-lg-9 profiledetails" *ngIf="showChangePassword">
 			<div>
 				<h3 class="profile-header">Change Password</h3>
 			</div>
@@ -637,7 +648,7 @@
 		</div>
 		<!-- my order -->
 
-		<div class="col-lg-9" *ngIf="showMyOrders" class="profiledetails">
+		<div class="col-lg-9 profiledetails" *ngIf="showMyOrders">
 			<div id="multi-item-example6" class="carousel slide" data-ride="carousel">
 				<br />
 				<!--Slides 1-->
@@ -817,7 +828,7 @@
 
 
 		<!-- order details -->
-		<div class="col-lg-9" *ngIf="showOrderDetails" class="profiledetails">
+		<div class="col-lg-9 profiledetails" *ngIf="showOrderDetails">
 			<div>
 				<h3 class="profile-header">My Order</h3>
 			</div>
@@ -833,6 +844,7 @@
 						<th scope="col" style="font-size:18px;">Color</th>
 						<th scope="col" style="font-size:18px;">Quantity</th>
 						<th scope="col" style="font-size:18px;">Price</th>
+						<th scope="col" style="font-size:18px;">Total</th>
 						<th scope="col" style="font-size:18px;">Status</th>
 					</tr>
 				</thead>
@@ -849,6 +861,7 @@
 						<td>{{orddata.color}}</td>
 						<td>{{orddata.quantity}}</td>
 						<td>BD {{orddata.selling_price}}</td>
+						<td>BD {{orddata.quantity * orddata.selling_price}}</td>
 						<td>{{orddata?.order_status}}</td>
 					</tr>
 				</tbody>
@@ -857,15 +870,15 @@
 				<p>Shipping Address</p>
 			</div>
 			<div class="address-bar">
-				<h4 class="office-header">{{ordAdd.address_type}}</h4>
+				<h4 class="office-header">{{ordAdd?.address_type}}</h4>
 				<p>
-					<i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{{ordAdd.house_no}}
-					{{ordAdd.landmark}},
-					<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ordAdd.city}},{{ordAdd.state}} {{ordAdd.pin_code}}
+					<i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{{ordAdd?.house_no}}
+					{{ordAdd?.landmark}},
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ordAdd?.city}},{{ordAdd?.state}} {{ordAdd?.pin_code}}
 				</p>
 				<p>
 					<i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;
-					<span>{{ordAdd.mobile_number}}</span>
+					<span>{{ordAdd?.mobile_number}}</span>
 				</p>
 			</div>
 			<div class="order-details">
@@ -899,7 +912,7 @@
 		</div>
 
 		<!-- offer zone -->
-		<div class="col-lg-9" *ngIf="showOfferZone" class="profiledetails">
+		<div class="col-lg-9 profiledetails" *ngIf="showOfferZone">
 
 			<div class="row">
 				<div class="col-md-6">
@@ -947,6 +960,9 @@
 						<li><a (click)="addtoWish(item.product_id,item.skid)"><i class="fas fa-heart"></i></a></li>
 					</ul>
 				</div>
+				<div>
+					<h5> &nbsp;&nbsp;&nbsp;&nbsp;No Products Found</h5>
+				</div>
 			</div>
 			<!-- end deals -->
 		</div>
@@ -954,32 +970,34 @@
 
 		<!-- notofications -->
 
-		<div class="col-lg-9" *ngIf="showNotifications" class="profiledetails">
+		<div class="col-lg-9 profiledetails" *ngIf="showNotifications">
 			<div class="row">
 				<div class="col-lg-6">
 					<h3 class="profile-header">Notifications</h3>
 				</div>
 				<div class="col-lg-6 clear-option">
-					<p (click)="clearAll()" class="clear">
+					<!-- <p (click)="clearAll()" class="clear">
 						<strong>Clear All</strong>
-					</p>
+					</p> -->
 				</div>
 			</div>
-			<div class="notification-bar1">
-				<p>
-					<i class="fa fa-bell" aria-hidden="true" style="color:#a7a3a2;"></i>&nbsp;&nbsp; Shop With Your Debit/Credit
-					Card and get 35% Discount</p>
+			<div>
+				<!-- <h4>No Notifications</h4> -->
 			</div>
-			<div class="notification-bar2">
+			<div class="notification-bar1" *ngFor="let data of noticationData">
+				<p>
+					<i class="fa fa-bell" aria-hidden="true" style="color:#a7a3a2;"></i>&nbsp;&nbsp; {{data.notification}}</p>
+			</div>
+			<!-- <div class="notification-bar2">
 				<p>
 					<i class="fa fa-bell" aria-hidden="true" style="color:#a7a3a2;"></i>&nbsp;&nbsp;&nbsp; Shop Upto 10000/- and
 					get Cashback upto 3000</p>
-			</div>
+			</div> -->
 		</div>
 
 	</div>
 
-	<div class="row" *ngIf="showOfferZone" class="profiledetails">
+	<div class="row profiledetails" *ngIf="showOfferZone">
 		<div class="col-md-12 mt-3">
 			<h4>Vegetables</h4>
 		</div>

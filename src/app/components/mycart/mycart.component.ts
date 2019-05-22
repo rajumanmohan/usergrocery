@@ -149,8 +149,8 @@ export class MycartComponent implements OnInit {
         }
 
     }
-    checkProdQuty(cartId, prodId, skuId, qunt, venId) {
-        this.appService.checkQuty(prodId, skuId, qunt, venId).subscribe(res => {
+    checkProdQuty(cartId, prodId, skuId, qunt, venId, venprodId) {
+        this.appService.checkQuty(prodId, skuId, qunt, venId, venprodId).subscribe(res => {
             if (res.json().status === 200) {
                 this.itemIncrease(cartId);
             } else {
@@ -466,8 +466,12 @@ export class MycartComponent implements OnInit {
             "item_type": "grocery"
         }
         this.appService.addToWish(inData).subscribe(res => {
-            console.log(res.json());
-            swal(res.json().message, "", "success");
+            if (res.json().status === 400) {
+                swal(res.json().message, "", "error");
+            } else {
+                swal(res.json().message, "", "success");
+                // this.getWish();
+            }
             // this.getWish();
         }, err => {
 

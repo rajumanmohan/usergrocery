@@ -11,10 +11,10 @@
       <table class="table table-borderless responsive">
         <tbody>
           <tr>
-            <td>Your Order Number is</td>
-            <td>: {{ordid}}</td>
-          </tr>
-          <!-- <tr>
+            <td>Your Order Number is &nbsp;:&nbsp; {{ordid}} </td>
+            <!-- <td>: {{ordid}}</td> -->
+            <!-- </tr> -->
+            <!-- <tr>
             <td>From</td>
             <td>: GoodLuck Retail Store</td>
           </tr> -->
@@ -27,9 +27,16 @@
         <br /> {{ordSum.house_no}}
         <br /> {{ordSum.city}}, {{ordSum.pin_code}}
         <br /> {{ordSum.state}}
+        <br />Ph: {{ordSum.mobile_number}}
       </p>
-      <p>Ph: {{ordSum.mobile_number}}</p>
+      <!-- <p></p> -->
     </div>
+  </div>
+  <div>
+    <p class="recemmended">Recommended for you</p>
+    <p>
+      No Recommended products found
+    </p>
   </div>
   <!--all -->
   <div class="row mt-5 justify-content-center place-order">

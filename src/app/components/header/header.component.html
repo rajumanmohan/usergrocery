@@ -26,7 +26,7 @@
                     </a>
                     <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary cust-menu" role="menu">
                         <a class="dropdown-item waves-light" mdbRippleRadius
-                            href="http://fansadda.mobi/mahaliuserecommerse/#/">{{"common.eCommerce"|translate}}
+                            href="../userecommerse/">{{"common.eCommerce"|translate}}
                         </a>
                         <hr />
                         <a class="dropdown-item waves-light" mdbRippleRadius
@@ -46,8 +46,8 @@
                             routerLink="/notifications">{{"common.changePassword"|translate}}
                         </a>
                         <hr />
-                        <a class="dropdown-item waves-light" mdbRippleRadius href="#"
-                            (click)="signOut()">{{"common.signout"|translate}}</a>
+                        <a class="dropdown-item waves-light" mdbRippleRadius routerLink="/" href="#/"
+                            (click)="signOut1()">{{"common.signout"|translate}}</a>
                     </div>
                 </li>
                 <!-- Modal -->
@@ -122,7 +122,7 @@
 <nav class="navbar cust-navbar navbar-expand-md sticky-top navbar-dark" id="navbar-desktop">
 
     <a routerLink="/" href="#/" class="navbar-brand">
-        <img src="assets/images/logo.png" class="img-fluid cust-logo" alt="Responsive image">
+        <img src="assets/images/logo1.png" class="img-fluid cust-logo" alt="Responsive image">
     </a>
     <button class="navbar-toggler togl-btn" type="button" data-toggle="collapse" data-target="#navbar5">
         <span class="navbar-toggler-icon"></span>
@@ -145,8 +145,11 @@
             <li class="nav-item cart">
                 <span class="crtt-items cust-cartitem" data-toggle="modal" data-target="#cartmodal">
                     <a>
-                        <i class="fa fa-shopping-cart" aria-hidden="true" (click)="getCart()">
-                        </i>
+                        <img src="assets/images/cart_img.png" class="img-fluid cart-logo" alt="Responsive image"
+                            (click)="getCart()">
+
+                        <!-- <i class="fa fa-shopping-cart" aria-hidden="true" (click)="getCart()"> -->
+                        <!-- </i> -->
                     </a>
                 </span>
             </li>
@@ -235,12 +238,12 @@
     <div class="card card-body card-accordion">
         <div class="accordion category-accordion" id="accordion">
             <h5 class="text-center">Categories</h5>
-            <div class="card">
+            <div class="card" *ngFor="let cat of category">
                 <div class="card-header" id="heading-1">
                     <h5 class="mb-0">
                         <a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true"
-                            aria-controls="collapse-1">
-                            Fruits & Vegetables
+                            aria-controls="collapse-1" (click)="showProbyCat(cat.id,'category',cat.category_name)">
+                            {{cat.category_name}}
                         </a>
                     </h5>
                 </div>
@@ -415,8 +418,7 @@
             <div class="modal-body">
                 <div id="triangle-up"></div>
                 <div>
-                    <a class="waves-light" mdbRippleRadius
-                        href="http://fansadda.mobi/mahaliuserecommerse/#/">{{"common.eCommerce"|translate}}
+                    <a class="waves-light" mdbRippleRadius href="../userecommerse/">{{"common.eCommerce"|translate}}
                     </a>
                     <!-- <hr class="cust-hr" />
               <a class="waves-light" data-dismiss="modal" mdbRippleRadius routerLink="/myaccount">{{"common.myProfile"|translate}}
@@ -436,8 +438,8 @@
                         routerLink="/deliveryAddr">{{"common.myAddress"|translate}}
                     </a>
                     <hr class="cust-hr" />
-                    <a class="waves-light" data-dismiss="modal" mdbRippleRadius href="#"
-                        (click)="signOut()">{{"common.signout"|translate}}</a>
+                    <a class="waves-light" data-dismiss="modal" mdbRippleRadius routerLink="/" href="#/"
+                        (click)="signOut1()">{{"common.signout"|translate}}</a>
                 </div>
             </div>
         </div>
@@ -482,7 +484,7 @@
                                 <input type="text" name="quantity" [(ngModel)]="item.quantity" readonly="readonly"
                                     value="{{item.quantity}}" />
                                 <button class="plus-btn" type="button" name="button"
-                                    (click)="checkProdQuty(item.cart_id,item.product_id,item.sku_id,item.quantity,item.vendorid_as_owner)">
+                                    (click)="checkProdQuty(item.cart_id,item.product_id,item.sku_id,item.quantity,item.vendorid_as_owner,item.vendor_product_id)">
                                     <i class=" fa fa-plus" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -591,9 +593,9 @@
             <div class="" role="document">
                 <div class=" cust-content">
                     <div class="cust-mdlhdr">
-                        <button type="button" class="close loc-close" (click)="hideLocation()">
+                        <!-- <button type="button" class="close loc-close" (click)="hideLocation()">
                             <i class="fa fa-times-circle cls-icon" aria-hidden="true"></i>
-                        </button>
+                        </button> -->
                     </div>
                     <div class="logo-popup">
                         <img _ngcontent-c3="" alt="Responsive image" class="img-fluid cust-logo"
@@ -664,23 +666,69 @@
                     <i class="fa fa-times-circle cls-icon" aria-hidden="true"></i>
                 </button>
             </div>
+            <div class="row">
+                <mat-radio-group aria-label="Select an option" (change)="radioChange($event)">
+                    <mat-radio-button value="1" [checked]='true'>Login with Email</mat-radio-button>
+                    <mat-radio-button value="2">Login with Mobile Number</mat-radio-button>
+                </mat-radio-group>
+            </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
                         <form [formGroup]="loginForm">
-                            <div class="form-group cust-frmgrp1 row">
+                            <div class="form-group cust-frmgrp1 row" *ngIf="selLogin ==1">
                                 <label class="col-sm-5 col-md-5 col-form-label">Email Id
                                     <span class="float-right">:</span>
                                 </label>
                                 <div class="col-sm-7 col-md-7">
                                     <input type="text" formControlName="email" class="form-control"
-                                        [ngClass]="{ 'is-invalid': loginSubmitted && f1.email.errors }" />
-                                    <div *ngIf="loginSubmitted && f1.email.errors" class="invalid-feedback">
+                                        [[ngClass]="{ 'is-invalid': email_errors }" />
+                                    <!-- <div *ngIf="loginSubmitted && f1.email.errors" class="invalid-feedback">
                                         <div *ngIf="f1.email.errors.required">Email Id is required</div>
                                         <div *ngIf="f1.email.errors.email">Email must be a valid email address</div>
+                                    </div> -->
+                                    <div *ngIf="email_errors" class="invalid-feedback">
+                                        <div *ngIf="email_errors">Email is required
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
+                            <div class="input-group mb-3" *ngIf="selLogin ==2">
+                                <label class="col-sm-5 col-md-5 col-form-label label-mobile">Mobile Number
+                                    <span class="float-right dot-mobile">:</span>
+                                </label>
+                                <div class="input-group-prepend group">
+                                    <button class="input-button" type="button" id="button-addon1">+973</button>
+                                </div>
+                                <!-- <div class="col-sm-7 col-md-7"> -->
+                                <input type="text" formControlName="mobile_number" class="mobile-number"
+                                    [ngClass]="{ 'is-invalid': loginSubmitted && f1.mobile_number.errors }"
+                                    maxlength="8" />
+                                <div *ngIf="loginSubmitted && f1.email.errors" class="invalid-feedback">
+                                    <div *ngIf="f1.mobile_number.errors.required">Mobile Number is required</div>
+                                    <div *ngIf="f1.mobile_number.errors.minlength">Mobile Number must be at least 8
+                                        numbers
+                                    </div>
+                                </div>
+                                <!-- </div> -->
+                            </div>
+                            <!-- <div class="form-group cust-frmgrp1 row" *ngIf="selLogin ==2">
+                                <label class="col-sm-5 col-md-5 col-form-label">Mobile Number
+                                    <span class="float-right">:</span>
+                                </label>
+                                <div class="col-sm-7 col-md-7">
+                                    <input type="text" formControlName="mobile_number" class="form-control"
+                                        [ngClass]="{ 'is-invalid': loginSubmitted && f1.mobile_number.errors }" />
+                                    <div *ngIf="loginSubmitted && f1.email.errors" class="invalid-feedback">
+                                        <div *ngIf="f1.mobile_number.errors.required">Mobile Number is required</div>
+                                        <div *ngIf="f1.mobile_number.errors.minlength">Mobile Number must be at least 8
+                                            numbers
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div> -->
                             <div class="form-group cust-frmgrp1 row">
                                 <label class="col-sm-5 col-md-5 col-form-label">Password
                                     <span class="float-right">:</span>
@@ -724,11 +772,12 @@
                             <h5>Or</h5>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <div class="p-2"><a href=""><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                            <div class="p-2"><a (click)="socialSignIn('facebook')"><i class="fa fa-facebook-official"
+                                        aria-hidden="true"></i></a>
                             </div>
-                            <div class="p-2"><a href=""><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
-                            </div>
-                            <div class="p-2"><a href=""><i class="fa fa-google-plus-official"
+                            <!-- <div class="p-2"><a href=""><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+                            </div> -->
+                            <div class="p-2"><a (click)="socialSignIn('google')"><i class="fa fa-google-plus-official"
                                         aria-hidden="true"></i></a></div>
                         </div>
 
@@ -738,6 +787,16 @@
         </div>
     </div>
 </div>
+<!-- <ng-template #proData>
+    <h4 class="marginBottom">My {{user.provider}} profile</h4>
+    <br />
+    <img src="{{user.image}}" class="marginBottom">
+    <div class="marginBottom">
+        <h4>{{user.name}}</h4>
+        <p>{{user.email}}</p>
+    </div>
+    <button class="btn btn-danger" (click)="signOut()">Sign out</button>
+</ng-template> -->
 <!-- ./login modal -->
 
 <!-- signup modal -->
@@ -792,7 +851,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group cust-frmgrp1 row">
+                            <!-- <div class="form-group cust-frmgrp1 row">
                                 <label class="col-sm-5 col-md-5 col-form-label">Mobile Number
                                     <span class="float-right">:</span>
                                 </label>
@@ -805,6 +864,22 @@
                                         <div *ngIf="f.mobile_number.errors.minlength">Mobile Number must be 10
                                             Numbers</div>
                                     </div>
+                                </div>
+                            </div> -->
+                            <div class="input-group mb-3">
+                                <label class="col-sm-5 col-md-5 col-form-label label-mobile">Mobile Number
+                                    <span class="float-right dot-mobile">:</span>
+                                </label>
+                                <div class="input-group-prepend group">
+                                    <button class="input-button" type="button" id="button-addon1">+973</button>
+                                </div>
+                                <input myNumberOnly type="text" class="mobile-number" formControlName="mobile_number"
+                                    maxlength="8" [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors}">
+                                <div *ngIf="submitted && f.mobile_number.errors"
+                                    class="invalid-feedback mobile_invalid">
+                                    <div *ngIf="f.mobile_number.errors.required">Mobile number is required</div>
+                                    <div *ngIf="f.mobile_number.errors.minlength">Mobile Number must be 8
+                                        Numbers</div>
                                 </div>
                             </div>
                             <div class="form-group cust-frmgrp1 row">
@@ -860,8 +935,8 @@
                         <div class="d-flex justify-content-center">
                             <div class="p-2"><a href=""><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
                             </div>
-                            <div class="p-2"><a href=""><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
-                            </div>
+                            <!-- <div class="p-2"><a href=""><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+                            </div> -->
                             <div class="p-2"><a href=""><i class="fa fa-google-plus-official"
                                         aria-hidden="true"></i></a></div>
                         </div>
@@ -888,30 +963,51 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form>
-
-                            <div class="form-group cust-frmgrp1 row">
+                        <form *ngIf="selLogin ==2" [formGroup]="forgotForm" (ngSubmit)="forgot()">
+                            <div class="input-group mb-3">
                                 <label class="col-sm-5 col-md-5 col-form-label frgot-size">Enter Mobile Number
                                     <span class="float-right">:</span>
                                 </label>
-
+                                <!-- <div class="col-sm-7 col-md-7"> -->
+                                <!-- <form [formGroup]="forgotForm" (ngSubmit)="forgot()"> -->
+                                <div class="input-group-prepend group">
+                                    <button class="input-button" type="button" id="button-addon1">+973</button>
+                                </div>
+                                <input myNumberOnly type="text" formControlName="mob_number" class="form-control"
+                                    [ngClass]="{ 'is-invalid': forgotSubmitted && f2.mob_number.errors }"
+                                    maxlength="8" />
+                                <div *ngIf="forgotSubmitted && f2.mob_number.errors"
+                                    class="invalid-feedback mobile_invalid">
+                                    <div *ngIf="f2.mob_number.errors.required">Mobile number is required</div>
+                                </div>
+                                <div class="form-group cust-frmgrp">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-danger cust-logbtn submt-btnf">Submit</button>
+                                    </div>
+                                </div>
+                                <!-- </form> -->
+                                <!-- </div> -->
+                            </div>
+                        </form>
+                        <form *ngIf="selLogin ==1" [formGroup]="forgotForm1" (ngSubmit)="forgot1()">
+                            <div class="form-group cust-frmgrp1 row" *ngIf="selLogin ==1">
+                                <label class="col-sm-5 col-md-5 col-form-label">Email Id
+                                    <span class="float-right">:</span>
+                                </label>
                                 <div class="col-sm-7 col-md-7">
-                                    <form [formGroup]="forgotForm" (ngSubmit)="forgot()">
-                                        <input myNumberOnly type="text" formControlName="mob_number"
-                                            class="form-control"
-                                            [ngClass]="{ 'is-invalid': forgotSubmitted && f2.mob_number.errors }" />
-                                        <div *ngIf="forgotSubmitted && f2.mob_number.errors" class="invalid-feedback">
-                                            <div *ngIf="f2.mob_number.errors.required">Mobile number is required</div>
-                                        </div>
-                                        <div class="form-group cust-frmgrp">
-                                            <div class="col-sm-12">
-                                                <button class="btn btn-danger cust-logbtn submt-btn">Submit</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    <input type="text" formControlName="email_id" class="form-control"
+                                        [ngClass]="{ 'is-invalid': forgotSubmitted1 && f3.email_id.errors }" />
+                                    <div *ngIf="forgotSubmitted1 && f3.email_id.errors" class="invalid-feedback">
+                                        <div *ngIf="f3.email_id.errors.required">Email Id is required</div>
+                                        <div *ngIf="f3.email_id.errors.email">Email must be a valid email address</div>
+                                    </div>
+                                </div>
+                                <div class="form-group cust-frmgrp">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-danger cust-logbtn submt-btnf">Submit</button>
+                                    </div>
                                 </div>
                             </div>
-
                         </form>
 
                     </div>

@@ -89,3 +89,14 @@ a {
 .footer-background{
   background:#f7f6f2;
 }
+.back-color {
+  background: #ece8d7;
+  padding-top: 90px;
+  }
+  .bottom-cont p {
+    float: unset;
+    text-align: center;
+    }
+    @media screen and (max-width:520px) {
+      .bottom-cont p {float: unset;text-align:center;}
+      }

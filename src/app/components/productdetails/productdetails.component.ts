@@ -32,13 +32,17 @@ export class ProductdetailsComponent implements OnInit {
   venId;
   discount;
   discountPer;
+  wish_list;
+  cart_id;
+  cat_id1;
   ngOnInit() {
     this.product = this.productService.product;
     this.sub = this.route
       .data
       .subscribe(v => console.log(v));
     this.getProductById();
-
+    this.getCart();
+    this.getWish();
   }
 
   starList: boolean[] = [true, true, true, true, true];       // create a list which contains status of 5 stars
@@ -91,24 +95,28 @@ export class ProductdetailsComponent implements OnInit {
   //   })
   // }
   getProductById() {
+    this.getWish();
     this.skuData = [];
     this.appService.getProductById(this.prodId).subscribe(res => {
-      this.prodId = res.json().products.product_id;
-      this.prodsData = res.json().products;
-      var uniq = {}
-      var arrFiltered = []
-      if (this.prodsData.length > 0) {
-        arrFiltered = this.prodsData.filter(obj => !uniq[obj.product_id] && (uniq[obj.product_id] = true));
-      } else {
-        arrFiltered = [];
-      }
-      this.prodsData = arrFiltered;
+      this.prodId = res.json().product_id;
+      this.prodsData = res.json().vendor_products;
+      // var uniq = {}
+      // var arrFiltered = []
+      // if (this.prodsData.length > 0) {
+      //   arrFiltered = this.prodsData.filter(obj => !uniq[obj.product_id] && (uniq[obj.product_id] = true));
+      // } else {
+      //   arrFiltered = [];
+      // }
+      // this.prodsData = arrFiltered;
       for (var i = 0; i < this.prodsData.length; i++) {
         this.prodId = this.prodsData[0].product_id;
         this.prodName = this.prodsData[0].product_name;
         this.category_name = this.prodsData[0].category_name;
         this.vendor_product_id = this.prodsData[0].vendor_product_id;
         this.discount = this.prodsData[0].discount;
+        this.wish_list = this.prodsData[0].wish_list;
+        this.quantity = this.prodsData[0].quantity;
+        this.cat_id1 = this.prodsData[0].category_id;
         // this.updated_discount = this.prodsData[0].category_name.vendor_product_id.updated_discount
         this.sub_category_name = this.prodsData[0].sub_category_name;
         for (var j = 0; j < this.prodsData[i].sku_row.length; j++) {
@@ -119,7 +127,6 @@ export class ProductdetailsComponent implements OnInit {
           this.discountPer = this.prodsData[i].sku_row[0].Discount_percentage;
           this.skid = this.prodsData[0].sku_row[0].skid;
           this.image = this.prodsData[i].sku_row[0].sku_images[0].sku_image;
-          this.quantity = this.prodsData[0].sku_row[0].quantity;
           this.size = this.prodsData[0].sku_row[0].size;
           this.description = this.prodsData[i].sku_row[0].description;
           this.venId = this.prodsData[0].vendor_id;
@@ -130,6 +137,35 @@ export class ProductdetailsComponent implements OnInit {
           }
         }
       }
+      let params = {
+        "country": sessionStorage.country,
+        "pin_code": sessionStorage.pinCode === "undefined" ? "null" : sessionStorage.pinCode,
+        "area": sessionStorage.Area === "undefined" ? "null" : sessionStorage.Area,
+        "user_id": sessionStorage.userId
+      }
+      this.appService.productByCatId(this.cat_id1, params).subscribe(res => {
+        this.prodData = res.json().vendor_products;
+        if (this.prodData != undefined) {
+          for (var i = 0; i < this.prodData.length; i++) {
+            for (var j = 0; j < this.prodData[i].sku_row.length; j++) {
+              this.prodData[i].selling_price = this.prodData[i].updated_price - this.prodData[i].updated_discount;
+              this.prodData[i].actual_price = this.prodData[i].updated_price;
+              this.prodData[i].image = this.prodData[i].sku_row[0].sku_images[0].sku_image;
+              this.prodData[i].skid = this.prodData[i].sku_row[0].skid;
+              this.skid = this.prodData[i].sku_row[0].skid;
+            }
+
+          }
+          // this.noData = false;
+          // this.noData1 = false;
+        }
+        if (res.json().message === "No records Found") {
+          // this.noData = true;
+          // this.noData1 = false;
+        }
+      }, err => {
+
+      })
 
     }, err => {
 
@@ -169,22 +205,28 @@ export class ProductdetailsComponent implements OnInit {
       this.cartDetails = res.json().cart_details;
       this.cartCount = res.json().count;
       this.billing = res.json().selling_Price_bill;
+      for (var i = 0; i < this.cartDetails.length; i++) {
+        if (this.prodId === this.cartDetails[i].product_id) {
+          this.cart_id = this.cartDetails[i].cart_id;
+        }
+      }
+
     }, err => {
 
     })
   }
-  addtoCart(id) {
+  addtoCart(id, skuId, price, venId, vProdID, udisc) {
     var inData = {
       "products": [{
         product_id: id,
-        sku_id: this.skid
+        sku_id: skuId
       }],
       "user_id": JSON.parse(sessionStorage.getItem('userId')),
       "item_type": "grocery",
-      "price": this.selling_price,
-      "vendor_product_id": this.vendor_product_id,
-      "updated_discount": this.discount,
-      "vendorid_as_owner": this.venId,
+      "price": price,
+      "vendor_product_id": vProdID,
+      "updated_discount": udisc,
+      "vendorid_as_owner": venId,
 
     }
     this.appService.addtoCart(inData).subscribe(res => {
@@ -199,10 +241,10 @@ export class ProductdetailsComponent implements OnInit {
 
     })
   }
-  checkProdQuty(prodId) {
-    this.appService.checkQuty(prodId, this.skid, 0, this.venId1).subscribe(res => {
+  checkProdQuty(prodId, skuId, price, venId, vProdID, udisc) {
+    this.appService.checkQuty(prodId, skuId, 0, venId, vProdID).subscribe(res => {
       if (res.json().status === 200) {
-        this.addtoCart(prodId);
+        this.addtoCart(prodId, skuId, price, venId, vProdID, udisc);
       }
       else {
         swal(res.json().message, "", "error");
@@ -213,38 +255,51 @@ export class ProductdetailsComponent implements OnInit {
   }
   addtoWish() {
     var inData = {
-      "user_id": JSON.parse(sessionStorage.userId),
+      "user_id": (sessionStorage.userId),
       "product_id": this.prodId,
       "sku_id": this.skid,
       "item_type": "grocery"
     }
     this.appService.addToWish(inData).subscribe(res => {
-      console.log(res.json());
-      swal(res.json().message, "", "success");
+      if (sessionStorage.userId === undefined) {
+        swal("Please Login", "", "error");
+      } else if (res.json().status === 400) {
+        swal(res.json().message, "", "error");
+      } else {
+        swal(res.json().message, "", "success");
+        this.getWish();
+      }
     }, err => {
 
     })
   }
-  itemIncrease(cartId) {
-    for (var i = 0; i < this.cartData.length; i++) {
-      if (this.cartData[i].cart_id === cartId) {
-        this.cartData[i].quantity = this.cartData[i].quantity + 1;
-        this.modifyCart(this.cartData[i].quantity, cartId);
+  getWish() {
+    this.appService.getWish().subscribe(res => {
+      console.log(res.json());
+    }, err => {
+
+    })
+  }
+  itemIncrease() {
+    for (var i = 0; i < this.cartDetails.length; i++) {
+      if (this.cartDetails[i].cart_id === this.cart_id) {
+        this.cartDetails[i].quantity = this.cartDetails[i].quantity + 1;
+        this.modifyCart(this.cartDetails[i].quantity, this.cart_id);
         // this.getCart();
         return;
       }
     }
   }
 
-  itemDecrease(cartId) {
-    for (var i = 0; i < this.cartData.length; i++) {
-      if (this.cartData[i].cart_id === cartId) {
-        if (this.cartData[i].quantity === 1) {
-          this.delCart(cartId);
+  itemDecrease() {
+    for (var i = 0; i < this.cartDetails.length; i++) {
+      if (this.cartDetails[i].cart_id === this.cart_id) {
+        if (this.cartDetails[i].quantity === 1) {
+          this.delCart(this.cart_id);
           return;
         } else {
-          this.cartData[i].quantity = this.cartData[i].quantity - 1;
-          this.modifyCart(this.cartData[i].quantity, cartId);
+          this.cartDetails[i].quantity = this.cartDetails[i].quantity - 1;
+          this.modifyCart(this.cartDetails[i].quantity, this.cart_id);
         }
         // this.getCart();
         return;
@@ -287,4 +342,35 @@ export class ProductdetailsComponent implements OnInit {
 
     })
   }
+  // getCatProducts() {
+  //   let params = {
+  //     "country": sessionStorage.country,
+  //     "pin_code": sessionStorage.pinCode === "undefined" ? "null" : sessionStorage.pinCode,
+  //     "area": sessionStorage.Area === "undefined" ? "null" : sessionStorage.Area,
+  //     "user_id": sessionStorage.userId
+  //   }
+  //   this.appService.productByCatId(this.cat_id1, params).subscribe(res => {
+  //     this.prodData = res.json().vendor_products;
+  //     if (this.prodData != undefined) {
+  //       for (var i = 0; i < this.prodData.length; i++) {
+  //         for (var j = 0; j < this.prodData[i].sku_row.length; j++) {
+  //           this.prodData[i].selling_price = this.prodData[i].updated_price - this.prodData[i].updated_discount;
+  //           this.prodData[i].actual_price = this.prodData[i].updated_price;
+  //           this.prodData[i].image = this.prodData[i].sku_row[0].sku_images[0].sku_image;
+  //           this.prodData[i].skid = this.prodData[i].sku_row[0].skid;
+  //           this.skid = this.prodData[i].sku_row[0].skid;
+  //         }
+
+  //       }
+  //       // this.noData = false;
+  //       // this.noData1 = false;
+  //     }
+  //     if (res.json().message === "No records Found") {
+  //       // this.noData = true;
+  //       // this.noData1 = false;
+  //     }
+  //   }, err => {
+
+  //   })
+  // }
 }

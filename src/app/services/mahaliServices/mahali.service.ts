@@ -85,7 +85,8 @@ export class appService {
     }
     getProductById(params) {
         const headers = new Headers({ 'Content-Type': "application/JSON" });
-        return this.http.get(AppSettings.ProductById + "/" + params, { headers: headers });
+        this.vendor_id = sessionStorage.getItem('userId');
+        return this.http.get(AppSettings.ProductById + "/" + params + "/" + this.vendor_id, { headers: headers });
     }
     getWholesellerById(params) {
         const headers = new Headers({ 'Content-Type': "application/JSON" });
@@ -141,9 +142,9 @@ export class appService {
         const headers = new Headers({ 'Content-Type': "application/JSON" });
         return this.http.post(AppSettings.productBySubCatId + "/" + params, params1, { headers: headers });
     }
-    searchProducts(params) {
+    searchProducts(params, par) {
         const headers = new Headers({ 'Content-Type': "application/JSON" });
-        return this.http.get(AppSettings.searchProducts + "/" + params, { headers: headers });
+        return this.http.post(AppSettings.searchProducts + "/" + params, par, { headers: headers });
     }
     wholeProducts(params) {
         const headers = new Headers({ 'Content-Type': "application/JSON" });
@@ -354,12 +355,37 @@ export class appService {
         const headers = new Headers({ 'Content-Type': "application/JSON" });
         return this.http.post(AppSettings.getBannerProds + "/" + ImgId, params, { headers: headers });
     }
-    checkQuty(proId, skuId, qnt, venId) {
+    checkQuty(proId, skuId, qnt, venId, vProdID) {
         const headers = new Headers({ 'Content-Type': "application/JSON" });
-        return this.http.get(AppSettings.checkQuty + "/" + proId + "/" + skuId + "/" + venId + "/" + qnt, { headers: headers });
+        return this.http.get(AppSettings.checkQuty + "/" + vProdID + "/" + qnt, { headers: headers });
     }
     getBrandCats() {
         const headers = new Headers({ 'Content-Type': "application/JSON" });
         return this.http.get(AppSettings.getBrandCats, { headers: headers });
+    }
+    getDetailsById() {
+        const headers = new Headers({ 'Content-Type': "application/JSON" });
+        this.user_id = sessionStorage.userId;
+        return this.http.get(AppSettings.getDetailsById + "/" + this.user_id, { headers: headers });
+    }
+    socialLogin(params) {
+        const headers = new Headers({ 'Content-Type': "application/JSON" });
+        // this.user_id = sessionStorage.userId;
+        return this.http.post(AppSettings.socialLogin, params, { headers: headers });
+    }
+    forgotwithEmail(params) {
+        const headers = new Headers({ 'Content-Type': "application/JSON" });
+        // this.user_id = sessionStorage.userId;
+        return this.http.post(AppSettings.forgotwithEmail, params, { headers: headers });
+    }
+    getNotifications1() {
+        const headers = new Headers({ 'Content-Type': "application/JSON" });
+        this.user_id = sessionStorage.userId;
+        return this.http.get(AppSettings.getNotifications + "/" + this.user_id + "/" + "grocery", { headers: headers });
+    }
+    getoffersGro(params) {
+        const headers = new Headers({ 'Content-Type': "application/JSON" });
+        // this.user_id = sessionStorage.userId;
+        return this.http.post(AppSettings.getoffersGro, params, { headers: headers });
     }
 }

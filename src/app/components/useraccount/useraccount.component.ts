@@ -21,6 +21,8 @@ export class UseraccountComponent implements OnInit {
   submitted = false;
   p: number = 1;
   skid;
+  noticationData = [];
+  prodData = [];
   // addressForm: FormGroup,
   // productForm: FormGroup
   constructor(
@@ -38,6 +40,7 @@ export class UseraccountComponent implements OnInit {
       this.getOrders();
     } else if (this.page === 'notifications') {
       this.showNotifications = true;
+      this.notifications();
     } else if (this.page === 'offerzone') {
       this.showOfferZone = true;
     } else if (this.page === 'changePw') {
@@ -73,10 +76,11 @@ export class UseraccountComponent implements OnInit {
       retype_password: ['', [Validators.required, Validators.minLength(6)]],
       user_id: sessionStorage.userId
     });
-    this.VegetablesData();
-    this.fruitsData();
-    this.breadData();
+    // this.VegetablesData();
+    // this.fruitsData();
+    // this.breadData();
     this.getOrders();
+    this.getOffer();
   }
 
   page;
@@ -204,7 +208,11 @@ export class UseraccountComponent implements OnInit {
     this.showProfile = false;
     this.showOfferZone = false;
     this.showEditAddress = false;
+    this.appService.getNotifications1().subscribe(res => {
+      this.noticationData = res.json().data;
+    })
   }
+
 
   showBukedOrderDetails(ordId) {
     this.showNotifications = false;
@@ -231,8 +239,8 @@ export class UseraccountComponent implements OnInit {
       this.ordData = resp.json().Order.products;
       for (var i = 0; i < this.ordData.length; i++) {
         this.ordData[i].size = this.ordData[i].sku_row[0].size;
-        this.ordData[i].selling_price = this.ordData[i].sku_row[0].selling_price;
-        this.ordData[i].quantity = this.ordData[i].quantity;
+        this.ordData[i].selling_price = this.ordData[i].updated_price;
+        this.ordData[i].quantity = this.ordData[i].updated_quantity;
         this.ordData[i].color = this.ordData[i].sku_row[0].filter_color;
         this.ordData[i].product_image = this.ordData[i].sku_row[0].sku_images[0].sku_image;
       }
@@ -273,6 +281,7 @@ export class UseraccountComponent implements OnInit {
   }
   profileData = {
     first_name: '',
+    last_name: '',
     email: '',
     mobile_number: '',
     area: '',
@@ -308,6 +317,7 @@ export class UseraccountComponent implements OnInit {
   updateProfile() {
     var inDate = {
       first_name: this.profileData.first_name,
+      last_name: this.profileData.last_name,
       email: this.profileData.email,
       mobile_number: this.profileData.mobile_number,
       area: this.profileData.area,
@@ -346,8 +356,9 @@ export class UseraccountComponent implements OnInit {
             this.wishData[i].size = this.wishData[i].products.sku_details[j].size;
             this.wishData[i].skid = this.wishData[i].products.sku_details[j].skid;
             this.wishData[i].product_image = this.wishData[i].products.sku_details[j].sku_images[0].sku_image;
-
-
+            this.wishData[i].vendorid_as_owner = this.wishData[i].products.vendorid_as_owner;
+            this.wishData[i].vendor_product_id = this.wishData[i].products.vendor_product_id;
+            this.wishData[i].updated_discount = this.wishData[i].products.updated_discount;
           }
           // this.wishData[i].sku_details.skid = this.wishData[i].sku_details.skid;
           // this.wishData[i].product_image = this.wishData[i].products.product_name;
@@ -525,14 +536,18 @@ export class UseraccountComponent implements OnInit {
   }
   cartDetails = [];
   cartCount = [];
-  addtoCart(Id, skId) {
+  addtoCart(Id, skId, price, venId, vProdID, udisc) {
     var inData = {
       "products": [{
         product_id: Id,
         sku_id: skId
       }],
       "user_id": JSON.parse(sessionStorage.getItem('userId')),
-      "item_type": "grocery"
+      "item_type": "grocery",
+      "price": price,
+      "vendorid_as_owner": venId,
+      "vendor_product_id": vProdID,
+      "updated_discount": udisc
     }
     this.appService.addtoCart(inData).subscribe(res => {
       if (res.json().status === 400) {
@@ -663,5 +678,47 @@ export class UseraccountComponent implements OnInit {
     }, err => {
 
     })
+  }
+  checkProdQuty(prodId, skuId, price, venId, vProdID, udisc) {
+    this.appService.checkQuty(prodId, skuId, 0, venId, vProdID).subscribe(res => {
+      if (res.json().status === 200) {
+        this.addtoCart(prodId, skuId, price, venId, vProdID, udisc);
+      } else {
+        swal(res.json().message, "", "error");
+        // this.NoStockMsg = res.json().data;
+      }
+    })
+  }
+  getOffer() {
+    let params = {
+      "country": sessionStorage.country,
+      "pin_code": sessionStorage.pinCode === "undefined" ? "null" : sessionStorage.pinCode,
+      "area": sessionStorage.Area === "undefined" ? "null" : sessionStorage.Area,
+      "user_id": sessionStorage.userId
+    }
+    this.appService.getoffersGro(params).subscribe(res => {
+      this.prodData = res.json().vendor_products;
+      if (this.prodData != undefined) {
+        for (var i = 0; i < this.prodData.length; i++) {
+          for (var j = 0; j < this.prodData[i].sku_row.length; j++) {
+            this.prodData[i].selling_price = this.prodData[i].updated_price - this.prodData[i].updated_discount;
+            this.prodData[i].actual_price = this.prodData[i].updated_price;
+            this.prodData[i].image = this.prodData[i].sku_row[0].sku_images[0].sku_image;
+            this.prodData[i].skid = this.prodData[i].sku_row[0].skid;
+            this.skid = this.prodData[i].sku_row[0].skid;
+          }
+
+        }
+        // this.noData = false;
+        // this.noData1 = false;
+      }
+      if (res.json().message === "No records Found") {
+        // this.noData = true;
+        // this.noData1 = false;
+      }
+    }, err => {
+
+    })
+    // this.subCatName1 = '';
   }
 }

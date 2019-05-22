@@ -92,45 +92,43 @@
 
         </div>
         <div class="row">
-          <div class="col-md-3 item" *ngFor="let item of skuData">
+          <div class="col-md-3 item" *ngFor="let data of wishData">
             <div class="wrapper">
               <div class="card">
-                <div class="product-image">
-                  <!-- <img class="img-fluid" [src]="item.image" alt="Card image cap"> -->
-                  <img *ngIf="item.image===''" src="assets/images/dummy-pro.png"
-                    (click)="showProduxtDetails(item.product_id)" class="img-fluid">
-                  <img *ngIf="item.image!==''" src="{{item.image}}" (click)="showProduxtDetails(item.product_id)"
-                    class="img-fluid">
-                </div>
-                <div class="card-block add-to-cart">
-                  <!-- <h5 class="text-center overflow">{{item.product_name}} </h5> -->
-                  <h5 class="text-center overflow"><a data-toggle="tooltip" data-placement="right"
-                      title="{{item.product_name}}">{{item.product_name}}</a></h5>
+                <img src="assets/images/background-img.png" class="bg-layer">
+                <img class="img-fluid gro-img" [src]="data.image" alt="Card image cap"
+                  (click)="showProduxtDetails(data.products.vendor_product_id,data.products.vendorid_as_owner)">
+                <div class="card-block">
+                  <h5 class="text-center">{{data.product_name}} </h5>
                   <p class="text-center">
-                    <span class="text-green"><strong>BD {{item.selling_price}}</strong></span>&nbsp;
-                    <strike>BD {{item.actual_price}}</strike>
+                    BD {{data?.selling_price}}
+                    <strike>BD {{data?.actual_price}}</strike>
                   </p>
-                  <p class="text-center">
-                    <span class="text-green"><strong>BD
-                        {{([(item.actual_price-item.selling_price)/item.selling_price]*100).toFixed(0)}}%</strong></span>&nbsp;
-                    <strike>OFF</strike>
-                  </p>
-                  <div class="quantity-price text-center">
+                  <div class="sort">
                     <select (change)="changeSize($event.target.value)">
-                      <option [value]="item.skid">{{item.size}}</option>
+                      <option *ngFor="let sku of data.products.sku_details" [value]="sku?.skid">{{sku?.size}}-BD
+                        {{data?.selling_price}}
+                      </option>
                     </select>
                   </div>
-                  <button type="text" class="btn waves-effect waves-light"
-                    (click)="addtoCart(item.product_id,item.skid)">Add
-                    To Cart</button>
                 </div>
+                <button type="button" class="btn cart-btn"
+                  (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.products.vendorid_as_owner,data.products.vendor_product_id,data.products.updated_discount)">Add
+                  To
+                  Cart
+                </button>
               </div>
               <ul class="expand-button">
-                <li><a (click)="addtoCart(item.product_id,item.skid)"><i class="fas fa-shopping-basket"></i></a></li>
-                <li><a (click)="showProduxtDetails(item.product_id)"><img src="assets/images/maximize.png"></a></li>
+                <li><a
+                    (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.products.vendorid_as_owner,data.products.vendor_product_id,data.products.updated_discount)"><i
+                      class="fas fa-shopping-basket"></i></a>
+                </li>
+                <li><a (click)="open(data.skid)"><img src="assets/images/maximize.png"></a></li>
               </ul>
               <ul class="expand-button2 expand-button-2">
-                <li><a (click)="addtoWish(item.product_id,item.skid)"><i class="fas fa-heart"></i></a></li>
+                <li><a (click)="addtoWish(data.product_id,data.skid)"><i class="fas fa-heart"
+                      [ngStyle]="{'color':data.wish_list == 'true' ? 'yellow'  :  '#dfdfdf'}"></i></a>
+                </li>
               </ul>
               <div *ngIf="!skuData">
                 No data

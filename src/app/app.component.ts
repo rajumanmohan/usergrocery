@@ -11,10 +11,10 @@ import { ProductService } from './services/productservice';
 })
 export class AppComponent {
   title = 'app';
-  time = {hour: 13, minute: 30};
+  time = { hour: 13, minute: 30 };
   meridian = true;
 
-  
+
   constructor(private translate: TranslateService) {
     translate.setDefaultLang('en');
 
@@ -23,6 +23,6 @@ export class AppComponent {
 
   }
 
-  
+
 
 }

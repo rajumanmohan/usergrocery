@@ -3,6 +3,9 @@
 @import '~bootstrap/dist/css/bootstrap.css';
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+/* @import "sass/main"; */
+
 body {
   min-height: 75rem;
   /* padding-top: 4.5rem; */
@@ -268,4 +271,10 @@ ngbd-table-complete span.ngb-highlight {
   width: 100%;
   z-index: -1;
   height: 100px;
+}
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #7eba00 !important;
+}
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #7eba00 !important;
 }

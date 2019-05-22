@@ -82,11 +82,14 @@
         </div>
         <!-- all -->
         <div class="row " *ngIf="showAllProductsScreen">
-            <div class="col-md-3 recProds" *ngFor="let data of allproductsData">
+            <div class="col-md-3 col-sm-12 recProds" *ngFor="let data of allproductsData">
                 <div class="wrapper all">
                     <div class="card">
+                        <img src="assets/images/background-img.png" class="bg-layer">
+                        <!-- <div class="img-box"> -->
                         <img class="img-fluid gro-img" [src]="data.image" alt="Card image cap"
                             (click)="showProduxtDetails(data.vendor_product_id,data.vendorid_as_owner)">
+                        <!-- </div> -->
                         <div class="card-block">
                             <h5 class="text-center">{{data.product_name}} </h5>
                             <p class="text-center">
@@ -121,8 +124,10 @@
                     </ul>
                 </div>
             </div>
-        </div>
-        <!-- </div> -->
+            <div *ngIf="noData">
+                <h3 class="noData">No Products Found</h3>
+            </div>
+        </div> <!-- </div> -->
 
         <!--all -->
         <!-- vegetables -->
@@ -130,6 +135,7 @@
             <div class="col-md-3 recProds" *ngFor="let data of allProductsData">
                 <div class="wrapper all">
                     <div class="card">
+                        <img src="assets/images/background-img.png" class="bg-layer">
                         <img class="img-fluid gro-img" [src]="data.image" alt="Card image cap"
                             (click)="showProduxtDetails(data.vendor_product_id,data.vendorid_as_owner)">
                         <div class="card-block">
@@ -140,7 +146,8 @@
                             </p>
                             <div class="sort">
                                 <select (change)="changeSize($event.target.value)">
-                                    <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}}-BD
+                                    <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">
+                                        {{sku?.size}}-BD
                                         {{sku?.selling_price}}
                                     </option>
                                 </select>
@@ -165,8 +172,8 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="noData&&!showAllProductsScreen">
-            <h1 class="noData">No records Found</h1>
+        <div *ngIf="noData1&&!showAllProductsScreen">
+            <h3 class="noData">No Products Found</h3>
         </div>
         <!-- friuts -->
         <!-- zoom model -->
@@ -205,7 +212,7 @@
 </div>
 
 <div id="multi-item-example" class="carousel slide carousel-multi-item container" data-ride="carousel">
-    
+
     <!--Slides-->
     <div class="carousel-inner product-slider" role="listbox">
 
@@ -409,13 +416,16 @@
         </div>
         <!--/.Slides-->
         <!--Controls-->
-        <div class="controls-top controls">
+        <div class="controls-top controls" *ngIf="!noVen">
             <a class="btn-floating btn-small slider-btn-left" href="#multi-item-example6" data-slide="prev">
                 <i class="fas fa-long-arrow-alt-left"></i>
             </a>
             <a class="btn-floating btn-small slider-btn-right" href="#multi-item-example6" data-slide="next">
                 <i class="fas fa-long-arrow-alt-right"></i>
             </a>
+        </div>
+        <div *ngIf="noVen">
+            <h3>No Vendors Found</h3>
         </div>
         <!--/.Controls-->
     </div>

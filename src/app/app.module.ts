@@ -18,6 +18,8 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
 import { MyDatePickerModule } from 'mydatepicker';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GooglePlacesDirective } from './directives/google-places.directive';
+import { MatRadioModule } from '@angular/material';
+
 //components
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -47,9 +49,64 @@ import { AlphaNumericOnly } from './directives/number';
 import swal from 'sweetalert';
 import { SafePipeModule } from 'safe-pipe';
 import { StaticComponent } from './components/static/static.component'
+// import { SocialLoginModule } from 'angularx-social-login';
+// import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login';
+import {
+    SocialLoginModule,
+    AuthServiceConfig,
+    GoogleLoginProvider,
+    FacebookLoginProvider,
+} from "angular5-social-login";
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+// import { DateTimePickerComponent } from './date-time-picker/date-time-picker.component';
+// const config = new AuthServiceConfig([
+//     {
+//         id: GoogleLoginProvider.PROVIDER_ID,
+//         provider: new GoogleLoginProvider('AIzaSyABEH47hs67lPiHiStOt2pPCBLzgESmKqU.apps.googleusercontent.com')
+//     },
+//     {
+//         id: FacebookLoginProvider.PROVIDER_ID,
+//         provider: new FacebookLoginProvider('561602290896109')
+//     },
+//     // {
+//     //   id: LinkedInLoginProvider.PROVIDER_ID,
+//     //   provider: new LinkedInLoginProvider("78iqy5cu2e1fgr")
+//     // }
+// ]);
+// const config = new AuthServiceConfig([
+//     {
+//         id: GoogleLoginProvider.PROVIDER_ID,
+//         provider: new GoogleLoginProvider('135880028313-fova8mdgo74qont06ogd5aarfe12f2bm.apps.googleusercontent.com')
+//     },
+//     {
+//         id: FacebookLoginProvider.PROVIDER_ID,
+//         provider: new FacebookLoginProvider('561602290896109')
+//     },
+//     // {
+//     //   id: LinkedInLoginProvider.PROVIDER_ID,
+//     //   provider: new LinkedInLoginProvider("78iqy5cu2e1fgr")
+//     // }
+// ]);
+export function getAuthServiceConfigs() {
+    let config = new AuthServiceConfig(
+        [
+            {
+                id: FacebookLoginProvider.PROVIDER_ID,
+                provider: new FacebookLoginProvider("282577308941815")
+            },
+            {
+                id: GoogleLoginProvider.PROVIDER_ID,
+                provider: new GoogleLoginProvider("399771236213-39ssksv8p64f2ahp7jqk7h0bdk6qlurj.apps.googleusercontent.com")//local 4200
+                // provider: new GoogleLoginProvider("1049449910121-o94ih63qrnluqlfmnqsbuapnml83ffs0.apps.googleusercontent.com")//server 
 
-
-
+            },
+        ]
+    );
+    return config;
+}
+// export function provideConfig() {
+//     return config;
+// }
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
@@ -95,6 +152,11 @@ export function HttpLoaderFactory(http: HttpClient) {
         MyDatePickerModule,
         NgbModule,
         SafePipeModule,
+        MatRadioModule,
+        SocialLoginModule,
+        // DateTimePickerComponent,
+        OwlDateTimeModule,
+        OwlNativeDateTimeModule,
         MDBBootstrapModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
@@ -150,7 +212,11 @@ export function HttpLoaderFactory(http: HttpClient) {
         ], { useHash: true })
     ],
     schemas: [NO_ERRORS_SCHEMA],
-    providers: [appService],
+    providers: [appService, {
+        provide: AuthServiceConfig,
+        useFactory: getAuthServiceConfigs
+    }],
+    // providers: [appService],
     bootstrap: [AppComponent],
     entryComponents: [LoginComponent, RegistrationComponent, ItemsComponent, PromocodesComponent],
     exports: [BrowserModule, TranslateModule]

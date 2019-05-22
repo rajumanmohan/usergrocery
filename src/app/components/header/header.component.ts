@@ -10,8 +10,16 @@ import { appService } from './../../services/mahaliServices/mahali.service';
 declare var jQuery: any;
 declare var $: any;
 import { googlemaps } from 'googlemaps';
-
-import swal from 'sweetalert'
+// import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login';
+import swal from 'sweetalert';
+// import { AuthService } from 'angularx-social-login';
+// import { SocialUser } from 'angularx-social-login';
+import {
+    AuthService,
+    SocialUser,
+    FacebookLoginProvider,
+    GoogleLoginProvider
+} from 'angular5-social-login';
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
@@ -23,11 +31,14 @@ export class HeaderComponent implements OnInit {
     registerForm: FormGroup;
     loginForm: FormGroup;
     forgotForm: FormGroup;
+    forgotForm1: FormGroup;
     otpForm: FormGroup;
     changePassForm: FormGroup;
     submitted = false;
-    loginSubmitted = false;
+    // loginSubmitted = false;
     forgotSubmitted = false;
+    forgotSubmitted1 = false;
+
     category: any;
     product: any;
     loginDetails: any;
@@ -53,11 +64,15 @@ export class HeaderComponent implements OnInit {
     productsData = [];
     productArr = [];
     Area;
+    selLogin;
+    email_errors = false;
     public addrKeys: string[];
     public addr: object;
     public postal_code: object;
+    user: SocialUser;
+    public authorized: boolean = false;
 
-    constructor(public dialog: MatDialog, private router: Router, private formBuilder: FormBuilder, public appService: appService, private zone: NgZone) {
+    constructor(public dialog: MatDialog, private router: Router, private formBuilder: FormBuilder, public appService: appService, private zone: NgZone, private socialAuthService: AuthService) {
         if (sessionStorage.userId === undefined) {
             this.showRegistration = true;
             this.showLoginScreen = true;
@@ -75,11 +90,66 @@ export class HeaderComponent implements OnInit {
         if (!sessionStorage.country) {
             this.showLocation = true;
         }
+        this.getCart();
+    }
+    public socialSignIn(socialPlatform: string) {
+
+        let socialPlatformProvider;
+        if (socialPlatform == "facebook") {
+            socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+        } else if (socialPlatform == "google") {
+            socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+        }
+
+        this.socialAuthService.signIn(socialPlatformProvider).then(
+            (userData) => {
+                console.log(socialPlatform + " sign in data : ", userData);
+                this.user = userData;
+                // Now sign-in with userData        
+                if (userData != null) {
+                    this.authorized = true;
+                    this.user = userData;
+                    var inData = {
+                        email: this.user.email,
+                        id: this.user.id,
+                        idToken: this.user.idToken,
+                        image: this.user.image,
+                        name: this.user.name,
+                        provider: this.user.provider,
+                        token: this.user.token
+                    }
+                    this.appService.socialLogin(inData).subscribe(res => {
+                        sessionStorage.setItem('userId', (res.json().id));
+                        swal(res.json().message, "", "message");
+                        this.appService.getDetailsById().subscribe(response => {
+                            console.log(response.json());
+                            sessionStorage.setItem('phone', (response.json().data[0].mobile_number));
+                            sessionStorage.setItem('email', (response.json().data[0].email));
+                            sessionStorage.setItem('userId', (response.json().data[0].reg_id));
+                            sessionStorage.setItem('userName', (response.json().data[0].first_name) + " " + (response.json().data[0].last_name));
+                            this.loginDetails = response.json().data[0];
+                            this.showRegistration = false;
+                            this.showLoginScreen = false;
+                            this.myAccount = true;
+                            jQuery("#loginmodal").modal("hide");
+                            $('body').removeClass('modal-open');
+                            $('.modal-backdrop').remove();
+
+                        })
+                    })
+                }
+            }
+        );
 
     }
-    // item = {
-    //     quantity: 1
-    // }
+
+    public signOut() {
+        this.socialAuthService.signOut();
+        this.authorized = false;
+    }
+    item = {
+        quantity: 1
+    }
     userMobile;
     userName;
     location;
@@ -126,6 +196,10 @@ export class HeaderComponent implements OnInit {
             this.userMobile = (sessionStorage.getItem('phone'));
             this.userName = (sessionStorage.getItem('userName'));
         }
+        // this.authService.authState.subscribe((user) => {
+        //     this.user = user;
+        //     console.log(user);
+        // });
         // if ((sessionStorage.token)! === undefined) {
         //     this.showRegistration = false;
         //     this.showLoginScreen = false;
@@ -163,18 +237,27 @@ export class HeaderComponent implements OnInit {
             first_name: ['', Validators.required],
             last_name: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
-            mobile_number: ['', [Validators.required, Validators.minLength(10)]],
+            mobile_number: ['', [Validators.required, Validators.minLength(8)]],
             password: ['', [Validators.required, Validators.minLength(6)]],
             retype_password: ['', [Validators.required, Validators.minLength(6)]],
             latitude: 16.398956,
             longitude: 78.637009
         });
+        // this.loginForm = this.formBuilder.group({
+        //     email: ['', [Validators.required, Validators.email]],
+        //     mobile_number: ['', [Validators.required, Validators.minLength(8)]],
+        //     password: ['', [Validators.required, Validators.minLength(6)]]
+        // });
         this.loginForm = this.formBuilder.group({
-            email: ['', [Validators.required, Validators.email]],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            email: [''],
+            mobile_number: [''],
+            password: ['']
         });
         this.forgotForm = this.formBuilder.group({
-            mob_number: ['', [Validators.required]],
+            mob_number: ['', [Validators.required, Validators.minLength(8)]],
+        });
+        this.forgotForm1 = this.formBuilder.group({
+            email_id: ['', [Validators.required]],
         });
         this.otpForm = this.formBuilder.group({
             otp_number: ['', [Validators.required]],
@@ -192,8 +275,18 @@ export class HeaderComponent implements OnInit {
         //     this.geoLocation();
         // }
         this.Area = sessionStorage.city;
+        this.selLogin = 1;
     }
+    // signInWithGoogle(): void {
+    //     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(x => console.log(x));
+    // }
+    // signInWithFB(): void {
+    //     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(x => console.log(x));
+    // }
 
+    radioChange(selLogin) {
+        this.selLogin = selLogin.value || 1;
+    }
     // showLogin() {
     //     const dialogConfig = new MatDialogConfig();
     //     dialogConfig.disableClose = true;
@@ -225,8 +318,8 @@ export class HeaderComponent implements OnInit {
             }
         }
     }
-    checkProdQuty(cartId, prodId, skuId, quantity, venId) {
-        this.appService.checkQuty(prodId, skuId, quantity, venId).subscribe(res => {
+    checkProdQuty(cartId, prodId, skuId, quantity, venId, venproId) {
+        this.appService.checkQuty(prodId, skuId, quantity, venId, venproId).subscribe(res => {
             if (res.json().status === 200) {
                 this.itemIncrease(cartId);
             } else {
@@ -290,8 +383,8 @@ export class HeaderComponent implements OnInit {
     showProduxtDetails(prodId, venId1) {
         this.router.navigate(['/productdetails'], { queryParams: { prodId: prodId, venId1: venId1 } });
         jQuery("#itemdesc").modal("hide");
-                $('body').removeClass('modal-open');
-                $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
     }
     showAddress() {
         this.router.navigate(['/address'], { queryParams: { order: 'popular' } });
@@ -345,21 +438,21 @@ export class HeaderComponent implements OnInit {
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
     }
-    signOut() {
+    signOut1() {
         // sessionStorage.removeItem('token');
         sessionStorage.removeItem('email');
         sessionStorage.removeItem('phone');
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('userName');
         sessionStorage.removeItem('session');
+        // this.router.navigate(["/"]);
         this.showRegistration = true;
         this.showLoginScreen = true;
         this.myAccount = false;
         this.phone = false;
         sessionStorage.clear();
         this.getCart();
-        this.router.navigate(["/"]);
-        location.reload();
+        // location.reload();
     }
     get f() { return this.registerForm.controls; }
     registration(form: FormGroup) {
@@ -397,11 +490,23 @@ export class HeaderComponent implements OnInit {
     }
     get f1() { return this.loginForm.controls; }
     login() {
-        this.loginSubmitted = true;
-
-        if (this.loginForm.invalid) {
-            return;
+        if (this.selLogin == 1) {
+            delete this.loginForm.value.mobile_number;
+            if (this.loginForm.value.email == '') {
+                swal("Required Fields are missing", "", "error");
+            }
+        } else {
+            delete this.loginForm.value.email
+            if (this.loginForm.value.mobile_number == '') {
+                swal("Required Fields are missing", "", "error");
+            }
         }
+        // this.loginSubmitted = true;
+
+        // if (this.loginForm.invalid) {
+        //     return;
+        // }
+
         this.appService.login(this.loginForm.value).subscribe(resp => {
             if (resp.json().status === 200) {
                 sessionStorage.setItem("role", resp.json().role);
@@ -414,17 +519,33 @@ export class HeaderComponent implements OnInit {
                     this.showRegistration = false;
                     this.showLoginScreen = false;
                     this.myAccount = true;
-                    this.appService.loginDetailsbyEmail(this.loginForm.value.email).subscribe(response => {
-                        console.log(response.json());
-                        sessionStorage.setItem('phone', (response.json().data[0].mobile_number));
-                        sessionStorage.setItem('email', (response.json().data[0].email));
-                        sessionStorage.setItem('userId', (response.json().data[0].reg_id));
-                        sessionStorage.setItem('userName', (response.json().data[0].first_name) + " " + (response.json().data[0].last_name));
-                        this.loginDetails = response.json().data[0];
-                        this.phone = true;
-                        this.ngOnInit();
+                    sessionStorage.setItem('userId', (resp.json().id));
+                    if (this.loginForm.value.email != undefined) {
+                        this.appService.loginDetailsbyEmail(this.loginForm.value.email).subscribe(response => {
+                            console.log(response.json());
+                            sessionStorage.setItem('phone', (response.json().data[0].mobile_number));
+                            sessionStorage.setItem('email', (response.json().data[0].email));
+                            sessionStorage.setItem('userId', (response.json().data[0].reg_id));
+                            sessionStorage.setItem('userName', (response.json().data[0].first_name) + " " + (response.json().data[0].last_name));
+                            this.loginDetails = response.json().data[0];
+                            this.phone = true;
+                            this.ngOnInit();
 
-                    })
+                        })
+                    } else {
+                        this.appService.getDetailsById().subscribe(response => {
+                            console.log(response.json());
+                            sessionStorage.setItem('phone', (response.json().data[0].mobile_number));
+                            sessionStorage.setItem('email', (response.json().data[0].email));
+                            sessionStorage.setItem('userId', (response.json().data[0].reg_id));
+                            sessionStorage.setItem('userName', (response.json().data[0].first_name) + " " + (response.json().data[0].last_name));
+                            this.loginDetails = response.json().data[0];
+                            this.phone = true;
+                            this.ngOnInit();
+
+                        })
+                    }
+
                 } else {
                     sessionStorage.removeItem('email');
                     sessionStorage.removeItem('phone');
@@ -478,6 +599,31 @@ export class HeaderComponent implements OnInit {
                 swal(resp.json().message, "", "error");
             }
 
+
+        }, err => {
+            swal(err.json().message, "", "error");
+        })
+    }
+    get f3() { return this.forgotForm1.controls; }
+    forgot1() {
+        this.forgotSubmitted1 = true;
+        if (this.forgotForm1.invalid) {
+            return;
+        }
+        var inData = {
+            email: this.forgotForm1.value.email_id
+        }
+        this.appService.forgotwithEmail(inData).subscribe(resp => {
+            if (resp.json().status === 200) {
+                jQuery("#forgotpass").modal("hide");
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+                swal(resp.json().message, "", "success");
+                jQuery("#otpScreen").modal("show");
+                sessionStorage.setItem('mobile_number', (resp.json().phone_number));
+            } else {
+                swal(resp.json().message, "", "error");
+            }
 
         }, err => {
             swal(err.json().message, "", "error");
@@ -688,5 +834,4 @@ export class HeaderComponent implements OnInit {
     hideLocation() {
         this.showLocation = false;
     }
-
 }
