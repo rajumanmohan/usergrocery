@@ -440,144 +440,146 @@
 			<div>
 				<h3 class="profile-header">Wishlist</h3>
 			</div>
-			<table class="table">
-				<thead>
-					<tr class="table-headers wishlist-items">
-						<th scope="col" width="40%">Item Name</th>
-						<th scope="col" width="20%">Quantity</th>
-						<th scope="col" width="15%">Price</th>
-						<th scope="col" width="25%">Add To Cart</th>
-						<th></th>
+			<div class="table-responsive">
+					<table class="table">
+							<thead>
+								<tr class="table-headers wishlist-items">
+									<th scope="col" width="40%">Item Name</th>
+									<th scope="col" width="20%">Quantity</th>
+									<th scope="col" width="15%">Price</th>
+									<th scope="col" width="25%">Add To Cart</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="wish-table" *ngFor="let wish of wishData | paginate: { itemsPerPage: 3, currentPage: p };">
+									<td>
+										<div class="row align-items-center">
+											<div class="col-md-4">
+												<img [src]="wish.product_image" class="prod-images" alt="gdksha">
+											</div>
+											<div class="col-md-8 prod-details">
+												<p class="mobile-manu">
+													<strong>{{wish.product_name}}</strong>
+												</p>
+												<p style="margin-top:-15px;">{{wish.size}} :
+													<strong>BD {{wish.selling_price }}</strong>
+												</p>
+			
+											</div>
+										</div>
+									</td>
+									<td class="pt-5">
+										<div class="quantity">
+											<button class="minus-btn" type="button" name="button" (click)="itemDecrease(wish.wishlist_id)">
+												<i class="fa fa-minus " aria-hidden="true"></i>
+											</button>
+											<input type="text" name="quantity" [(ngModel)]="wish.quantity" readonly="readonly"
+												value="{{wish.quantity}}" />
+											<button class="plus-btn" type="button" name="button" (click)="itemIncrease(wish.wishlist_id)">
+												<i class="fa fa-plus" aria-hidden="true"></i>
+											</button>
+										</div>
+									</td>
+									<td>
+										<div class="prod-details">
+											<span>
+												<strong>BD {{wish.selling_price * wish.quantity}}</strong>
+											</span>
+										</div>
+									</td>
+									<td>
+										<i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"
+											(click)="delWish(wish.wishlist_id)"></i>
+										<button type="button" class="btn cart-btn"
+											(click)="checkProdQuty(wish.product_id,wish.skid,wish.selling_price,wish.vendorid_as_owner,wish.vendor_product_id,wish.updated_discount)">Add
+											To
+											cart</button>
+									</td>
+								</tr>
+								<!-- <tr>
+									<td>
+										<div class=" row align-items-center">
+											<div class="col-md-4">
+												<img src="assets/images/tomato.png" class="prod-images" alt="gdksha">
+											</div>
+											<div class="col-md-8 prod-details">
+												<p class="mobile-manu">
+													<strong>Tomato</strong>
+												</p>
+												<p style="margin-top:-15px;">1 kg :
+													<strong>BD 22</strong>
+												</p>
+			
+											</div>
+					</div>
+					</td>
+					<td class="pt-5">
+						<div class="plus-minus mt-3" style="display: inline;">
+							<button class="btn btn-maroon btn-minus" (click)="itemDecrease()">
+								<span>-</span>
+							</button>
+							<input type="text" value="{{item.quantity}}" [(ngModel)]="item.quantity" disabled>
+							<button class="btn btn-maroon btn-plus" (click)="itemIncrease()">
+								<span>+</span>
+							</button>
+						</div>
+					</td>
+					<td>
+						<div class="prod-details">
+							<span>
+								<strong>$ 540.00</strong>
+							</span>
+						</div>
+					</td>
+					<td>
+						<i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"></i>
+						<button type="button" class="btn cart-btn">Add To cart</button>
+					</td>
 					</tr>
-				</thead>
-				<tbody>
-					<tr class="wish-table" *ngFor="let wish of wishData | paginate: { itemsPerPage: 3, currentPage: p };">
+					<tr>
 						<td>
 							<div class="row align-items-center">
 								<div class="col-md-4">
-									<img [src]="wish.product_image" class="prod-images" alt="gdksha">
+									<img src="assets/images/pinapple.png" class="prod-images" alt="gdksha">
 								</div>
 								<div class="col-md-8 prod-details">
 									<p class="mobile-manu">
-										<strong>{{wish.product_name}}</strong>
+										<strong>Pineapple</strong>
 									</p>
-									<p style="margin-top:-15px;">{{wish.size}} :
-										<strong>BD {{wish.selling_price }}</strong>
+									<p style="margin-top:-15px;">1 kg :
+										<strong>BD 22</strong>
 									</p>
-
+			
 								</div>
 							</div>
 						</td>
 						<td class="pt-5">
-							<div class="quantity">
-								<button class="minus-btn" type="button" name="button" (click)="itemDecrease(wish.wishlist_id)">
-									<i class="fa fa-minus " aria-hidden="true"></i>
+							<div class="plus-minus mt-3" style="display: inline;">
+								<button class="btn btn-maroon btn-minus" (click)="itemDecrease()">
+									<span>-</span>
 								</button>
-								<input type="text" name="quantity" [(ngModel)]="wish.quantity" readonly="readonly"
-									value="{{wish.quantity}}" />
-								<button class="plus-btn" type="button" name="button" (click)="itemIncrease(wish.wishlist_id)">
-									<i class="fa fa-plus" aria-hidden="true"></i>
+								<input type="text" value="{{item.quantity}}" [(ngModel)]="item.quantity" disabled>
+								<button class="btn btn-maroon btn-plus" (click)="itemIncrease()">
+									<span>+</span>
 								</button>
 							</div>
 						</td>
 						<td>
 							<div class="prod-details">
 								<span>
-									<strong>BD {{wish.selling_price * wish.quantity}}</strong>
+									<strong>$ 540.00</strong>
 								</span>
 							</div>
 						</td>
 						<td>
-							<i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"
-								(click)="delWish(wish.wishlist_id)"></i>
-							<button type="button" class="btn cart-btn"
-								(click)="checkProdQuty(wish.product_id,wish.skid,wish.selling_price,wish.vendorid_as_owner,wish.vendor_product_id,wish.updated_discount)">Add
-								To
-								cart</button>
+							<i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"></i>
+							<button type="button" class="btn cart-btn">Add To cart</button>
 						</td>
-					</tr>
-					<!-- <tr>
-            <td>
-              <div class=" row align-items-center">
-								<div class="col-md-4">
-									<img src="assets/images/tomato.png" class="prod-images" alt="gdksha">
-								</div>
-								<div class="col-md-8 prod-details">
-									<p class="mobile-manu">
-										<strong>Tomato</strong>
-									</p>
-									<p style="margin-top:-15px;">1 kg :
-										<strong>BD 22</strong>
-									</p>
-
-								</div>
-		</div>
-		</td>
-		<td class="pt-5">
-			<div class="plus-minus mt-3" style="display: inline;">
-				<button class="btn btn-maroon btn-minus" (click)="itemDecrease()">
-					<span>-</span>
-				</button>
-				<input type="text" value="{{item.quantity}}" [(ngModel)]="item.quantity" disabled>
-				<button class="btn btn-maroon btn-plus" (click)="itemIncrease()">
-					<span>+</span>
-				</button>
+					</tr> -->
+							</tbody>
+						</table>
 			</div>
-		</td>
-		<td>
-			<div class="prod-details">
-				<span>
-					<strong>$ 540.00</strong>
-				</span>
-			</div>
-		</td>
-		<td>
-			<i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"></i>
-			<button type="button" class="btn cart-btn">Add To cart</button>
-		</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="row align-items-center">
-					<div class="col-md-4">
-						<img src="assets/images/pinapple.png" class="prod-images" alt="gdksha">
-					</div>
-					<div class="col-md-8 prod-details">
-						<p class="mobile-manu">
-							<strong>Pineapple</strong>
-						</p>
-						<p style="margin-top:-15px;">1 kg :
-							<strong>BD 22</strong>
-						</p>
-
-					</div>
-				</div>
-			</td>
-			<td class="pt-5">
-				<div class="plus-minus mt-3" style="display: inline;">
-					<button class="btn btn-maroon btn-minus" (click)="itemDecrease()">
-						<span>-</span>
-					</button>
-					<input type="text" value="{{item.quantity}}" [(ngModel)]="item.quantity" disabled>
-					<button class="btn btn-maroon btn-plus" (click)="itemIncrease()">
-						<span>+</span>
-					</button>
-				</div>
-			</td>
-			<td>
-				<div class="prod-details">
-					<span>
-						<strong>$ 540.00</strong>
-					</span>
-				</div>
-			</td>
-			<td>
-				<i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"></i>
-				<button type="button" class="btn cart-btn">Add To cart</button>
-			</td>
-		</tr> -->
-				</tbody>
-			</table>
 			<pagination-controls class="my-pagination" (pageChange)="p = $event" style="float:right;"></pagination-controls>
 			<!-- <div class="row arrow-btns">
         <button class="icon-btn">
@@ -835,37 +837,39 @@
 			<div class="order-details">
 				<p>Order no : {{ordId}}</p>
 			</div>
-			<table class="table myorder-details">
-				<thead>
-					<tr>
-						<th scope="col" style="font-size:18px;">Product</th>
-						<th scope="col" style="font-size:18px;">Name</th>
-						<th scope="col" style="font-size:18px;">Size</th>
-						<th scope="col" style="font-size:18px;">Color</th>
-						<th scope="col" style="font-size:18px;">Quantity</th>
-						<th scope="col" style="font-size:18px;">Price</th>
-						<th scope="col" style="font-size:18px;">Total</th>
-						<th scope="col" style="font-size:18px;">Status</th>
-					</tr>
-				</thead>
-				<tbody class="table-data myorder-details">
-					<tr *ngFor="let orddata of ordData">
-						<td>
-							<img [src]="orddata.product_image">
-						</td>
-						<td>
-							<p>{{orddata.product_name}}
-							</p>
-						</td>
-						<td>{{orddata.size}}</td>
-						<td>{{orddata.color}}</td>
-						<td>{{orddata.quantity}}</td>
-						<td>BD {{orddata.selling_price}}</td>
-						<td>BD {{orddata.quantity * orddata.selling_price}}</td>
-						<td>{{orddata?.order_status}}</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="table-responsive">
+					<table class="table myorder-details">
+							<thead>
+								<tr>
+									<th scope="col" style="font-size:18px;">Product</th>
+									<th scope="col" style="font-size:18px;">Name</th>
+									<th scope="col" style="font-size:18px;">Size</th>
+									<th scope="col" style="font-size:18px;">Color</th>
+									<th scope="col" style="font-size:18px;">Quantity</th>
+									<th scope="col" style="font-size:18px;">Price</th>
+									<th scope="col" style="font-size:18px;">Total</th>
+									<th scope="col" style="font-size:18px;">Status</th>
+								</tr>
+							</thead>
+							<tbody class="table-data myorder-details">
+								<tr *ngFor="let orddata of ordData">
+									<td>
+										<img [src]="orddata.product_image">
+									</td>
+									<td>
+										<p>{{orddata.product_name}}
+										</p>
+									</td>
+									<td>{{orddata.size}}</td>
+									<td>{{orddata.color}}</td>
+									<td>{{orddata.quantity}}</td>
+									<td>BD {{orddata.selling_price}}</td>
+									<td>BD {{orddata.quantity * orddata.selling_price}}</td>
+									<td>{{orddata?.order_status}}</td>
+								</tr>
+							</tbody>
+						</table>
+			</div>
 			<div class="order-details">
 				<p>Shipping Address</p>
 			</div>

@@ -124,6 +124,9 @@ h4 a {
   .card {
     width: 160px;
   }
+  .cdk-overlay-pane {
+    left: 15px !important;
+  }
 }
 
 @media screen and (max-width:760px) {
@@ -181,8 +184,23 @@ h4 a {
     height: auto;
   }
 }
+
+@media (min-width: 500px) and (max-width: 568px) { 
+  .ng-tns-c8-0 {
+    height: 200px;
+    overflow: scroll;
+  }
+ }
+ @media (min-width: 576px) and (max-width: 767.98px) { 
+  .ng-tns-c8-0 {
+    height: 250px;
+    overflow: scroll;
+  }
+ }
+
 .cdk-overlay-pane {
-  overflow-y: auto !important; 
+  /* overflow-y: auto !important;  */
+  
 }
 .mydp {
   border:none !important;
