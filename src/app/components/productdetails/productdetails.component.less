@@ -400,7 +400,7 @@ body {
 @media screen and (min-width:360px) and (max-width:520px) {
     .productDetails {margin-top: 10px;margin-bottom: 10px;}
     .productDetails .offer-label img {width: 30px;}
-    .productDetails #myImg{width:100px; height:200px;max-width:100%;}
+    .productDetails #myImg{width:fit-content; height:200px;max-width:100%;}
     .productDetails fieldset.rating {width: 44%;text-align: center;margin: 0 auto !important;}
     .productDetails h4{display:none;}
     .productDetails{text-align:center;}
@@ -486,4 +486,12 @@ body {
     }
     .card-block {
         margin-top: 28px;
+    }
+
+    @media (max-width: 767.98px) {
+        .gro-img {
+            height: fit-content;
+            position: relative;
+            padding: 0;
+        }
     }
