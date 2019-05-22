@@ -388,4 +388,9 @@ export class appService {
         // this.user_id = sessionStorage.userId;
         return this.http.post(AppSettings.getoffersGro, params, { headers: headers });
     }
+    getSavedList(catId) {
+        const headers = new Headers({ 'Content-Type': "application/JSON" });
+        this.user_id = sessionStorage.userId;
+        return this.http.get(AppSettings.getSavedList + "/" + this.user_id + "/" + "grocery" + "/" + catId, { headers: headers });
+    }
 }

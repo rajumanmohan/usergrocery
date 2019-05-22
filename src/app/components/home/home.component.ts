@@ -91,7 +91,7 @@ export class HomeComponent implements OnInit {
         product_id: Id,
         sku_id: skId
       }],
-      "user_id": JSON.parse(sessionStorage.getItem('userId')),
+      "user_id": (sessionStorage.getItem('userId')),
       "item_type": "grocery",
       "price": price,
       "vendorid_as_owner": venId,

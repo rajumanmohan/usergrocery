@@ -391,7 +391,7 @@
                                     <button class="btn btn-maroon" (click)="proceed()">Proceed To Pay</button>
                             </div> -->
                             <div class="shippipng">
-                                <h4>Immediate Delivery</h4>
+                                <h4>Scheduled Delivery</h4>
                                 <p>{{selAdd.house_no}}, {{selAdd.landmark}},
                                     <br /> {{selAdd.state}}
                                     <br /> {{selAdd.pin_code}}
@@ -417,9 +417,9 @@
 
                                     <label class="example-input-wrapper">
                                         <!-- Date Time: -->
-                                        <input placeholder="Date Time:" [(ngModel)]="dateTime" [owlDateTimeTrigger]="dt"
-                                            [owlDateTime]="dt">
-                                        <owl-date-time #dt></owl-date-time>
+                                        <input placeholder="Date Time:" [(ngModel)]="dateTime" [min]="disDate"
+                                            [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+                                        <owl-date-time #dt [min]="disTime"></owl-date-time>
                                     </label>
                                 </div>
                                 <button class="btn btn-maroon" (click)="proceed()">Proceed To Pay</button>

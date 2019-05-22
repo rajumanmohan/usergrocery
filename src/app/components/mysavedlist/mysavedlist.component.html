@@ -89,54 +89,53 @@
               </div>
             </div> -->
           <!-- </div> -->
-
-        </div>
-        <div class="row">
-          <div class="col-md-3 item" *ngFor="let data of wishData">
-            <div class="wrapper">
-              <div class="card">
-                <img src="assets/images/background-img.png" class="bg-layer">
-                <img class="img-fluid gro-img" [src]="data.image" alt="Card image cap"
-                  (click)="showProduxtDetails(data.products.vendor_product_id,data.products.vendorid_as_owner)">
-                <div class="card-block">
-                  <h5 class="text-center">{{data.product_name}} </h5>
-                  <p class="text-center">
-                    BD {{data?.selling_price}}
-                    <strike>BD {{data?.actual_price}}</strike>
-                  </p>
-                  <div class="sort">
-                    <select (change)="changeSize($event.target.value)">
-                      <option *ngFor="let sku of data.products.sku_details" [value]="sku?.skid">{{sku?.size}}-BD
-                        {{data?.selling_price}}
-                      </option>
-                    </select>
+          <div class="row">
+            <div class="col-md-3 item" *ngFor="let data of prodData">
+              <div class="wrapper">
+                <div class="card">
+                  <img src="assets/images/background-img.png" class="bg-layer">
+                  <img class="img-fluid gro-img" [src]="data.image" alt="Card image cap"
+                    (click)="showProduxtDetails(data.vendor_product_id,data.vendorid_as_owner)">
+                  <div class="card-block">
+                    <h5 class="text-center">{{data.product_name}} </h5>
+                    <p class="text-center">
+                      BD {{data?.selling_price}}
+                      <strike>BD {{data?.actual_price}}</strike>
+                    </p>
+                    <div class="sort">
+                      <select (change)="changeSize($event.target.value)">
+                        <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}}-BD
+                          {{data?.selling_price}}
+                        </option>
+                      </select>
+                    </div>
                   </div>
+                  <button type="button" class="btn cart-btn"
+                    (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)">Add
+                    To
+                    Cart
+                  </button>
                 </div>
-                <button type="button" class="btn cart-btn"
-                  (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.products.vendorid_as_owner,data.products.vendor_product_id,data.products.updated_discount)">Add
-                  To
-                  Cart
-                </button>
-              </div>
-              <ul class="expand-button">
-                <li><a
-                    (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.products.vendorid_as_owner,data.products.vendor_product_id,data.products.updated_discount)"><i
-                      class="fas fa-shopping-basket"></i></a>
-                </li>
-                <li><a (click)="open(data.skid)"><img src="assets/images/maximize.png"></a></li>
-              </ul>
-              <ul class="expand-button2 expand-button-2">
-                <li><a (click)="addtoWish(data.product_id,data.skid)"><i class="fas fa-heart"
-                      [ngStyle]="{'color':data.wish_list == 'true' ? 'yellow'  :  '#dfdfdf'}"></i></a>
-                </li>
-              </ul>
-              <div *ngIf="!skuData">
-                No data
+                <ul class="expand-button">
+                  <li><a
+                      (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)"><i
+                        class="fas fa-shopping-basket"></i></a>
+                  </li>
+                  <li><a (click)="open(data.skid)"><img src="assets/images/maximize.png"></a></li>
+                </ul>
+                <ul class="expand-button2 expand-button-2">
+                  <li><a (click)="addtoWish(data.product_id,data.skid)"><i class="fas fa-heart"
+                        [ngStyle]="{'color':data.wish_list == 'true' ? 'yellow'  :  '#dfdfdf'}"></i></a>
+                  </li>
+                </ul>
               </div>
             </div>
-
+            <div *ngIf="noData">
+              <h5>No Products Found</h5>
+            </div>
           </div>
         </div>
+
 
         <!-- slider -->
         <!-- end deals -->

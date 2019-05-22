@@ -425,11 +425,16 @@ export class UseraccountComponent implements OnInit {
       return;
     }
     this.appService.addaddress(this.addressForm.value).subscribe(res => {
-      this.addressForm.reset();
-      swal(res.json().message, "", "success");
-      this.pincode_errors = false;
-      this.getAdd();
-      this.cancelAdd();
+      if (res.json().status == 200) {
+        this.addressForm.reset();
+        swal(res.json().message, "", "success");
+        this.pincode_errors = false;
+        this.getAdd();
+        this.cancelAdd();
+      } else {
+        swal(res.json().message, "", "error");
+      }
+
     })
   }
   getAddData = [];

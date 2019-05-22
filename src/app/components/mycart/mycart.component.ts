@@ -27,6 +27,8 @@ export class MycartComponent implements OnInit {
     showDate = true;
     showTime = true;
     skid;
+    disDate;
+    disTime;
     time = { hour: 13, minute: 30 };
     constructor(public dialog: MatDialog, public appService: appService, private router: Router, private formBuilder: FormBuilder) { }
 
@@ -62,6 +64,8 @@ export class MycartComponent implements OnInit {
         ];
         this.sortData = this.fruits.sort();
         console.log(this.sortData);
+        this.disDate = new Date();
+        this.disTime = new Date().getTime()
     }
     onDateChanged(date) {
         // alert(date)

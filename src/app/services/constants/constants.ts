@@ -85,5 +85,6 @@ export const AppSettings = {
     socialLogin: baseUrl + "users/sociallogin",
     forgotwithEmail: baseUrl + "users/forgot_passwordbyemail",
     getNotifications: baseUrl + "vendor/cart_details/usernotifications",
-    getoffersGro: baseUrl + "vendor/products/gettopoffersproducts/grocery"
+    getoffersGro: baseUrl + "vendor/products/gettopoffersproducts/grocery",
+    getSavedList: baseUrl + "vendor/products/savedlistproductsbasedoncat"
 }

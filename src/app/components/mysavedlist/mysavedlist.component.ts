@@ -17,7 +17,7 @@ export class MysavedlistComponent implements OnInit {
     this.getCategories();
     // this.getCatProducts(this.catId);
     this.VegetablesData();
-    this.getWish();
+    // this.getWish();
   }
   category = [];
   prodData = [];
@@ -25,38 +25,72 @@ export class MysavedlistComponent implements OnInit {
   catId;
   skid;
   enlargeImg;
+  noData;
+  cat_first_id;
   getCategories() {
     let params = {
+      "user_id": (sessionStorage.userId),
       "country": sessionStorage.country,
       "pin_code": sessionStorage.pinCode === "undefined" ? "null" : sessionStorage.pinCode,
       "area": sessionStorage.Area === "undefined" ? "null" : sessionStorage.Area,
     }
     this.appService.getCategories(params).subscribe(resp => {
       this.category = resp.json().categories;
+      this.cat_first_id = this.category[0].category_id;
       // this.showSubCat(this.subId);
+      this.appService.getSavedList(this.cat_first_id).subscribe(res => {
+        this.prodData = res.json().vendor_products;
+        if (this.prodData != undefined) {
+          for (var i = 0; i < this.prodData.length; i++) {
+            for (var j = 0; j < this.prodData[i].sku_row.length; j++) {
+              this.prodData[i].selling_price = this.prodData[i].updated_price - this.prodData[i].updated_discount;
+              this.prodData[i].actual_price = this.prodData[i].updated_price;
+              this.prodData[i].image = this.prodData[i].sku_row[0].sku_images[0].sku_image;
+              this.prodData[i].skid = this.prodData[i].sku_row[0].skid;
+              this.skid = this.prodData[i].sku_row[0].skid;
+            }
+
+          }
+          this.noData = false;
+        }
+        if (res.json().status === 400) {
+          this.noData = true;
+
+        }
+      }, err => {
+
+      })
     })
   }
-  // getCatProducts(id) {
-  //   this.catId = id;
-  //   this.skuData = [];
-  //   // this.catId = (id === '') ? this.catId : id;
-  //   this.appService.productByCatId(id).subscribe(res => {
-  //     this.prodData = res.json().products;
-  //     for (var i = 0; i < this.prodData.length; i++) {
-  //       for (var j = 0; j < this.prodData[i].sku_details.length; j++) {
-  //         this.prodData[i].sku_details[j].product_name = this.prodData[i].product_name;
-  //         this.skuData.push(this.prodData[i].sku_details[j]);
-  //       }
-  //     }
-  //     if (res.json().message === "No records Found") {
-  //       // this.noData = true;
-  //     }
+  getCatProducts(id) {
+    this.catId = id;
+    this.skuData = [];
+    // this.catId = (id === '') ? this.catId : id;
+    this.appService.getSavedList(id).subscribe(res => {
+      this.prodData = res.json().vendor_products;
+      if (this.prodData != undefined) {
+        for (var i = 0; i < this.prodData.length; i++) {
+          for (var j = 0; j < this.prodData[i].sku_row.length; j++) {
+            this.prodData[i].selling_price = this.prodData[i].updated_price - this.prodData[i].updated_discount;
+            this.prodData[i].actual_price = this.prodData[i].updated_price;
+            this.prodData[i].image = this.prodData[i].sku_row[0].sku_images[0].sku_image;
+            this.prodData[i].skid = this.prodData[i].sku_row[0].skid;
+            this.skid = this.prodData[i].sku_row[0].skid;
+          }
+
+        }
+        this.noData = false;
+      }
+      if (res.json().status === 400) {
+        this.noData = true;
+
+      }
+    }, err => {
+
+    })
 
 
-  //   }, err => {
-
-  //   })
-  // }
+  }
   cartDetails = [];
   cartCount = [];
 
@@ -115,41 +149,41 @@ export class MysavedlistComponent implements OnInit {
   wishData = [];
   wishListData = [];
   wishArr = [];
-  getWish() {
-    this.wishArr = [];
-    this.appService.getWish().subscribe(res => {
-      if (res.json().message === "Success") {
-        this.wishData = res.json().wishlist;
-        this.wishData.sort(function (a, b) {
-          var keyA = new Date(a.created_on),
-            keyB = new Date(b.created_on)
-          if (keyA < keyB) return - 1;
-          if (keyA > keyB) return 1;
-          return 0;
-        });
-        // this.wishData = res.json().vendor_products;
-        if (this.wishData != undefined) {
-          for (var i = 0; i < this.wishData.length; i++) {
-            for (var j = 0; j < this.wishData[i].products.sku_details.length; j++) {
-              this.wishData[i].selling_price = this.wishData[i].products.updated_price - this.wishData[i].products.updated_discount;
-              this.wishData[i].actual_price = this.wishData[i].products.updated_price;
-              this.wishData[i].image = this.wishData[i].products.sku_details[0].sku_images[0].sku_image;
-              this.wishData[i].skid = this.wishData[i].products.sku_details[0].skid;
-            }
+  // getWish() {
+  //   this.wishArr = [];
+  //   this.appService.getWish().subscribe(res => {
+  //     if (res.json().message === "Success") {
+  //       this.wishData = res.json().wishlist;
+  //       this.wishData.sort(function (a, b) {
+  //         var keyA = new Date(a.created_on),
+  //           keyB = new Date(b.created_on)
+  //         if (keyA < keyB) return - 1;
+  //         if (keyA > keyB) return 1;
+  //         return 0;
+  //       });
+  //       // this.wishData = res.json().vendor_products;
+  //       if (this.wishData != undefined) {
+  //         for (var i = 0; i < this.wishData.length; i++) {
+  //           for (var j = 0; j < this.wishData[i].products.sku_details.length; j++) {
+  //             this.wishData[i].selling_price = this.wishData[i].products.updated_price - this.wishData[i].products.updated_discount;
+  //             this.wishData[i].actual_price = this.wishData[i].products.updated_price;
+  //             this.wishData[i].image = this.wishData[i].products.sku_details[0].sku_images[0].sku_image;
+  //             this.wishData[i].skid = this.wishData[i].products.sku_details[0].skid;
+  //           }
 
-          }
-          // this.noData = false;
-          // this.noData1 = false;
-        }
-        if (res.json().message === "No records Found") {
-          // this.noData = true;
-          // this.noData1 = false;
-        }
-      }
-    }, err => {
+  //         }
+  //         // this.noData = false;
+  //         // this.noData1 = false;
+  //       }
+  //       if (res.json().message === "No records Found") {
+  //         // this.noData = true;
+  //         // this.noData1 = false;
+  //       }
+  //     }
+  //   }, err => {
 
-    })
-  }
+  //   })
+  // }
   addtoCart(id, skuId, price, venId, vProdID, udisc) {
     var inData = {
       "products": [{
@@ -189,15 +223,14 @@ export class MysavedlistComponent implements OnInit {
     })
   }
   open(skid): void {
-    for (var i = 0; i < this.wishData.length; i++) {
-      for (var j = 0; j < this.wishData[i].products.sku_details.length; j++) {
-        if (skid == this.wishData[i].products.sku_details[j].skid) {
-          this.enlargeImg = this.wishData[i].products.sku_details[j].sku_images[0].sku_image;
+    for (var i = 0; i < this.prodData.length; i++) {
+      for (var j = 0; j < this.prodData[i].sku_row.length; j++) {
+        if (skid == this.prodData[i].sku_row[j].skid) {
+          this.enlargeImg = this.prodData[i].sku_row[j].sku_images[0].sku_image;
           jQuery("#enlargeImg").modal("show");
         }
       }
 
     }
-
   }
 }
