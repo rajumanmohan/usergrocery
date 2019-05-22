@@ -10,7 +10,10 @@
 .cust-span2{
   margin-left: 22px;
 }
-
+.back-color{
+  background: #ece8d7;
+  padding-top: 90px;
+}
 
 h4 {
   font-weight: normal !important;

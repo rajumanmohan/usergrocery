@@ -136,6 +136,11 @@ h4 a {
   .card {
     width: 210px;
   }
+  #loginmodal .form-group label{text-align:left;}
+  ul.saved-list > h4, .saved-quote > h4 {font-size: 15px;}
+  .saved-list h5{font-size:15px;}
+  .profiledetails .btn-address{margin-top:5px;}
+  .address-details i.far.fa-circle {margin-left: 0 !important;margin-top: 0;}
 }
 
 @media screen and (max-width:490px) {
