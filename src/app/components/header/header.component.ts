@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
     // loginSubmitted = false;
     forgotSubmitted = false;
     forgotSubmitted1 = false;
-
+    mobile_number;
     category: any;
     product: any;
     loginDetails: any;
@@ -115,27 +115,34 @@ export class HeaderComponent implements OnInit {
                         idToken: this.user.idToken,
                         image: this.user.image,
                         name: this.user.name,
+                        first_name: this.user.name,
                         provider: this.user.provider,
                         token: this.user.token
                     }
                     this.appService.socialLogin(inData).subscribe(res => {
-                        sessionStorage.setItem('userId', (res.json().id));
-                        swal(res.json().message, "", "message");
-                        this.appService.getDetailsById().subscribe(response => {
-                            console.log(response.json());
-                            sessionStorage.setItem('phone', (response.json().data[0].mobile_number));
-                            sessionStorage.setItem('email', (response.json().data[0].email));
-                            sessionStorage.setItem('userId', (response.json().data[0].reg_id));
-                            sessionStorage.setItem('userName', (response.json().data[0].first_name) + " " + (response.json().data[0].last_name));
-                            this.loginDetails = response.json().data[0];
-                            this.showRegistration = false;
-                            this.showLoginScreen = false;
-                            this.myAccount = true;
-                            jQuery("#loginmodal").modal("hide");
-                            $('body').removeClass('modal-open');
-                            $('.modal-backdrop').remove();
+                        res.json().id ? sessionStorage.setItem('userId', (res.json().id)) : ''
+                        swal(res.json().message, "", "success");
+                        if (res.json().id != '' || undefined) {
+                            this.appService.getDetailsById().subscribe(response => {
+                                console.log(response.json());
+                                sessionStorage.setItem('phone', (response.json().data[0].mobile_number));
+                                sessionStorage.setItem('email', (response.json().data[0].email));
+                                sessionStorage.setItem('userId', (response.json().data[0].reg_id));
+                                sessionStorage.setItem('userName', (response.json().data[0].first_name) + " " + (response.json().data[0].last_name));
+                                this.loginDetails = response.json().data[0];
+                                this.showRegistration = false;
+                                this.showLoginScreen = false;
+                                this.myAccount = true;
+                                jQuery("#loginmodal").modal("hide");
+                                $('body').removeClass('modal-open');
+                                $('.modal-backdrop').remove();
+                                this.ngOnInit()
+                            })
+                        }
+                        if (res.json().status == 400) {
+                            swal(res.json().message, "", "error");
+                        }
 
-                        })
                     })
                 }
             }
@@ -168,18 +175,24 @@ export class HeaderComponent implements OnInit {
         });
     }
     submitLocation() {
-        this.city = this.position2;
-        this.showLocation = false;
-        sessionStorage.removeItem("pinCode");
-        sessionStorage.setItem("pinCode", this.pin_code);
-        sessionStorage.removeItem('city');
-        sessionStorage.setItem('city', this.position2);
-        this.Area = sessionStorage.city;
-        sessionStorage.removeItem("country");
-        sessionStorage.setItem('country', this.country);
-        sessionStorage.removeItem("Area");
-        sessionStorage.setItem('Area', this.area);
-        location.reload();
+        if (this.addr) {
+            this.city = this.position2;
+            this.showLocation = false;
+            sessionStorage.removeItem("pinCode");
+            sessionStorage.setItem("pinCode", this.pin_code);
+            sessionStorage.removeItem('city');
+            sessionStorage.setItem('city', this.position2);
+            this.Area = sessionStorage.city;
+            sessionStorage.removeItem("country");
+            sessionStorage.setItem('country', this.country);
+            sessionStorage.removeItem("Area");
+            sessionStorage.setItem('Area', this.area);
+            location.reload();
+        } else {
+            swal("Please choose location", "", "warning");
+            // this.showLocation = false;
+        }
+
         // sessionStorage.removeItem("pinCode");
         // sessionStorage.setItem("pinCode", this.pin_code)
     }
@@ -237,11 +250,11 @@ export class HeaderComponent implements OnInit {
             first_name: ['', Validators.required],
             last_name: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
-            mobile_number: ['', [Validators.required, Validators.minLength(8)]],
+            mobile_number: [''],
             password: ['', [Validators.required, Validators.minLength(6)]],
             retype_password: ['', [Validators.required, Validators.minLength(6)]],
-            latitude: 16.398956,
-            longitude: 78.637009
+            // latitude: 16.398956,
+            // longitude: 78.637009
         });
         // this.loginForm = this.formBuilder.group({
         //     email: ['', [Validators.required, Validators.email]],
@@ -445,12 +458,15 @@ export class HeaderComponent implements OnInit {
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('userName');
         sessionStorage.removeItem('session');
-        // this.router.navigate(["/"]);
+        this.router.navigate(["/"]);
+        if (this.router.navigate(["/"])) {
+            location.reload();
+        }
         this.showRegistration = true;
         this.showLoginScreen = true;
         this.myAccount = false;
         this.phone = false;
-        sessionStorage.clear();
+        // sessionStorage.clear();
         this.getCart();
         // location.reload();
     }
@@ -462,7 +478,7 @@ export class HeaderComponent implements OnInit {
         }
         if (this.registerForm.value.password != this.registerForm.value.retype_password) {
             swal("Password doesn't matched", "", "warning");
-            return;
+            // return;
         } else {
             this.appService.registration(this.registerForm.value).subscribe(resp => {
                 if (resp.json().status === 200) {
@@ -471,12 +487,24 @@ export class HeaderComponent implements OnInit {
                     $('body').removeClass('modal-open');
                     $('.modal-backdrop').remove();
                     // this.showRegistration = false;
-                    sessionStorage.setItem('userId', (resp.json().reg_id));
-                    // this.myAccount = true
-                    // this.showOpacity = false;
-                    // this.onCloseCancel();
-                    // this.router.navigate(['/address']);
-                } else if (resp.json().status === 400) {
+                    resp.json().data[0].reg_id ? sessionStorage.setItem('userId', (resp.json().data[0].reg_id)) : '';
+                    if (resp.json().data[0].reg_id != '' || undefined) {
+                        this.appService.getDetailsById().subscribe(response => {
+                            console.log(response.json());
+                            sessionStorage.setItem('phone', (response.json().data[0].mobile_number));
+                            sessionStorage.setItem('email', (response.json().data[0].email));
+                            sessionStorage.setItem('userId', (response.json().data[0].reg_id));
+                            sessionStorage.setItem('userName', (response.json().data[0].first_name) + " " + (response.json().data[0].last_name));
+                            this.loginDetails = response.json().data[0];
+                            this.phone = true;
+                            this.showRegistration = false;
+                            this.showLoginScreen = false;
+                            this.myAccount = true;
+                            this.ngOnInit()
+                        })
+                    }
+
+                } else if (resp.json().status == 400) {
                     swal(resp.json().message, "", "error");
                     // jQuery("#signupmodal").modal("hide");
                 }
@@ -547,10 +575,10 @@ export class HeaderComponent implements OnInit {
                     }
 
                 } else {
-                    sessionStorage.removeItem('email');
-                    sessionStorage.removeItem('phone');
-                    sessionStorage.removeItem('userId');
-                    sessionStorage.removeItem('userName');
+                    // sessionStorage.removeItem('email');
+                    // sessionStorage.removeItem('phone');
+                    // sessionStorage.removeItem('userId');
+                    // sessionStorage.removeItem('userName');
                 }
 
             }
@@ -620,7 +648,7 @@ export class HeaderComponent implements OnInit {
                 $('.modal-backdrop').remove();
                 swal(resp.json().message, "", "success");
                 jQuery("#otpScreen").modal("show");
-                sessionStorage.setItem('mobile_number', (resp.json().phone_number));
+                sessionStorage.setItem('mobile_number', (resp.json().mobile_number));
             } else {
                 swal(resp.json().message, "", "error");
             }

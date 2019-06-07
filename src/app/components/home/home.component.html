@@ -45,6 +45,492 @@
 </main>
 <br />
 <!-- delas -->
+<!-- shops -->
+<div id="multi-item-example6" class="carousel slide store-location carousel-multi-item container shops-carousel"
+    data-ride="carousel">
+    <h2 class="text-center">Your Nearest
+        <span class="ur-nearest">Shops</span>
+
+    </h2>
+
+    <!--Slides-->
+    <!-- <div>
+        No Data
+    </div> -->
+    <div id="myCarousel" class="carousel product-space  slide" data-ride="carousel" data-interval="0">
+        <!-- Carousel indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <!-- Wrapper for carousel items -->
+        <div class="carousel-inner">
+            <div class="item carousel-item active">
+                <div class="shops-list">
+                    <div class="row">
+                        <div class="col-md-4 shops-col" *ngIf="vendorData[0]">
+                            <div class="thumb-wrapper">
+                                <div class="" (click)="viewVendorProds(vendorData[0]?.id)">
+                                    <!-- <img src="assets/images/background-img.png" class="bg-layer"> -->
+                                    <div class="img-box shops">
+                                        <img src="{{vendorData[0]?.image_one}}" alt="" *ngIf="vendorData[0]?.image_one">
+                                        <img *ngIf="!vendorData[0]?.image_one" class="img-fluid"
+                                            src="assets/images/placeholder.png" alt="No image found">
+                                    </div>
+                                    <div class="thumb-content">
+                                        <h4>{{vendorData[0]?.bussiness_name}}</h4>
+
+                                        <p class="shops-p">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{vendorData[0]?.bussiness_houseno || 0}},{{vendorData[0]?.bussiness_area}},{{vendorData[0]?.bussiness_city}}<br />
+
+                                            {{vendorData[0]?.bussiness_country}},{{vendorData[0]?.bussiness_pincode}}
+                                        </p>
+                                        <!-- <a>View Product&nbsp;
+                                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                            </a> -->
+                                        <div class="shop-now">
+                                            <button type="text" class="btn waves-effect waves-light"
+                                                (click)="viewVendorProds(vendorData[0]?.id)">Shop
+                                                Now</button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 shops-col" *ngIf="vendorData[1]">
+                            <div class="thumb-wrapper">
+                                <div class="" (click)="viewVendorProds(vendorData[1]?.id)">
+                                    <!-- <img src="assets/images/background-img.png" class="bg-layer"> -->
+                                    <div class="img-box shops">
+                                        <img src="{{vendorData[1]?.image_one}}" alt="" *ngIf="vendorData[1]?.image_one">
+                                        <img *ngIf="!vendorData[1]?.image_one" class="img-fluid"
+                                            src="assets/images/placeholder.png" alt="No image found">
+                                    </div>
+                                    <div class="thumb-content">
+                                        <h4>{{vendorData[1]?.bussiness_name}}</h4>
+
+                                        <p class="shops-p">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{vendorData[1]?.bussiness_houseno || 0}},{{vendorData[1]?.bussiness_area}},{{vendorData[1]?.bussiness_city}}<br />
+
+                                            {{vendorData[1]?.bussiness_country}},{{vendorData[1]?.bussiness_pincode}}
+                                        </p>
+                                        <!-- <a>View Product&nbsp;
+                                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                            </a> -->
+                                        <div class="shop-now">
+                                            <button type="text" class="btn waves-effect waves-light"
+                                                (click)="viewVendorProds(vendorData[1]?.id)">Shop
+                                                Now</button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 shops-col" *ngIf="vendorData[2]">
+                            <div class="thumb-wrapper">
+                                <div class="" (click)="viewVendorProds(vendorData[2]?.id)">
+                                    <!-- <img src="assets/images/background-img.png" class="bg-layer"> -->
+                                    <div class="img-box shops">
+                                        <img src="{{vendorData[2]?.image_one}}" alt="" *ngIf="vendorData[2]?.image_one">
+                                        <img *ngIf="!vendorData[2]?.image_one" class="img-fluid"
+                                            src="assets/images/placeholder.png" alt="No image found">
+                                    </div>
+                                    <div class="thumb-content">
+                                        <h4>{{vendorData[2]?.bussiness_name}}</h4>
+
+                                        <p class="shops-p">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{vendorData[2]?.bussiness_houseno || 0}},{{vendorData[2]?.bussiness_area}},{{vendorData[2]?.bussiness_city}}<br />
+
+                                            {{vendorData[2]?.bussiness_country}},{{vendorData[2]?.bussiness_pincode}}
+                                        </p>
+                                        <!-- <a>View Product&nbsp;
+                                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                            </a> -->
+                                        <div class="shop-now">
+                                            <button type="text" class="btn waves-effect waves-light"
+                                                (click)="viewVendorProds(vendorData[2]?.id)">Shop
+                                                Now</button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <li class="carousel-list">
+                            <div class="thumb-wrapper" *ngIf="product[4]?.approval==='Active'">
+                                <div class="img-box">
+                                    <img src="{{product[4]?.sku_row[0]?.sku_images[0]?.sku_image}}"
+                                        (click)="showProduxtDetails(product[4]?.product_id)" alt="">
+                                </div>
+                                <div class="thumb-content">
+                                    <h4>{{product[4]?.product_name}}</h4>
+                                    <div class="star-rating">
+                                        <ul class="list-inline">
+                                           
+                                        </ul>
+                                    </div>
+                                    <p class="item-price"><strike></strike> <b></b></p>
+                                    <button type="text" class="btn waves-effect waves-light"
+                                        (click)="checkProdQuty(product[4]?.product_id,product[4]?.sku_row[0].skid,product[4]?.sku_row[0].selling_price,product[4]?.wholesaler_id)">Add</button>
+                                </div>
+                            </div>
+                        </li> -->
+                    </div>
+                    <div class="row sec-row" *ngIf="vendorData[3]">
+                        <div class="col-md-4 shops-col" *ngIf="vendorData[3]">
+                            <div class="thumb-wrapper">
+                                <div class="" (click)="viewVendorProds(vendorData[3].id)">
+                                    <!-- <img src="assets/images/background-img.png" class="bg-layer"> -->
+                                    <div class="img-box shops">
+                                        <img src="{{vendorData[3]?.image_one}}" *ngIf="vendorData[3]?.image_one">
+                                        <img *ngIf="!vendorData[3]?.image_one" class="img-fluid"
+                                            src="assets/images/placeholder.png" alt="No image found">
+                                    </div>
+                                    <div class="thumb-content">
+                                        <h4>{{vendorData[3]?.bussiness_name}}</h4>
+
+                                        <p class="shops-p">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{vendorData[3]?.bussiness_houseno || 0}},{{vendorData[3]?.bussiness_area}},{{vendorData[3]?.bussiness_city}}<br />
+
+                                            {{vendorData[3]?.bussiness_country}},{{vendorData[3]?.bussiness_pincode}}
+                                        </p>
+                                        <!-- <a>View Product&nbsp;
+                                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                            </a> -->
+                                        <div class="shop-now">
+                                            <button type="text" class="btn waves-effect waves-light"
+                                                (click)="viewVendorProds(vendorData[3].id)">Shop
+                                                Now</button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 shops-col">
+                            <div class="thumb-wrapper" *ngIf="vendorData[4]">
+                                <div class="" (click)="viewVendorProds(vendorData[4].id)">
+                                    <!-- <img src="assets/images/background-img.png" class="bg-layer"> -->
+                                    <div class="img-box shops">
+                                        <img src="{{vendorData[4]?.image_one}}"
+                                            (click)="showProduxtDetails(product[0]?.product_id)" alt=""
+                                            *ngIf="vendorData[4]?.image_one">
+                                        <img *ngIf="!vendorData[4]?.image_one" class="img-fluid"
+                                            src="assets/images/placeholder.png" alt="No image found">
+                                    </div>
+                                    <div class="thumb-content">
+                                        <h4>{{vendorData[4]?.bussiness_name}}</h4>
+
+                                        <p class="shops-p">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{vendorData[4]?.bussiness_houseno || 0}},{{vendorData[4]?.bussiness_area}},{{vendorData[4]?.bussiness_city}}<br />
+
+                                            {{vendorData[4]?.bussiness_country}},{{vendorData[4]?.bussiness_pincode}}
+                                        </p>
+                                        <!-- <a>View Product&nbsp;
+                                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                            </a> -->
+                                        <div class="shop-now">
+                                            <button type="text" class="btn waves-effect waves-light"
+                                                (click)="viewVendorProds(vendorData[4].id)">Shop
+                                                Now</button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 shops-col" *ngIf="vendorData[5]">
+                            <div class="thumb-wrapper">
+                                <div class="" (click)="viewVendorProds(vendorData[5].id)">
+                                    <!-- <img src="assets/images/background-img.png" class="bg-layer"> -->
+                                    <div class="img-box shops">
+                                        <img src="{{vendorData[5]?.image_one}}"
+                                            (click)="showProduxtDetails(product[0]?.product_id)" alt=""
+                                            *ngIf="vendorData[5]?.image_one">
+                                        <img *ngIf="!vendorData[5]?.image_one" class="img-fluid"
+                                            src="assets/images/placeholder.png" alt="No image found">
+                                    </div>
+                                    <div class="thumb-content">
+                                        <h4>{{vendorData[5]?.bussiness_name}}</h4>
+
+                                        <p class="shops-p">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{vendorData[5]?.bussiness_houseno || 0}},{{vendorData[5]?.bussiness_area}},{{vendorData[5]?.bussiness_city}}<br />
+
+                                            {{vendorData[5]?.bussiness_country}},{{vendorData[5]?.bussiness_pincode}}
+                                        </p>
+                                        <!-- <a>View Product&nbsp;
+                                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                            </a> -->
+                                        <div class="shop-now">
+                                            <button type="text" class="btn waves-effect waves-light"
+                                                (click)="viewVendorProds(vendorData[5].id)">Shop
+                                                Now</button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- new 2 -->
+            <div class="item carousel-item" *ngIf="vendorData[6]">
+                <div class="shops-list">
+                    <div class="row">
+                        <div class="col-md-4 shops-col">
+                            <div class="thumb-wrapper">
+                                <div class="" (click)="viewVendorProds(vendorData[6].id)">
+                                    <!-- <img src="assets/images/background-img.png" class="bg-layer"> -->
+                                    <div class="img-box shops">
+                                        <img src="{{vendorData[6]?.image_one}}"
+                                            (click)="showProduxtDetails(product[0]?.product_id)" alt=""
+                                            *ngIf="vendorData[6]?.image_one">
+                                        <img *ngIf="!vendorData[6]?.image_one" class="img-fluid"
+                                            src="assets/images/placeholder.png" alt="No image found">
+                                    </div>
+                                    <div class="thumb-content">
+                                        <h4>{{vendorData[6]?.bussiness_name}}</h4>
+
+                                        <p class="shops-p">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{vendorData[6]?.bussiness_houseno || 0}},{{vendorData[6]?.bussiness_area}},{{vendorData[6]?.bussiness_city}}<br />
+
+                                            {{vendorData[6]?.bussiness_country}},{{vendorData[6]?.bussiness_pincode}}
+                                        </p>
+                                        <!-- <a>View Product&nbsp;
+                                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                            </a> -->
+                                        <div class="shop-now">
+                                            <button type="text" class="btn waves-effect waves-light"
+                                                (click)="viewVendorProds(vendorData[6].id)">Shop
+                                                Now</button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 shops-col">
+                            <div class="thumb-wrapper">
+                                <div class="" (click)="viewVendorProds(vendorData[7].id)">
+                                    <!-- <img src="assets/images/background-img.png" class="bg-layer"> -->
+                                    <div class="img-box shops">
+                                        <img src="{{vendorData[7]?.image_one}}"
+                                            (click)="showProduxtDetails(product[0]?.product_id)" alt=""
+                                            *ngIf="vendorData[7]?.image_one">
+                                        <img *ngIf="!vendorData[7]?.image_one" class="img-fluid"
+                                            src="assets/images/placeholder.png" alt="No image found">
+                                    </div>
+                                    <div class="thumb-content">
+                                        <h4>{{vendorData[7]?.bussiness_name}}</h4>
+
+                                        <p class="shops-p">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{vendorData[7]?.bussiness_houseno || 0}},{{vendorData[7]?.bussiness_area}},{{vendorData[7]?.bussiness_city}}<br />
+
+                                            {{vendorData[7]?.bussiness_country}},{{vendorData[7]?.bussiness_pincode}}
+                                        </p>
+                                        <!-- <a>View Product&nbsp;
+                                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                            </a> -->
+                                        <div class="shop-now">
+                                            <button type="text" class="btn waves-effect waves-light"
+                                                (click)="viewVendorProds(vendorData[7].id)">Shop
+                                                Now</button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 shops-col">
+                            <div class="thumb-wrapper">
+                                <div class="">
+                                    <!-- <img src="assets/images/background-img.png" class="bg-layer"> -->
+                                    <div class="img-box shops">
+                                        <img src="{{vendorData[8]?.image_one}}"
+                                            (click)="showProduxtDetails(product[0]?.product_id)" alt=""
+                                            *ngIf="vendorData[8]?.image_one">
+                                        <img *ngIf="!vendorData[8]?.image_one" class="img-fluid"
+                                            src="assets/images/placeholder.png" alt="No image found">
+                                    </div>
+                                    <div class="thumb-content">
+                                        <h4>{{vendorData[8]?.bussiness_name}}</h4>
+
+                                        <p class="shops-p">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{vendorData[8]?.bussiness_houseno || 0}},{{vendorData[8]?.bussiness_area}},{{vendorData[8]?.bussiness_city}}<br />
+
+                                            {{vendorData[8]?.bussiness_country}},{{vendorData[8]?.bussiness_pincode}}
+                                        </p>
+                                        <!-- <a>View Product&nbsp;
+                                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                            </a> -->
+                                        <div class="shop-now">
+                                            <button type="text" class="btn waves-effect waves-light"
+                                                (click)="showProduxtDetails(product[8]?.product_id)">Shop
+                                                Now</button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row sec-row" *ngIf="vendorData[9]">
+                        <div class="col-md-4 shops-col" *ngIf="vendorData[9]">
+                            <div class="thumb-wrapper">
+                                <div class="" (click)="viewVendorProds(vendorData[9].id)">
+                                    <!-- <img src="assets/images/background-img.png" class="bg-layer"> -->
+                                    <div class="img-box shops">
+                                        <img src="{{vendorData[9]?.image_one}}" *ngIf="vendorData[9]?.image_one">
+                                        <img *ngIf="!vendorData[9]?.image_one" class="img-fluid"
+                                            src="assets/images/placeholder.png" alt="No image found">
+                                    </div>
+                                    <div class="thumb-content">
+                                        <h4>{{vendorData[9]?.bussiness_name}}</h4>
+
+                                        <p class="shops-p">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{vendorData[9]?.bussiness_houseno || 0}},{{vendorData[9]?.bussiness_area}},{{vendorData[9]?.bussiness_city}}<br />
+
+                                            {{vendorData[9]?.bussiness_country}},{{vendorData[9]?.bussiness_pincode}}
+                                        </p>
+                                        <!-- <a>View Product&nbsp;
+                                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                            </a> -->
+                                        <div class="shop-now">
+                                            <button type="text" class="btn waves-effect waves-light"
+                                                (click)="viewVendorProds(vendorData[9].id)">Shop
+                                                Now</button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 shops-col">
+                            <div class="thumb-wrapper" *ngIf="vendorData[10]">
+                                <div class="" (click)="viewVendorProds(vendorData[10].id)">
+                                    <!-- <img src="assets/images/background-img.png" class="bg-layer"> -->
+                                    <div class="img-box shops">
+                                        <img src="{{vendorData[10]?.image_one}}"
+                                            (click)="showProduxtDetails(product[0]?.product_id)" alt=""
+                                            *ngIf="vendorData[10]?.image_one">
+                                        <img *ngIf="!vendorData[10]?.image_one" class="img-fluid"
+                                            src="assets/images/placeholder.png" alt="No image found">
+                                    </div>
+                                    <div class="thumb-content">
+                                        <h4>{{vendorData[10]?.bussiness_name}}</h4>
+
+                                        <p class="shops-p">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{vendorData[10]?.bussiness_houseno || 0}},{{vendorData[10]?.bussiness_area}},{{vendorData[10]?.bussiness_city}}<br />
+
+                                            {{vendorData[10]?.bussiness_country}},{{vendorData[10]?.bussiness_pincode}}
+                                        </p>
+                                        <!-- <a>View Product&nbsp;
+                                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                            </a> -->
+                                        <div class="shop-now">
+                                            <button type="text" class="btn waves-effect waves-light"
+                                                (click)="viewVendorProds(vendorData[10].id)">Shop
+                                                Now</button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 shops-col" *ngIf="vendorData[11]">
+                            <div class="thumb-wrapper">
+                                <div class="" (click)="viewVendorProds(vendorData[11].id)">
+                                    <!-- <img src="assets/images/background-img.png" class="bg-layer"> -->
+                                    <div class="img-box shops">
+                                        <img src="{{vendorData[11]?.image_one}}"
+                                            (click)="showProduxtDetails(product[0]?.product_id)" alt=""
+                                            *ngIf="vendorData[11]?.image_one">
+                                        <img *ngIf="!vendorData[11]?.image_one" class="img-fluid"
+                                            src="assets/images/placeholder.png" alt="No image found">
+                                    </div>
+                                    <div class="thumb-content">
+                                        <h4>{{vendorData[11]?.bussiness_name}}</h4>
+
+                                        <p class="shops-p">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{vendorData[11]?.bussiness_houseno || 0}},{{vendorData[11]?.bussiness_area}},{{vendorData[11]?.bussiness_city}}<br />
+
+                                            {{vendorData[11]?.bussiness_country}},{{vendorData[11]?.bussiness_pincode}}
+                                        </p>
+                                        <!-- <a>View Product&nbsp;
+                                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                            </a> -->
+                                        <div class="shop-now">
+                                            <button type="text" class="btn waves-effect waves-light"
+                                                (click)="viewVendorProds(vendorData[11].id)">Shop
+                                                Now</button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- Carousel controls -->
+        <!-- <a class="carousel-control left carousel-control-prev" href="#myCarousel" data-slide="prev">
+            <i class="fa fa-angle-left"></i>
+        </a>
+        <a class="carousel-control right carousel-control-next" href="#myCarousel" data-slide="next">
+            <i class="fa fa-angle-right"></i>
+        </a> -->
+        <!-- <div class="whole-icons controls-top" *ngIf="!noData">
+            <a class="btn-floating btn-small slider-btn-left" href="#myCarousel" data-slide="prev">
+                <i class="fas fa-long-arrow-alt-left"></i>
+            </a>
+            <a class="btn-floating btn-small slider-btn-right" href="#myCarousel" data-slide="next">
+                <i class="fas fa-long-arrow-alt-right"></i>
+            </a>
+        </div> -->
+        <div class="whole-icons controls-top" *ngIf="!noData1">
+            <a class="btn-floating btn-small slider-btn-left" href="#myCarousel" data-slide="prev">
+                <i class="fas fa-long-arrow-alt-left"></i>
+            </a>
+            <a class="btn-floating btn-small slider-btn-right1" href="#myCarousel" data-slide="next">
+                <i class="fas fa-long-arrow-alt-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!-- shops -->
 <div class="container-fluid">
     <hr class="product-cat">
     <h4 class="text-center product-header">
@@ -90,13 +576,13 @@
                         <img class="img-fluid gro-img" [src]="data.image" alt="Card image cap"
                             (click)="showProduxtDetails(data.vendor_product_id,data.vendorid_as_owner)">
                         <!-- </div> -->
-                        <div class="card-block">
+                        <div class="card-block prd-scr">
                             <h5 class="text-center">{{data.product_name}} </h5>
                             <p class="text-center">
                                 BD {{data?.selling_price}}
                                 <strike>BD {{data?.actual_price}}</strike>
                             </p>
-                            <div class="sort">
+                            <!-- <div class="sort">
                                 <select (change)="changeSize($event.target.value)">
                                     <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}}-BD
                                         {{data?.selling_price}}
@@ -108,120 +594,121 @@
                             (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)">Add
                             To
                             Cart
-                        </button>
+                        </button> -->
+                        </div>
+                        <ul class="expand-button">
+                            <li><a
+                                    (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)"><i
+                                        class="fas fa-shopping-basket"></i></a>
+                            </li>
+                            <!-- <li><a (click)="open(data.skid)"><img src="assets/images/maximize.png"></a></li> -->
+                        </ul>
+                        <ul class="expand-button2 expand-button-2">
+                            <li><a (click)="addtoWish(data.product_id,data.skid)"><i class="fas fa-heart"
+                                        [ngStyle]="{'color':data.wish_list == 'true' ? 'yellow'  :  '#dfdfdf'}"></i></a>
+                            </li>
+                        </ul>
                     </div>
-                    <ul class="expand-button">
-                        <li><a
-                                (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)"><i
-                                    class="fas fa-shopping-basket"></i></a>
-                        </li>
-                        <li><a (click)="open(data.skid)"><img src="assets/images/maximize.png"></a></li>
-                    </ul>
-                    <ul class="expand-button2 expand-button-2">
-                        <li><a (click)="addtoWish(data.product_id,data.skid)"><i class="fas fa-heart"
-                                    [ngStyle]="{'color':data.wish_list == 'true' ? 'yellow'  :  '#dfdfdf'}"></i></a>
-                        </li>
-                    </ul>
+                </div>
+                <div *ngIf="noData">
+                    <h3 class="noData">No Products Found</h3>
+                </div>
+            </div> <!-- </div> -->
+
+            <!--all -->
+            <!-- vegetables -->
+            <div class="row " *ngIf="showAllProdsForCat">
+                <div class="col-md-3 recProds" *ngFor="let data of allProductsData">
+                    <div class="wrapper all">
+                        <div class="card">
+                            <img src="assets/images/background-img.png" class="bg-layer">
+                            <img class="img-fluid gro-img" [src]="data.image" alt="Card image cap"
+                                (click)="showProduxtDetails(data.vendor_product_id,data.vendorid_as_owner)">
+                            <div class="card-block prd-scr">
+                                <h5 class="text-center">{{data.product_name}} </h5>
+                                <p class="text-center">
+                                    BD {{data?.selling_price}}
+                                    <strike>BD {{data?.actual_price}}</strike>
+                                </p>
+                                <div class="sort">
+                                    <select (change)="changeSize($event.target.value)">
+                                        <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">
+                                            {{sku?.size}}-BD
+                                            {{sku?.selling_price}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="button" class="btn cart-btn"
+                                (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)">Add
+                                To
+                                Cart
+                            </button>
+                        </div>
+                        <ul class="expand-button">
+                            <li><a
+                                    (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)"><i
+                                        class="fas fa-shopping-basket"></i></a>
+                            </li>
+                            <!-- <li><a (click)="open(data.skid)"><img src="assets/images/maximize.png"></a></li> -->
+                        </ul>
+                        <ul class="expand-button2 expand-button-2">
+                            <li><a (click)="addtoWish(data.product_id,data.skid)"><i class="fas fa-heart"></i></a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div *ngIf="noData">
+            <div *ngIf="noData1&&!showAllProductsScreen">
                 <h3 class="noData">No Products Found</h3>
             </div>
-        </div> <!-- </div> -->
+            <!-- friuts -->
+            <!-- zoom model -->
+            <div class="modal fade" id="enlargeImg" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
 
-        <!--all -->
-        <!-- vegetables -->
-        <div class="row " *ngIf="showAllProdsForCat">
-            <div class="col-md-3 recProds" *ngFor="let data of allProductsData">
-                <div class="wrapper all">
-                    <div class="card">
-                        <img src="assets/images/background-img.png" class="bg-layer">
-                        <img class="img-fluid gro-img" [src]="data.image" alt="Card image cap"
-                            (click)="showProduxtDetails(data.vendor_product_id,data.vendorid_as_owner)">
-                        <div class="card-block">
-                            <h5 class="text-center">{{data.product_name}} </h5>
-                            <p class="text-center">
-                                BD {{data?.selling_price}}
-                                <strike>BD {{data?.actual_price}}</strike>
-                            </p>
-                            <div class="sort">
-                                <select (change)="changeSize($event.target.value)">
-                                    <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">
-                                        {{sku?.size}}-BD
-                                        {{sku?.selling_price}}
-                                    </option>
-                                </select>
-                            </div>
                         </div>
-                        <button type="button" class="btn cart-btn"
-                            (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)">Add
-                            To
-                            Cart
-                        </button>
                     </div>
-                    <ul class="expand-button">
-                        <li><a
-                                (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)"><i
-                                    class="fas fa-shopping-basket"></i></a>
-                        </li>
-                        <li><a (click)="open(data.skid)"><img src="assets/images/maximize.png"></a></li>
-                    </ul>
-                    <ul class="expand-button2 expand-button-2">
-                        <li><a (click)="addtoWish(data.product_id,data.skid)"><i class="fas fa-heart"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div *ngIf="noData1&&!showAllProductsScreen">
-            <h3 class="noData">No Products Found</h3>
-        </div>
-        <!-- friuts -->
-        <!-- zoom model -->
-        <div class="modal fade" id="enlargeImg" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="modal-dialog modal-dialog-centered modal-popup-fullimage" role="document">
-                            <div class="modal-content enlargeImg">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body large-body">
-                                    <div class="">
-                                        <img class="img-fluid" [src]="enlargeImg" alt="Card image cap"
-                                            (click)="showProduxtDetails(data.vendor_product_id,data.vendorid_as_owner)">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="modal-dialog modal-dialog-centered modal-popup-fullimage" role="document">
+                                <div class="modal-content enlargeImg">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body large-body">
+                                        <div class="">
+                                            <img class="img-fluid" [src]="enlargeImg" alt="Card image cap"
+                                                (click)="showProduxtDetails(data.vendor_product_id,data.vendorid_as_owner)">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
+            <!-- zoom model -->
+        </div>
+    </div>
+
+    <div id="multi-item-example" class="carousel slide carousel-multi-item container" data-ride="carousel">
+
+        <!--Slides-->
+        <div class="carousel-inner product-slider" role="listbox">
+
 
         </div>
-        <!-- zoom model -->
-    </div>
-</div>
+        <!--/.Slides-->
 
-<div id="multi-item-example" class="carousel slide carousel-multi-item container" data-ride="carousel">
-
-    <!--Slides-->
-    <div class="carousel-inner product-slider" role="listbox">
-
-
-    </div>
-    <!--/.Slides-->
-
-    <!--Controls-->
-    <!-- <div class="controls-top">
+        <!--Controls-->
+        <!-- <div class="controls-top">
 		<a class="btn-floating btn-small slider-btn-left" href="#multi-item-example" data-slide="prev">
 			<i class="fas fa-long-arrow-alt-left"></i>
 		</a>
@@ -229,35 +716,35 @@
 			<i class="fas fa-long-arrow-alt-right"></i>
 		</a>
 	</div> -->
-    <!--/.Controls-->
+        <!--/.Controls-->
 
-</div>
-<!-- end deals -->
-<div class="container-fluid">
-    <hr class="product-cat">
-    <h4 class="text-center product-header">
-        <span>Brand</span>
-        Categories
-    </h4>
-</div>
-<div id="multi-item-example1" class="carousel slide carousel-multi-item container" data-ride="carousel">
-    <br />
-    <!--Slides-->
-    <div class="carousel-inner product-slider" role="listbox">
-        <!--First slide-->
-        <div class="carousel-item active">
-            <div class="col-md-4" *ngFor="let item of brandsData;let i=index">
-                <div class="col-md-12">
-                    <div class="row top-brands banImg" *ngIf="i<3" (click)="getBanProds(item.image_id)">
-                        <div class="col-md-5">
-                            <img [src]="item.website_banner" alt="top-brands">
-                        </div>
-                        <div class="col-md-7 browse-site">
-                            <p>{{item.name}}</p>
+    </div>
+    <!-- end deals -->
+    <div class="container-fluid">
+        <hr class="product-cat">
+        <h4 class="text-center product-header">
+            <span>Brand</span>
+            Categories
+        </h4>
+    </div>
+    <div id="multi-item-example1" class="carousel slide carousel-multi-item container" data-ride="carousel">
+        <br />
+        <!--Slides-->
+        <div class="carousel-inner product-slider" role="listbox">
+            <!--First slide-->
+            <div class="carousel-item active brand-resp">
+                <div class="col-md-4" *ngFor="let item of brandsData;let i=index">
+                    <div class="col-md-12">
+                        <div class="row top-brands banImg" (click)="getBanProds(item.image_id)">
+                            <div class="col-md-5">
+                                <img [src]="item.website_banner" alt="top-brands">
+                            </div>
+                            <div class="col-md-7 browse-site">
+                                <p>{{item.name}}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- <div class="col-md-12">
+                    <!-- <div class="col-md-12">
 					<div class="row top-brands">
 						<div class="col-md-5">
 							<img src="assets/images/top-brand.png" alt="top-brands">
@@ -277,9 +764,9 @@
 						</div>
 					</div>
 				</div> -->
-            </div>
+                </div>
 
-            <!-- <div class="col-md-4 hidden-sm-down">
+                <!-- <div class="col-md-4 hidden-sm-down">
 				<div class="col-md-12">
 					<div class="row top-brands">
 						<div class="col-md-5">
@@ -344,88 +831,33 @@
 					</div>
 				</div>
 			</div> -->
+            </div>
         </div>
+        <!--/.Slides-->
+        <!--Controls-->
+        <div class="controls-top">
+            <a class="btn-floating btn-small slider-btn-left" href="#multi-item-example1" data-slide="prev">
+                <i class="fas fa-long-arrow-alt-left"></i>
+            </a>
+            <a class="btn-floating btn-small slider-btn-right1" href="#multi-item-example1" data-slide="next">
+                <i class="fas fa-long-arrow-alt-right"></i>
+            </a>
+        </div>
+        <!--/.Controls-->
     </div>
-    <!--/.Slides-->
-    <!--Controls-->
-    <!-- <div class="controls-top">
-		<a class="btn-floating btn-small slider-btn-left" href="#multi-item-example1" data-slide="prev">
-			<i class="fas fa-long-arrow-alt-left"></i>
-		</a>
-		<a class="btn-floating btn-small slider-btn-right" href="#multi-item-example1" data-slide="next">
-			<i class="fas fa-long-arrow-alt-right"></i>
-		</a>
-	</div> -->
-    <!--/.Controls-->
-</div>
-<!-- end deals -->
+    <!-- end deals -->
 
-<div class="container banner-shop">
+    <!-- <div class="container banner-shop">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 banner-1">
             <img [src]="brandsData1" class="img-fluid" alt="No image found">
         </div>
         <div class="col-md-6" *ngIf="brandsData2">
             <img [src]="brandsData2" class="img-fluid" alt="No image found">
         </div>
     </div>
-</div>
+</div> -->
 
-<!-- recommended products -->
-<div id="multi-item-example6" class="carousel slide store-location carousel-multi-item container" data-ride="carousel">
-    <h2 class="text-center">Your Nearest
-        <span class="ur-nearest">Shops</span>
+    <!-- recommended products -->
 
-    </h2>
-
-    <!--Slides-->
-    <!-- <div>
-        No Data
-    </div> -->
-    <div class="carousel-inner" role="listbox">
-
-        <!-- First slide -->
-        <div class="carousel-item" *ngFor="let data of vendorData;let i= index" [ngClass]="{'active':i == 0}">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img class="img-fluid" src="assets/images/placeholder.png" alt="No image found">
-                        </div>
-                        <div class="card-block col-md-6 recmded">
-                            <h4 class="">{{data.first_name + " " + data.last_name}}
-                            </h4>
-                            <h5>{{data.bussiness_name}}</h5>
-                            <i class="fas fa-map-marker-alt"></i>
-
-                            {{data.bussiness_houseno || 0}},{{data.bussiness_area}},{{data.bussiness_city}}<br />
-
-                            {{data.bussiness_country}},{{data.bussiness_pincode}} <p>
-                                <a (click)="viewVendorProds(data.id)">View Product&nbsp;
-                                    <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- /.Third slide -->
-        </div>
-        <!--/.Slides-->
-        <!--Controls-->
-        <div class="controls-top controls" *ngIf="!noVen">
-            <a class="btn-floating btn-small slider-btn-left" href="#multi-item-example6" data-slide="prev">
-                <i class="fas fa-long-arrow-alt-left"></i>
-            </a>
-            <a class="btn-floating btn-small slider-btn-right" href="#multi-item-example6" data-slide="next">
-                <i class="fas fa-long-arrow-alt-right"></i>
-            </a>
-        </div>
-        <div *ngIf="noVen">
-            <h3>No Vendors Found</h3>
-        </div>
-        <!--/.Controls-->
-    </div>
     <!-- end recommended products -->

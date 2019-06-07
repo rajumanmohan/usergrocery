@@ -56,7 +56,7 @@
                 <li class="nav-item cust-item1" *ngIf="phone">
                     <a class="nav-link pr-2">
                         <i class="fa fa-phone" aria-hidden="true"></i>
-                        +97317555666
+                        +97317001599
                     </a>
                 </li>
                 <li class="nav-item" (click)="showLocation1()">
@@ -180,14 +180,14 @@
 <nav class="navbar cust-navbar navbar-expand-md sticky-top navbar-dark" id="navbar-mobile">
 
     <a routerLink="/" href="#/" class="navbar-brand">
-        <img src="assets/images/logo.png" class="img-fluid cust-logo" alt="Responsive image">
+        <img src="assets/images/logo1.png" class="img-fluid cust-logo" alt="Responsive image">
     </a>
     <ul class="navbar-nav cust-navbarnav">
         <li class="nav-item cart">
             <span class="crtt-items cust-cartitem" data-toggle="modal" data-target="#cartmodal">
                 <a>
-                    <i class="fa fa-shopping-cart" aria-hidden="true" (click)="getCart()">
-                    </i>
+                    <img src="assets/images/cart_img.png" class="img-fluid cart-logo" alt="Responsive image"
+                        (click)="getCart()">
                 </a>
             </span>
         </li>
@@ -777,8 +777,9 @@
                             </div>
                             <!-- <div class="p-2"><a href=""><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
                             </div> -->
-                            <div class="p-2"><a (click)="socialSignIn('google')"><i class="fa fa-google-plus-official"
-                                        aria-hidden="true"></i></a></div>
+                            <div class="p-2"><a (click)="socialSignIn('google')"><img class="gmail-img"
+                                        src="assets/images/gmail.png" aria-hidden="true">
+                                </a></div>
                         </div>
 
                     </div>
@@ -873,14 +874,15 @@
                                 <div class="input-group-prepend group">
                                     <button class="input-button" type="button" id="button-addon1">+973</button>
                                 </div>
-                                <input myNumberOnly type="text" class="mobile-number" formControlName="mobile_number"
-                                    maxlength="8" [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors}">
-                                <div *ngIf="submitted && f.mobile_number.errors"
-                                    class="invalid-feedback mobile_invalid">
-                                    <div *ngIf="f.mobile_number.errors.required">Mobile number is required</div>
+                                <input myNumberOnly type="text" class="mobile-number" name="mobile_number"
+                                    formControlName="mobile_number" maxlength="8" [(ngModel)]="mobile_number">
+                                <!-- [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors}" -->
+                                <!-- <div *ngIf="submitted && f.mobile_number.errors"
+                                    class="invalid-feedback mobile_invalid"> -->
+                                <!-- <div *ngIf="f.mobile_number.errors.required">Mobile number is required</div>
                                     <div *ngIf="f.mobile_number.errors.minlength">Mobile Number must be 8
-                                        Numbers</div>
-                                </div>
+                                        Numbers</div> -->
+                                <!-- </div> -->
                             </div>
                             <div class="form-group cust-frmgrp1 row">
                                 <label class="col-sm-5 col-md-5 col-form-label">Password
@@ -937,8 +939,9 @@
                             </div>
                             <!-- <div class="p-2"><a href=""><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
                             </div> -->
-                            <div class="p-2"><a href=""><i class="fa fa-google-plus-official"
-                                        aria-hidden="true"></i></a></div>
+                            <div class="p-2"><a (click)="socialSignIn('google')"><img class="gmail-img"
+                                        src="assets/images/gmail.png" aria-hidden="true">
+                                </a></div>
                         </div>
 
                     </div>

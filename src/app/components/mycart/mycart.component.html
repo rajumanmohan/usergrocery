@@ -36,13 +36,6 @@
                                         <strike>BD {{data.actual_price}}</strike>
                                     </span>
                                 </h6>
-                                <div class="custom-control custom-radio mahali-radio">
-                                    <input type="radio" id="customRadio3" name="customRadio3"
-                                        class="custom-control-input mahali-input" checked>
-                                    <label data-toggle="modal" data-target="#myModal"
-                                        class="custom-control-label mahali-label" for="customRadio3">Apply
-                                        Promocode</label>
-                                </div>
                             </div>
                             <div class="col-md-3 text-center">
                                 <div class="quantity">
@@ -70,8 +63,14 @@
                             <div class="col-md-12 text-right">
 
                             </div>
-
                             <hr>
+                        </div>
+                        <div class="custom-control custom-radio mahali-radio">
+                            <input type="radio" id="customRadio3" name="customRadio3"
+                                class="custom-control-input mahali-input" checked>
+                            <label data-toggle="modal" data-target="#myModal" class="custom-control-label mahali-label"
+                                for="customRadio3">Apply
+                                Promocode</label>
                         </div>
                     </div>
                     <div class="sub-total">
@@ -79,12 +78,21 @@
                             <tbody>
                                 <tr class="text-right">
 
-                                    <td>Sub-Total</td>
+                                    <td>Total</td>
                                     <td> : BD.{{billing}}</td>
                                 </tr>
                                 <tr class="text-right">
+                                    <td>Discount </td>
+                                    <td> : {{disAmt || 0}}</td>
+                                </tr>
+                                <!-- <tr class="text-right">
                                     <td>Delivery charges </td>
-                                    <td> : ***</td>
+                                    <td> : 0</td>
+                                </tr> -->
+                                <hr />
+                                <tr class="text-right">
+                                    <td>Total Amount </td>
+                                    <td> : {{(billing) - (disAmt || 0)  }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -321,8 +329,7 @@
                                 <br />
                                 <div class="form-group row ">
                                     <div class="col-sm-12 submit text-right ">
-                                        <button class="btn btn-maroon submit " type="submit "
-                                            (click)="saveAddress()">Submit</button>
+                                        <button class="btn btn-maroon submit " type="submit ">Submit</button>
                                     </div>
                                 </div>
                             </form>
@@ -335,14 +342,14 @@
                             <h4>shipment 1</h4>
                             <div class="shippipng">
                                 <h4>Immediate Delivery</h4>
-                                <p>{{selAdd.house_no}}, {{selAdd.landmark}},
-                                    <br /> {{selAdd.state}}
-                                    <br /> {{selAdd.pin_code}}
+                                <p>{{selAdd?.house_no}}, {{selAdd?.landmark}},
+                                    <br /> {{selAdd?.state}}
+                                    <br /> {{selAdd?.pin_code}}
                                 </p>
-                                <p>Ph : {{selAdd.mobile_number}}</p>
+                                <p>Ph : {{selAdd?.mobile_number}}</p>
                                 <p>
-                                    <a (click)="showItems()">{{cartCount}} Items</a>@ BD {{billing}}</p>
-                                <p>Delivery Charge: BD ***
+                                    <a (click)="showItems()">{{cartCount}} Items</a>@ BD {{billing-disAmt}}</p>
+                                <p>Delivery Charge: BD {{delCharge.express_delivery}}
                                     <img src="assets/images/!.png">
                                 </p>
                                 <div class="row justify-content-center">
@@ -355,18 +362,19 @@
                                         </select>
                                     </div>
                                 </div>
-                                <button class="btn btn-maroon" (click)="proceed()">Proceed To Pay</button>
+                                <button class="btn btn-maroon" (click)="proceed(delCharge.express_delivery)">Proceed To
+                                    Pay</button>
                             </div>
                         </div>
                         <div class="col-md-6 text-center">
                             <h4>shipment 2</h4>
                             <!-- <div class="shippipng">
                                 <h4>Scheduled Delivery</h4>
-                                <p>{{selAdd.house_no}}, {{selAdd.landmark}},
-                                    <br /> {{selAdd.state}}
-                                    <br /> {{selAdd.pin_code}}
+                                <p>{{selAdd?.house_no}}, {{selAdd?.landmark}},
+                                    <br /> {{selAdd?.state}}
+                                    <br /> {{selAdd?.pin_code}}
                                 </p>
-                                <p>Ph : {{selAdd.mobile_number}}</p>
+                                <p>Ph : {{selAdd?.mobile_number}}</p>
                                 <p>
                                     <p>
                                         <a (click)="showItems()">{{cartCount}} Items</a>@ BD
@@ -392,14 +400,14 @@
                             </div> -->
                             <div class="shippipng">
                                 <h4>Scheduled Delivery</h4>
-                                <p>{{selAdd.house_no}}, {{selAdd.landmark}},
-                                    <br /> {{selAdd.state}}
-                                    <br /> {{selAdd.pin_code}}
+                                <p>{{selAdd?.house_no}}, {{selAdd?.landmark}},
+                                    <br /> {{selAdd?.state}}
+                                    <br /> {{selAdd?.pin_code}}
                                 </p>
-                                <p>Ph : {{selAdd.mobile_number}}</p>
+                                <p>Ph : {{selAdd?.mobile_number}}</p>
                                 <p>
-                                    <a (click)="showItems()">{{cartCount}} Items</a>@ BD {{billing}}</p>
-                                <p>Delivery Charge: BD ***
+                                    <a (click)="showItems()">{{cartCount}} Items</a>@ BD {{billing-disAmt}}</p>
+                                <p>Delivery Charge: BD {{delCharge.standard_delivery}}
                                     <img src="assets/images/!.png">
                                 </p>
                                 <!-- <div class="row justify-content-center">
@@ -422,7 +430,8 @@
                                         <owl-date-time #dt [min]="disTime"></owl-date-time>
                                     </label>
                                 </div>
-                                <button class="btn btn-maroon" (click)="proceed()">Proceed To Pay</button>
+                                <button class="btn btn-maroon" (click)="proceed1(delCharge.standard_delivery)">Proceed
+                                    To Pay</button>
                             </div>
                         </div>
                     </div>
@@ -451,7 +460,18 @@
                         </div>
                         <div class="col-md-6 prices">
                             <h4>
-                                <span>BD.{{billing}}</span>
+                                <span>BD.{{Newbilling}}</span>
+                            </h4>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-md-6 ">
+                            <h4>Delivery Charges</h4>
+                        </div>
+                        <div class="col-md-6 prices">
+                            <h4>
+                                <span>BD.{{delChar}}</span>
                             </h4>
                         </div>
                     </div>
@@ -462,7 +482,7 @@
                         </div>
                         <div class="col-md-6 prices">
                             <h4>
-                                <span>BD.{{billing}}</span>
+                                <span>BD.{{payAmt }}</span>
                             </h4>
                         </div>
                     </div>

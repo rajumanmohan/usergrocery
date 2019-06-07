@@ -9,7 +9,10 @@ export class appService {
     user_id;
     constructor(private http: Http) { }
     registration(params) {
-        const headers = new Headers({ 'Content-Type': "application/JSON" });
+        const headers = new Headers({
+            'Content-Type': "application/JSON",
+            'session_id': sessionStorage.userId === undefined ? (sessionStorage.session) : ""
+        });
         return this.http.post(AppSettings.registrationUrl, params, { headers: headers });
     }
     login(params) {
@@ -214,10 +217,10 @@ export class appService {
         this.user_id = sessionStorage.userId;
         return this.http.delete(AppSettings.delWish + "/" + this.user_id + "/" + params, { headers: headers });
     }
-    getSlots() {
+    getSlots(venId) {
         const headers = new Headers({ 'Content-Type': "application/JSON" });
         this.user_id = sessionStorage.userId;
-        return this.http.get(AppSettings.getSlots + "/" + this.user_id, { headers: headers });
+        return this.http.get(AppSettings.getSlots + "/" + this.user_id + "/" + venId, { headers: headers });
     }
     modifyCart(params, cartId) {
         const headers = new Headers({ 'Content-Type': "application/JSON" });
@@ -369,8 +372,10 @@ export class appService {
         return this.http.get(AppSettings.getDetailsById + "/" + this.user_id, { headers: headers });
     }
     socialLogin(params) {
-        const headers = new Headers({ 'Content-Type': "application/JSON" });
-        // this.user_id = sessionStorage.userId;
+        const headers = new Headers({
+            'Content-Type': "application/JSON",
+            'session_id': sessionStorage.userId === undefined ? (sessionStorage.session) : ""
+        });
         return this.http.post(AppSettings.socialLogin, params, { headers: headers });
     }
     forgotwithEmail(params) {

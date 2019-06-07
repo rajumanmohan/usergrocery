@@ -29,7 +29,15 @@ export class MycartComponent implements OnInit {
     skid;
     disDate;
     disTime;
+    dateTime;
+    venId;
+    delCharge = []
     time = { hour: 13, minute: 30 };
+    delChar1;
+    delChar;
+    Newbilling;
+    disAmt;
+    payAmt;
     constructor(public dialog: MatDialog, public appService: appService, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
@@ -46,7 +54,7 @@ export class MycartComponent implements OnInit {
         this.getCart();
         this.getVouchers();
         this.getAdd();
-        this.getSlots();
+        // this.getSlots();
         this.paymentOptions();
         this.fruits = [
             {
@@ -294,6 +302,7 @@ export class MycartComponent implements OnInit {
         var inData = sessionStorage.getItem('userId');
         this.appService.getCart(inData).subscribe(res => {
             this.cartData = res.json().cart_details;
+            this.delCharge = res.json().deliveryfee[0];
             this.cartData.sort(function (a, b) {
                 var keyA = new Date(a.added_on),
                     keyB = new Date(b.added_on)
@@ -303,6 +312,7 @@ export class MycartComponent implements OnInit {
             });
             for (var i = 0; i < this.cartData.length; i++) {
                 this.cartData[i].prodName = this.cartData[i].products.product_name;
+                this.venId = this.cartData[0].vendorid_as_owner;
                 for (var j = 0; j < this.cartData[i].products.sku_details.length; j++) {
                     this.cartData[i].skuValue = this.cartData[i].products.sku_details[0].size;
                     this.cartData[i].skuValue = this.cartData[i].products.sku_details[0].size;
@@ -358,6 +368,7 @@ export class MycartComponent implements OnInit {
             if (res.json().status === 200) {
                 console.log(res.json());
                 swal(res.json().message, "", "success");
+                this.disAmt = res.json().discount_amount;
             }
             if (res.json().status === 400) {
                 swal(res.json().message, "", "error");
@@ -370,7 +381,7 @@ export class MycartComponent implements OnInit {
     slotData;
     delSlots;
     getSlots() {
-        this.appService.getSlots().subscribe(res => {
+        this.appService.getSlots(this.venId).subscribe(res => {
             if (res.json().status === 200) {
                 this.selAdd = res.json().delivery_address[0];
                 this.slotData = res.json();
@@ -382,12 +393,28 @@ export class MycartComponent implements OnInit {
             swal(err.json().message, "", "error");
         });
     }
-    proceed() {
+
+    proceed(delChr) {
+        this.delChar = delChr;
         this.addresses = false;
         this.showAddresses = false;
         this.showDeliveryType = false;
         this.showPaymentMethode = true;
         this.showDeliveryAddress = false;
+        this.Newbilling = parseInt(this.billing) - parseInt(this.disAmt);
+        this.payAmt = parseInt(this.Newbilling) + parseInt(this.delChar);
+
+    }
+    proceed1(delChr1) {
+        this.delChar = delChr1;
+        this.addresses = false;
+        this.showAddresses = false;
+        this.showDeliveryType = false;
+        this.showPaymentMethode = true;
+        this.showDeliveryAddress = false;
+        this.Newbilling = (parseInt(this.billing)) - parseInt(this.disAmt);
+        this.payAmt = parseInt(this.Newbilling) + parseInt(this.delChar);
+
     }
     changeSlot(slot) {
         this.slotId = slot;
@@ -428,7 +455,11 @@ export class MycartComponent implements OnInit {
                 "payment_type": this.payId,
                 "user_id": sessionStorage.getItem('userId'),
                 "item_type": "grocery",
-                "delivery_slot_id": this.slotId
+                "delivery_slot_id": this.slotId || '',
+                "delivery_date_time": this.dateTime || '',
+                "Delivery_charge": JSON.parse(this.delChar),
+                "Coupon_Discount": this.disAmt,
+                "Final_amount": this.payAmt
             }
             this.appService.palceOrder(inData).subscribe(res => {
                 if (res.json().message === "Success") {

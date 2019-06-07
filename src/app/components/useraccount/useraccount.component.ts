@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { appService } from './../../services/mahaliServices/mahali.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+declare var jQuery: any;
+declare var $: any;
 @Component({
   selector: 'app-useraccount',
   templateUrl: './useraccount.component.html',
@@ -725,5 +727,37 @@ export class UseraccountComponent implements OnInit {
 
     })
     // this.subCatName1 = '';
+  }
+  addtoWish(Id, skId) {
+    var inData = {
+      "user_id": (sessionStorage.userId),
+      "product_id": Id,
+      "sku_id": skId,
+      "item_type": "grocery"
+    }
+    this.appService.addToWish(inData).subscribe(res => {
+      if (sessionStorage.userId === undefined) {
+        swal("Please Login", "", "error");
+      } else if (res.json().status === 400) {
+        swal(res.json().message, "", "error");
+      } else {
+        swal(res.json().message, "", "success");
+        this.getWish();
+      }
+    }, err => {
+
+    })
+  }
+  enlargeImg;
+  openNew(skid): void {
+    for (var i = 0; i < this.prodData.length; i++) {
+      for (var j = 0; j < this.prodData[i].sku_row.length; j++) {
+        if (skid === this.prodData[i].sku_row[j].skid) {
+          this.enlargeImg = this.prodData[i].sku_row[j].sku_images[0].sku_image;
+          jQuery("#enlargeImg").modal("show");
+        }
+      }
+
+    }
   }
 }

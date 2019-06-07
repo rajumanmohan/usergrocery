@@ -11,24 +11,30 @@
                 <img *ngFor="let img of prodImages" [src]="img" class="prod-images" (click)="showBigImage(img)">
             </div>
         </div> -->
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="offer-label">
-                <img src="assets/images/percentage.png">
-                <p class="discount-per">{{discountPer}}%</p>
+                <!-- <img src="assets/images/percentage.png">
+                <p class="discount-per"></p> -->
             </div>
             <div class="wish-list" (click)="addtoWish()">
                 <a><i class="fas fa-heart wish" [ngStyle]="{'color':wish_list=='true'?'#7fba00':'gray'}"></i></a>
             </div>
             <img id="myImg" src="{{product_image}}" alt="Snow" [imageZoom]="zoomedImageSrc">
+            <div class="col-md-9">
+                <div class="img">
+                    <img *ngFor="let img of prodImages" [src]="img.sku_image" class="prod-images"
+                        (click)="showBigImage(img.sku_image)">
+                </div>
+            </div>
         </div>
-        <div class="col-md-6 details">
+        <div class="col-md-7 details">
             <h4>{{prodName}} </h4>
             <div class="row">
                 <div class="col-md-6">
                     <div class="quantity-price text-center">
                         <select (change)="changeSize($event.target.value)">
                             <option *ngFor="let sku of skuData" [value]="sku.skid" data-icon="images/sample-1.jpg"
-                                class="left">{{sku.size}}
+                                class="left">{{sku.size}} {{sku.size_measuring_unit}}
                                 - BD {{selling_price}}
                             </option>
                             <!-- <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80</option>
@@ -52,7 +58,7 @@
                 </div>
             </div>
             <br />
-            <p>Get {{discountPer}}% OFF
+            <p class="per-tag">Get {{discountPer}}% OFF
             </p>
             <p><strong>BD:</strong> {{selling_price}}
                 <span>
@@ -89,10 +95,25 @@
 
                         <input type="text" name="quantity" [(ngModel)]="quantity" readonly="readonly"
                             value="quantity" />
-                        <button class="plus-btn" type="button" name="button" (click)="checkProdQuty(prodId)">
+                        <button class="plus-btn" type="button" name="button"
+                            (click)="checkProdQuty(prodId,skid,selling_price,venId,vendor_product_id,discount)">
                             <i class=" fa fa-plus" aria-hidden="true"></i>
                         </button>
                     </div> -->
+                    <!-- <div class="col-lg-3 col-md-3 col-sm-3 text-right mt-3"> -->
+                    <!-- <div class="quantity">
+                        <button class="minus-btn" type="button" name="button" (click)="itemDecrease(item.cart_id)">
+                            <i class="fa fa-minus " aria-hidden="true"></i>
+                        </button>
+
+                        <input type="text" name="quantity" [(ngModel)]="quantity" readonly="readonly"
+                            value="{{quantity}}" />
+                        <button class="plus-btn" type="button" name="button"
+                            (click)="checkProdQuty(item.cart_id,item.product_id,item.sku_id,item.quantity,item.vendorid_as_owner,item.vendor_product_id)">
+                            <i class=" fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div> -->
+                    <!-- </div> -->
                     <button class="btn btn-maroon add-cart" [value]="prodId"
                         (click)="checkProdQuty(prodId,skid,selling_price,venId,vendor_product_id,discount)">Add to
                         Cart</button>
@@ -101,14 +122,14 @@
         </div>
 
     </div>
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-9">
             <div class="img">
                 <img *ngFor="let img of prodImages" [src]="img.sku_image" class="prod-images"
                     (click)="showBigImage(img.sku_image)">
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- The Modal -->
     <div id="myModal" class="modal">
         <span class="close">&times;</span>
@@ -124,392 +145,62 @@
             </p>
         </div>
     </div>
-    <div class="row desription">
+    <!-- <div class="row desription"> -->
+
+    <!-- <br />No Related Products -->
+    <div class="desription">
         <h5>More Products Related Your Search</h5>
-        <!-- <br />No Related Products -->
-        <div id="multi-item-example" class="carousel slide carousel-multi-item container" data-ride="carousel">
-            <br />
-            <!--Slides-->
-            <div class="carousel-inner product-slider" role="listbox">
-
-                <!--First slide-->
-                <div class="carousel-item active">
-
-                    <div class="col-md-3  item" *ngFor="let data of prodData">
-                        <div class="wrapper">
-                            <div class="card">
-                                <img src="assets/images/background-img.png" class="bg-layer">
-                                <img class="img-fluid gro-img" [src]="data.image" alt="Card image cap"
-                                    (click)="showProduxtDetails(data.vendor_product_id,data.vendorid_as_owner)">
-                                <div class="card-block">
-                                    <h5 class="text-center">{{data.product_name}} </h5>
-                                    <p class="text-center">
-                                        BD {{data?.selling_price}}
-                                        <strike>BD {{data?.actual_price}}</strike>
-                                    </p>
-                                    <div class="sort">
-                                        <select (change)="changeSize($event.target.value)">
-                                            <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">
-                                                {{sku?.size}}-BD
-                                                {{data?.selling_price}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn cart-btn"
-                                    (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)">Add
-                                    To
-                                    Cart
-                                </button>
-                            </div>
-                            <!-- <ul class="expand-button">
-                                <li><a
-                                        (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)"><i
-                                            class="fas fa-shopping-basket"></i></a>
-                                </li>
-                                <li><a (click)="openNew(data.skid)"><img src="assets/images/maximize.png"></a></li>
-                            </ul>
-                            <ul class="expand-button2 expand-button-2">
-                                <li><a (click)="addtoWish(data.product_id,data.skid)"><i class="fas fa-heart"
-                                            [ngStyle]="{'color':data.wish_list == 'true' ? 'yellow'  :  '#dfdfdf'}"></i></a>
-                                </li>
-                            </ul> -->
-                        </div>
-
-                    </div>
-
-                    <!-- <div class="col-md-3 hidden-sm-down">
-                        <div class="card">
-                            <div class="product-image" (click)="showProduxtDetails()">
-                                <img class="img-fluid" src="assets/images/cherry.png" alt="Card image cap">
-                            </div>
-                            <div class="card-block add-to-cart">
-                                <h5 class="text-center">Electric Kettle </h5>
-                                <p class="text-center">
-                                    BD 7.500
-                                    <strike>BD 8.000</strike>
-                                </p>
-                                <div class="quantity-price text-center">
-                                    <select>
-                                        <option value="" disabled selected>500gms-Rs 20.40</option>
-                                        <option value="" data-icon="images/sample-1.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/yuna.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                    </select>
-                                </div>
-                                <button type="text" class="btn waves-effect waves-light">Add To Cart</button>
-                            </div>
+    </div>
+    <div class="row desription">
+        <!-- <h5>More Products Related Your Search</h5> -->
+        <br />
+        <div class="col-md-3  item" *ngFor="let data of prodData">
+            <div class="wrapper">
+                <div class="card">
+                    <img src="assets/images/background-img.png" class="bg-layer">
+                    <img class="img-fluid gro-img" [src]="data.image" alt="Card image cap"
+                        (click)="showProduxtDetails(data.vendor_product_id,data.vendorid_as_owner)">
+                    <div class="card-block">
+                        <h5 class="text-center">{{data.product_name}} </h5>
+                        <p class="text-center">
+                            BD {{data?.selling_price}}
+                            <strike>BD {{data?.actual_price}}</strike>
+                        </p>
+                        <div class="sort">
+                            <select (change)="changeSize($event.target.value)">
+                                <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}}-BD
+                                    {{data?.selling_price}}
+                                </option>
+                            </select>
                         </div>
                     </div>
-
-                    <div class="col-md-3 hidden-sm-down">
-                        <div class="card">
-                            <div class="product-image" (click)="showProduxtDetails()">
-                                <img class="img-fluid" src="assets/images/onion.png" alt="Card image cap">
-                            </div>
-                            <div class="card-block add-to-cart">
-                                <h5 class="text-center">Electric Kettle </h5>
-                                <p class="text-center">
-                                    BD 7.500
-                                    <strike>BD 8.000</strike>
-                                </p>
-                                <div class="quantity-price text-center">
-                                    <select>
-                                        <option value="" disabled selected>500gms-Rs 20.40</option>
-                                        <option value="" data-icon="images/sample-1.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/yuna.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                    </select>
-                                </div>
-                                <button type="text" class="btn waves-effect waves-light">Add To Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 hidden-sm-down">
-                        <div class="card">
-                            <div class="product-image " (click)="showProduxtDetails()">
-                                <img class="img-fluid" src="assets/images/tomato.png" alt="Card image cap">
-                            </div>
-                            <div class="card-block add-to-cart">
-                                <h5 class="text-center">Electric Kettle </h5>
-                                <p class="text-center">
-                                    BD 7.500
-                                    <strike>BD 8.000</strike>
-                                </p>
-                                <div class="quantity-price text-center">
-                                    <select>
-                                        <option value="" disabled selected>500gms-Rs 20.40</option>
-                                        <option value="" data-icon="images/sample-1.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/yuna.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                    </select>
-                                </div>
-                                <button type="text" class="btn waves-effect waves-light">Add To Cart</button>
-                            </div>
-                        </div>
-                    </div> -->
+                    <button type="button" class="btn cart-btn"
+                        (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)">Add
+                        To
+                        Cart
+                    </button>
                 </div>
-                <!--/.First slide-->
-
-                <!--Second slide-->
-                <!-- <div class="carousel-item ">
-                    <div class="col-md-3">
-                        <div class="card">
-                            <div class="product-image" (click)="showProduxtDetails()">
-                                <img class="img-fluid" src="assets/images/pinapple.png" alt="Card image cap">
-                            </div>
-                            <div class="card-block add-to-cart">
-                                <h5 class="text-center">Electric Kettle </h5>
-                                <p class="text-center">
-                                    BD 7.500
-                                    <strike>BD 8.000</strike>
-                                </p>
-                                <div class="quantity-price text-center">
-                                    <select>
-                                        <option value="" disabled selected>500gms-Rs 20.40</option>
-                                        <option value="" data-icon="images/sample-1.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/yuna.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                    </select>
-                                </div>
-                                <button type="text" class="btn waves-effect waves-light">Add To Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 hidden-sm-down">
-                        <div class="card">
-                            <div class="product-image" (click)="showProduxtDetails()">
-                                <img class="img-fluid" src="assets/images/onion.png" alt="Card image cap">
-                            </div>
-                            <div class="card-block add-to-cart">
-                                <h5 class="text-center">Electric Kettle </h5>
-                                <p class="text-center">
-                                    BD 7.500
-                                    <strike>BD 8.000</strike>
-                                </p>
-                                <div class="quantity-price text-center">
-                                    <select>
-                                        <option value="" disabled selected>500gms-Rs 20.40</option>
-                                        <option value="" data-icon="images/sample-1.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/yuna.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                    </select>
-                                </div>
-                                <button type="text" class="btn waves-effect waves-light">Add To Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 hidden-sm-down">
-                        <div class="card">
-                            <div class="product-image" (click)="showProduxtDetails()">
-                                <img class="img-fluid" src="assets/images/cherry.png" alt="Card image cap">
-                            </div>
-                            <div class="card-block add-to-cart">
-                                <h5 class="text-center">Electric Kettle </h5>
-                                <p class="text-center">
-                                    BD 7.500
-                                    <strike>BD 8.000</strike>
-                                </p>
-                                <div class="quantity-price text-center">
-                                    <select>
-                                        <option value="" disabled selected>500gms-Rs 20.40</option>
-                                        <option value="" data-icon="images/sample-1.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/yuna.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                    </select>
-                                </div>
-                                <button type="text" class="btn waves-effect waves-light">Add To Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 hidden-sm-down">
-                        <div class="card">
-                            <div class="product-image" (click)="showProduxtDetails()">
-                                <img class="img-fluid" src="assets/images/tomato.png" alt="Card image cap">
-                            </div>
-                            <div class="card-block add-to-cart">
-                                <h5 class="text-center">Electric Kettle </h5>
-                                <p class="text-center">
-                                    BD 7.500
-                                    <strike>BD 8.000</strike>
-                                </p>
-                                <div class="quantity-price text-center">
-                                    <select>
-                                        <option value="" disabled selected>500gms-Rs 20.40</option>
-                                        <option value="" data-icon="images/sample-1.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/yuna.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                    </select>
-                                </div>
-                                <button type="text" class="btn waves-effect waves-light">Add To Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div> -->
-                <!--/.Second slide-->
-
-                <!--Third slide-->
-                <!-- <div class="carousel-item ">
-
-                    <div class="col-md-3">
-                        <div class="card">
-                            <div class="product-image" (click)="showProduxtDetails()">
-                                <img class="img-fluid" src="assets/images/pinapple.png" alt="Card image cap">
-                            </div>
-                            <div class="card-block add-to-cart">
-                                <h5 class="text-center">Electric Kettle </h5>
-                                <p class="text-center">
-                                    BD 7.500
-                                    <strike>BD 8.000</strike>
-                                </p>
-                                <div class="quantity-price text-center">
-                                    <select>
-                                        <option value="" disabled selected>500gms-Rs 20.40</option>
-                                        <option value="" data-icon="images/sample-1.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/yuna.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                    </select>
-                                </div>
-                                <button type="text" class="btn waves-effect waves-light">Add To Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 hidden-sm-down">
-                        <div class="card">
-                            <div class="product-image" (click)="showProduxtDetails()">
-                                <img class="img-fluid" src="assets/images/onion.png" alt="Card image cap">
-                            </div>
-                            <div class="card-block add-to-cart">
-                                <h5 class="text-center">Electric Kettle </h5>
-                                <p class="text-center">
-                                    BD 7.500
-                                    <strike>BD 8.000</strike>
-                                </p>
-                                <div class="quantity-price text-center">
-                                    <select>
-                                        <option value="" disabled selected>500gms-Rs 20.40</option>
-                                        <option value="" data-icon="images/sample-1.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/yuna.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                    </select>
-                                </div>
-                                <button type="text" class="btn waves-effect waves-light">Add To Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 hidden-sm-down">
-                        <div class="card">
-                            <div class="product-image" (click)="showProduxtDetails()">
-                                <img class="img-fluid" src="assets/images/cherry.png" alt="Card image cap">
-                            </div>
-                            <div class="card-block add-to-cart">
-                                <h5 class="text-center">Electric Kettle </h5>
-                                <p class="text-center">
-                                    BD 7.500
-                                    <strike>BD 8.000</strike>
-                                </p>
-                                <div class="quantity-price text-center">
-                                    <select>
-                                        <option value="" disabled selected>500gms-Rs 20.40</option>
-                                        <option value="" data-icon="images/sample-1.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/yuna.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                    </select>
-                                </div>
-                                <button type="text" class="btn waves-effect waves-light">Add To Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 hidden-sm-down">
-                        <div class="card">
-                            <div class="product-image" (click)="showProduxtDetails()">
-                                <img class="img-fluid" src="assets/images/tomato.png" alt="Card image cap">
-                            </div>
-                            <div class="card-block add-to-cart">
-                                <h5 class="text-center">Electric Kettle </h5>
-                                <p class="text-center">
-                                    BD 7.500
-                                    <strike>BD 8.000</strike>
-                                </p>
-                                <div class="quantity-price text-center">
-                                    <select>
-                                        <option value="" disabled selected>500gms-Rs 20.40</option>
-                                        <option value="" data-icon="images/sample-1.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                        <option value="" data-icon="images/yuna.jpg" class="left">1000gms-Rs 40.80
-                                        </option>
-                                    </select>
-                                </div>
-                                <button type="text" class="btn waves-effect waves-light">Add To Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div> -->
-                <!--/.Third slide-->
-
+                <!-- <ul class="expand-button">
+                    <li><a
+                            (click)="checkProdQuty(data.product_id,data.skid,data.selling_price,data.vendorid_as_owner,data.vendor_product_id,data.updated_discount)"><i
+                                class="fas fa-shopping-basket"></i></a>
+                    </li>
+                    <li><a (click)="openNew(data.skid)"><img src="assets/images/maximize.png"></a></li>
+                </ul>
+                <ul class="expand-button2 expand-button-2">
+                    <li><a (click)="addtoWish(data.product_id,data.skid)"><i class="fas fa-heart"
+                                [ngStyle]="{'color':data.wish_list == 'true' ? 'yellow'  :  '#dfdfdf'}"></i></a>
+                    </li>
+                </ul> -->
             </div>
-            <!--/.Slides-->
-
-            <!--Controls-->
-            <div class="controls-top">
-                <a class="btn-floating btn-small slider-btn-left" href="#multi-item-example" data-slide="prev">
-                    <i class="fas fa-long-arrow-alt-left"></i>
-                </a>
-                <a class="btn-floating btn-small slider-btn-right" href="#multi-item-example" data-slide="next">
-                    <i class="fas fa-long-arrow-alt-right"></i>
-                </a>
-            </div>
-            <!--/.Controls-->
 
         </div>
-        <!-- end deals -->
     </div>
+    <!-- end deals -->
+    <!-- </div>
 
-</div>
-<!-- <link rel="stylesheet" href="assets/css/ninja-slider.css">
+</div> -->
+    <!-- <link rel="stylesheet" href="assets/css/ninja-slider.css">
 <link rel="stylesheet" href="assets/css/thumbnail-slider.css">
 
 

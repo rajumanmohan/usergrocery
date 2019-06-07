@@ -124,7 +124,7 @@ export class ProductdetailsComponent implements OnInit {
           this.actual_price = this.prodsData[0].price;
           this.selling_price = this.prodsData[0].price - (this.prodsData[0].discount);
           this.product_image = this.prodsData[i].sku_row[0].sku_images[0].sku_image;
-          this.discountPer = this.prodsData[i].sku_row[0].Discount_percentage;
+          this.discountPer = this.prodsData[i].Discount_percentage;
           this.skid = this.prodsData[0].sku_row[0].skid;
           this.image = this.prodsData[i].sku_row[0].sku_images[0].sku_image;
           this.size = this.prodsData[0].sku_row[0].size;

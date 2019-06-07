@@ -41,22 +41,22 @@ export class ProductsComponent implements OnInit {
     a;
     priceArr = [{
         'price': "Less than 100",
-        'value': "0,100"
+        'value': "0,99"
     },
     {
         'price': "Less than 200",
-        'value': "101,200"
+        'value': "0,199"
     },
     {
         'price': "Less than 300",
-        'value': "201,300"
+        'value': "0,299"
     },
     {
-        'price': "Less than 400",
-        'value': "301,400"
+        'price': "Less than or Equall to 400",
+        'value': "0,400"
     },
     {
-        'price': "Less than 500",
+        'price': "Greater than 400",
         'value': "401,100000"
     },
     ];
