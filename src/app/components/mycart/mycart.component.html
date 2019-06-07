@@ -46,7 +46,8 @@
                                         </span>
                                     </button>
                                     <input type="text" value="1" name="quantity" [(ngModel)]="data.quantity"
-                                        readonly="readonly" value="{{data.quantity}}" class="text-center" disabled>
+                                        readonly="readonly" value="{{data.quantity}}" class="text-center"
+                                        style="margin-left: -7%!important;" disabled>
                                     <button class="btn btn-icon btn-maroon btn-plus"
                                         (click)="checkProdQuty(data.cart_id,data.product_id,data.sku_id,data.quantity,data.vendorid_as_owner,data.vendor_product_id)">
                                         <span>
@@ -83,7 +84,7 @@
                                 </tr>
                                 <tr class="text-right">
                                     <td>Discount </td>
-                                    <td> : {{disAmt || 0}}</td>
+                                    <td> : BD.{{disAmt || 0}}</td>
                                 </tr>
                                 <!-- <tr class="text-right">
                                     <td>Delivery charges </td>
@@ -92,7 +93,7 @@
                                 <hr />
                                 <tr class="text-right">
                                     <td>Total Amount </td>
-                                    <td> : {{(billing) - (disAmt || 0)  }}</td>
+                                    <td> : BD.{{(billing) - (disAmt || 0)  }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -229,9 +230,12 @@
                                     <label class="col-sm-4 col-md-4 col-form-label ">Mobile Number
                                         <span>:</span>
                                     </label>
-                                    <div class="col-sm-8 col-md-8 ">
+                                    <div class="col-sm-8 col-md-8  mobile-behrain">
+                                        <div class="input-group-prepend group">
+                                            <button class="input-button" type="button" id="button-addon1">+973</button>
+                                        </div>
                                         <input myNumberOnly type="text " formControlName="mobile_number"
-                                            class="form-control"
+                                            class="form-control mobile-num"
                                             [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors }">
                                         <div *ngIf="submitted && f.mobile_number.errors" class="invalid-feedback">
                                             <div *ngIf="f.mobile_number.errors.required">Mobile Number is required</div>
@@ -318,13 +322,13 @@
                                         <a (click)="Type('Office')" [ngClass]="{'activeAdd':type=='Office'}">Office</a>
                                         <a (click)="Type('Other')" [ngClass]="{'activeAdd':type=='Other'}">Other</a>
                                     </p>
-                                    <div class="custom-control custom-checkbox ">
+                                    <!-- <div class="custom-control custom-checkbox ">
                                         <input type="checkbox " class="custom-control-input " id="defaultUnchecked5 ">
                                         <label class="custom-control-label " for="defaultUnchecked5 ">Set this as my
                                             default
                                             address
                                         </label>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <br />
                                 <div class="form-group row ">
@@ -348,7 +352,7 @@
                                 </p>
                                 <p>Ph : {{selAdd?.mobile_number}}</p>
                                 <p>
-                                    <a (click)="showItems()">{{cartCount}} Items</a>@ BD {{billing-disAmt}}</p>
+                                    <a (click)="showItems()">{{cartCount}} Items</a>@ BD {{billing-(disAmt || 0)}}</p>
                                 <p>Delivery Charge: BD {{delCharge.express_delivery}}
                                     <img src="assets/images/!.png">
                                 </p>
@@ -406,7 +410,7 @@
                                 </p>
                                 <p>Ph : {{selAdd?.mobile_number}}</p>
                                 <p>
-                                    <a (click)="showItems()">{{cartCount}} Items</a>@ BD {{billing-disAmt}}</p>
+                                    <a (click)="showItems()">{{cartCount}} Items</a>@ BD {{billing-(disAmt || 0)}}</p>
                                 <p>Delivery Charge: BD {{delCharge.standard_delivery}}
                                     <img src="assets/images/!.png">
                                 </p>
