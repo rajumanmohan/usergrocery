@@ -571,7 +571,7 @@
             <div class="col-md-3 col-sm-12 recProds" *ngFor="let data of allproductsData">
                 <div class="wrapper all">
                     <div class="card">
-                        <img src="assets/images/background-img.png" class="bg-layer">
+                        <img src="assets/images/background-img.png" class="bg-layer bg-layer-2">
                         <!-- <div class="img-box"> -->
                         <img class="img-fluid gro-img" [src]="data.image" alt="Card image cap"
                             (click)="showProduxtDetails(data.vendor_product_id,data.vendorid_as_owner)">
@@ -621,7 +621,7 @@
                 <div class="col-md-3 recProds" *ngFor="let data of allProductsData">
                     <div class="wrapper all">
                         <div class="card">
-                            <img src="assets/images/background-img.png" class="bg-layer">
+                            <img src="assets/images/background-img.png" class="bg-layer bg-layer-2">
                             <img class="img-fluid gro-img" [src]="data.image" alt="Card image cap"
                                 (click)="showProduxtDetails(data.vendor_product_id,data.vendorid_as_owner)">
                             <div class="card-block prd-scr">
@@ -736,10 +736,10 @@
                 <div class="col-md-4" *ngFor="let item of brandsData;let i=index">
                     <div class="col-md-12">
                         <div class="row top-brands banImg" (click)="getBanProds(item.image_id)">
-                            <div class="col-md-5">
+                            <div class="col-md-5 col-sm-12 brand-logo">
                                 <img [src]="item.website_banner" alt="top-brands">
                             </div>
-                            <div class="col-md-7 browse-site">
+                            <div class="col-md-7 col-sm-12 browse-site">
                                 <p>{{item.name}}</p>
                             </div>
                         </div>
