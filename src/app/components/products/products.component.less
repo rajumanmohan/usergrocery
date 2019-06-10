@@ -225,19 +225,22 @@
 }
  }
  @media (min-width: 375px) { 
- .products .wrapper:hover .expand-button-2 {
-    top: 9px;
-    right: 53px!important;
-}
-.products .wrapper:hover .expand-button-2 {
-    top: 9px;
-    right: 53px !important;
-}
+
 .gro-img {
     height: 192px!important;
 }
  }
 
+ @media (max-width: 375px) { 
+    .products .wrapper:hover .expand-button-2 {
+        top: 9px;
+        right: 53px;
+    }
+     .wrapper:hover .expand-button{
+        top: 9px;
+        left: 53px;
+    }
+ }
  @media (max-width: 319.98px) {
     .card {
         margin: 0px -4px auto!important;

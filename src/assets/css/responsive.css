@@ -22,6 +22,26 @@
         max-width: 50%;
     }
 }
+@media (min-width: 489.98px) and (max-width: 768px) { 
+    .wrapper:hover .expand-button {
+       top: 8px!important;
+       left: 173px!important;
+   }
+   .wrapper:hover .expand-button-2 {
+       top: 8px!important;
+       right: 173px!important;
+   }
+ }
+ @media (min-width: 376.98px) and (max-width: 489.98px) { 
+    .wrapper:hover .expand-button {
+       top: 8px!important;
+       left: 64px!important;
+   }
+   .wrapper:hover .expand-button-2 {
+       top: 8px!important;
+       right: 64px!important;
+   }
+ }
 @media (max-width: 991.98px) { 
     .dot-mobile{
         display:none!important;
