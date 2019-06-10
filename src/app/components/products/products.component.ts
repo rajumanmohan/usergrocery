@@ -41,22 +41,22 @@ export class ProductsComponent implements OnInit {
     a;
     priceArr = [{
         'price': "Less than 100",
-        'value': "0,99"
+        'value': "0,100"
     },
     {
         'price': "Less than 200",
-        'value': "0,199"
+        'value': "0,200"
     },
     {
         'price': "Less than 300",
-        'value': "0,299"
+        'value': "0,300"
     },
     {
-        'price': "Less than or Equall to 400",
+        'price': "Less than 400",
         'value': "0,400"
     },
     {
-        'price': "Greater than 400",
+        'price': "Above 400",
         'value': "401,100000"
     },
     ];
@@ -65,28 +65,28 @@ export class ProductsComponent implements OnInit {
         'value': "100,500 gms"
     },
     {
-        'price': "501 to 700 gms",
-        'value': "501,700 gms"
+        'price': "500 to 700 gms",
+        'value': "500,700 gms"
     },
     {
-        'price': "701 to 999kg",
-        'value': "701,999 kg"
+        'price': "700 to 1000gm",
+        'value': "700,1000 gms"
     },
     {
         'price': "1 to 5kg",
         'value': "1,5 kg"
     },
     {
-        'price': "6 to 10kg",
-        'value': "6,10 kg"
+        'price': "5 to 10kg",
+        'value': "5,10 kg"
     },
     {
         'price': "1 to 100lts",
         'value': "1,100 lts"
     },
     {
-        'price': "101 to 1000lts",
-        'value': "101,1000 lts"
+        'price': "100 to 1000lts",
+        'value': "100,1000 lts"
     },
     ];
     constructor(private router: Router, public productService: ProductService, private appService: appService, private route: ActivatedRoute) {
@@ -778,29 +778,64 @@ export class ProductsComponent implements OnInit {
                 })
             }
         } else {
-            this.appService.productByCatId(this.catId1, params).subscribe(res => {
-                this.prodData = res.json().vendor_products;
-                if (this.prodData != undefined) {
-                    for (var i = 0; i < this.prodData.length; i++) {
-                        for (var j = 0; j < this.prodData[i].sku_row.length; j++) {
-                            this.prodData[i].selling_price = this.prodData[i].updated_price - this.prodData[i].updated_discount;
-                            this.prodData[i].actual_price = this.prodData[i].updated_price;
-                            this.prodData[i].image = this.prodData[i].sku_row[0].sku_images[0].sku_image;
-                            this.prodData[i].skid = this.prodData[i].sku_row[0].skid;
-                            this.skid = this.prodData[i].sku_row[0].skid;
+            if (this.catId1 != undefined) {
+                this.appService.productByCatId(this.catId1, params).subscribe(res => {
+                    this.prodData = res.json().vendor_products;
+                    if (this.prodData != undefined) {
+                        for (var i = 0; i < this.prodData.length; i++) {
+                            for (var j = 0; j < this.prodData[i].sku_row.length; j++) {
+                                this.prodData[i].selling_price = this.prodData[i].updated_price - this.prodData[i].updated_discount;
+                                this.prodData[i].actual_price = this.prodData[i].updated_price;
+                                this.prodData[i].image = this.prodData[i].sku_row[0].sku_images[0].sku_image;
+                                this.prodData[i].skid = this.prodData[i].sku_row[0].skid;
+                                this.skid = this.prodData[i].sku_row[0].skid;
+                            }
+
                         }
-
+                        this.noData = false;
+                        this.noData1 = false;
                     }
-                    this.noData = false;
-                    this.noData1 = false;
-                }
-                if (res.json().message === "No records Found") {
-                    this.noData = true;
-                    this.noData1 = false;
-                }
-            }, err => {
+                    if (res.json().message === "No records Found") {
+                        this.noData = true;
+                        this.noData1 = false;
+                    }
+                }, err => {
 
-            })
+                })
+            } else {
+                // vendorProds() {
+                let params = {
+                    "country": sessionStorage.country,
+                    "pin_code": sessionStorage.pinCode === "undefined" ? "null" : sessionStorage.pinCode,
+                    "area": sessionStorage.Area === "undefined" ? "null" : sessionStorage.Area,
+                    "user_id": sessionStorage.userId
+                }
+                this.appService.getVendorProds(this.vendorId, params).subscribe(res => {
+                    if (res.json().message === "No records Found") {
+                        this.noData1 = true;
+                        this.noData = false;
+                    } else {
+                        this.prodData = res.json().vendor_products;
+                        if (this.prodData != undefined) {
+                            for (var i = 0; i < this.prodData.length; i++) {
+                                for (var j = 0; j < this.prodData[i].sku_row.length; j++) {
+                                    this.prodData[i].selling_price = this.prodData[i].updated_price - this.prodData[i].updated_discount;
+                                    this.prodData[i].actual_price = this.prodData[i].updated_price;
+                                    this.prodData[i].image = this.prodData[i].sku_row[0].sku_images[0].sku_image;
+                                    this.prodData[i].skid = this.prodData[i].sku_row[0].skid;
+                                    this.skid = this.prodData[i].sku_row[0].skid;
+                                }
+
+                            }
+                            this.noData1 = false;
+                            this.noData = false;
+                        }
+                    }
+
+                })
+                // }
+            }
+
         }
     }
     getAllCountries() {

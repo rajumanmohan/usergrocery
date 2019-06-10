@@ -145,7 +145,7 @@
             <li class="nav-item cart">
                 <span class="crtt-items cust-cartitem" data-toggle="modal" data-target="#cartmodal">
                     <a>
-                        <img src="assets/images/cart_img.png" class="img-fluid cart-logo" alt="Responsive image"
+                        <img src="assets/images/cart_img_new.png" class="img-fluid cart-logo" alt="Responsive image"
                             (click)="getCart()">
 
                         <!-- <i class="fa fa-shopping-cart" aria-hidden="true" (click)="getCart()"> -->
@@ -247,7 +247,7 @@
                         </a>
                     </h5>
                 </div>
-                <div id="collapse-1" class="collapse" data-parent="#accordion" aria-labelledby="heading-1">
+                <!-- <div id="collapse-1" class="collapse" data-parent="#accordion" aria-labelledby="heading-1">
                     <div class="card-body">
 
                         <div id="accordion-1">
@@ -320,9 +320,9 @@
                         </div>
 
                     </div>
-                </div>
+                </div> -->
             </div>
-            <div class="card">
+            <!-- <div class="card">
                 <div class="card-header" id="heading-2">
                     <h5 class="mb-0">
                         <a role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="true"
@@ -405,7 +405,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
         </div>
@@ -935,7 +935,8 @@
                             <h5>Or</h5>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <div class="p-2"><a href=""><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                            <div class="p-2"><a (click)="socialSignIn('facebook')"><i class="fa fa-facebook-official"
+                                aria-hidden="true"></i></a>
                             </div>
                             <!-- <div class="p-2"><a href=""><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
                             </div> -->

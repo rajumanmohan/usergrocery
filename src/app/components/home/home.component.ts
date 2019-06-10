@@ -77,6 +77,7 @@ export class HomeComponent implements OnInit {
       this.cartDetails = res.json().cart_details;
       this.cartValue = res.json().count;
       this.billing = res.json().selling_Price_bill;
+      this.cartCount = res.json().count;
     }, err => {
 
     })

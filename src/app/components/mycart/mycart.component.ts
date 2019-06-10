@@ -6,6 +6,8 @@ import { appService } from './../../services/mahaliServices/mahali.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import swal from 'sweetalert';
+declare var jQuery: any;
+declare var $: any;
 @Component({
     selector: 'app-mycart',
     templateUrl: './mycart.component.html',
@@ -227,7 +229,7 @@ export class MycartComponent implements OnInit {
 
     type;
     Type(type) {
-        this.type = type;
+        this.type = type || 'Home';
     }
     //save address
 
@@ -265,7 +267,7 @@ export class MycartComponent implements OnInit {
     }
     selectAdd(id) {
         this.appService.setDelAdd(this.addId).subscribe(res => {
-            swal("Selected successfully", "", "success");
+            swal("Address selected successfully", "", "success");
             this.getAdd();
             this.getSlots();
         })
@@ -369,6 +371,7 @@ export class MycartComponent implements OnInit {
                 console.log(res.json());
                 swal(res.json().message, "", "success");
                 this.disAmt = res.json().discount_amount;
+                $('#myModal').modal('hide');
             }
             if (res.json().status === 400) {
                 swal(res.json().message, "", "error");
@@ -401,8 +404,8 @@ export class MycartComponent implements OnInit {
         this.showDeliveryType = false;
         this.showPaymentMethode = true;
         this.showDeliveryAddress = false;
-        this.Newbilling = parseInt(this.billing) - parseInt(this.disAmt);
-        this.payAmt = parseInt(this.Newbilling) + parseInt(this.delChar);
+        this.Newbilling = parseInt(this.billing) - (parseInt(this.disAmt) || 0);
+        this.payAmt = parseInt(this.Newbilling) + (parseInt(this.delChar) || 0);
 
     }
     proceed1(delChr1) {
@@ -412,8 +415,8 @@ export class MycartComponent implements OnInit {
         this.showDeliveryType = false;
         this.showPaymentMethode = true;
         this.showDeliveryAddress = false;
-        this.Newbilling = (parseInt(this.billing)) - parseInt(this.disAmt);
-        this.payAmt = parseInt(this.Newbilling) + parseInt(this.delChar);
+        this.Newbilling = (parseInt(this.billing)) - (parseInt(this.disAmt) || 0);
+        this.payAmt = parseInt(this.Newbilling) + (parseInt(this.delChar) || 0);
 
     }
     changeSlot(slot) {
@@ -458,7 +461,7 @@ export class MycartComponent implements OnInit {
                 "delivery_slot_id": this.slotId || '',
                 "delivery_date_time": this.dateTime || '',
                 "Delivery_charge": JSON.parse(this.delChar),
-                "Coupon_Discount": this.disAmt,
+                "Coupon_Discount": this.disAmt || 0,
                 "Final_amount": this.payAmt
             }
             this.appService.palceOrder(inData).subscribe(res => {
