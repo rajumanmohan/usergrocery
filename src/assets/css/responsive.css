@@ -139,10 +139,16 @@
     .mobile-number {
         width: 76%!important;
     }
-
+    .card{
+        margin:0px auto;
+    }
   }
 
   @media (max-width: 374.98px) {
+    .more-products{
+        flex: 0 0 100%!important;
+        max-width: 100%!important;
+    }
     .prd-scr {
         padding: 0px!important;
         margin-top: -52%!important;
@@ -156,11 +162,20 @@
     .cust-cartitem {
         margin-left: -7px!important;
     }
+    .products .wrapper:hover .expand-button-2 {
+        top: 9px!important;
+        right: 53px!important;
+    }
+    .products .wrapper:hover .expand-button{
+        top: 9px!important;
+        left: 57px!important;
+    }
   }
-
-
   @media (max-width: 319.98px) {
     .mobile-number {
         width: 70%!important;
+    }
+    .card {
+        margin: 0px -4px auto!important;
     }
   }
