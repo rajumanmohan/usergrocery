@@ -778,29 +778,64 @@ export class ProductsComponent implements OnInit {
                 })
             }
         } else {
-            this.appService.productByCatId(this.catId1, params).subscribe(res => {
-                this.prodData = res.json().vendor_products;
-                if (this.prodData != undefined) {
-                    for (var i = 0; i < this.prodData.length; i++) {
-                        for (var j = 0; j < this.prodData[i].sku_row.length; j++) {
-                            this.prodData[i].selling_price = this.prodData[i].updated_price - this.prodData[i].updated_discount;
-                            this.prodData[i].actual_price = this.prodData[i].updated_price;
-                            this.prodData[i].image = this.prodData[i].sku_row[0].sku_images[0].sku_image;
-                            this.prodData[i].skid = this.prodData[i].sku_row[0].skid;
-                            this.skid = this.prodData[i].sku_row[0].skid;
+            if (this.catId1 != undefined) {
+                this.appService.productByCatId(this.catId1, params).subscribe(res => {
+                    this.prodData = res.json().vendor_products;
+                    if (this.prodData != undefined) {
+                        for (var i = 0; i < this.prodData.length; i++) {
+                            for (var j = 0; j < this.prodData[i].sku_row.length; j++) {
+                                this.prodData[i].selling_price = this.prodData[i].updated_price - this.prodData[i].updated_discount;
+                                this.prodData[i].actual_price = this.prodData[i].updated_price;
+                                this.prodData[i].image = this.prodData[i].sku_row[0].sku_images[0].sku_image;
+                                this.prodData[i].skid = this.prodData[i].sku_row[0].skid;
+                                this.skid = this.prodData[i].sku_row[0].skid;
+                            }
+
                         }
-
+                        this.noData = false;
+                        this.noData1 = false;
                     }
-                    this.noData = false;
-                    this.noData1 = false;
-                }
-                if (res.json().message === "No records Found") {
-                    this.noData = true;
-                    this.noData1 = false;
-                }
-            }, err => {
+                    if (res.json().message === "No records Found") {
+                        this.noData = true;
+                        this.noData1 = false;
+                    }
+                }, err => {
 
-            })
+                })
+            } else {
+                // vendorProds() {
+                let params = {
+                    "country": sessionStorage.country,
+                    "pin_code": sessionStorage.pinCode === "undefined" ? "null" : sessionStorage.pinCode,
+                    "area": sessionStorage.Area === "undefined" ? "null" : sessionStorage.Area,
+                    "user_id": sessionStorage.userId
+                }
+                this.appService.getVendorProds(this.vendorId, params).subscribe(res => {
+                    if (res.json().message === "No records Found") {
+                        this.noData1 = true;
+                        this.noData = false;
+                    } else {
+                        this.prodData = res.json().vendor_products;
+                        if (this.prodData != undefined) {
+                            for (var i = 0; i < this.prodData.length; i++) {
+                                for (var j = 0; j < this.prodData[i].sku_row.length; j++) {
+                                    this.prodData[i].selling_price = this.prodData[i].updated_price - this.prodData[i].updated_discount;
+                                    this.prodData[i].actual_price = this.prodData[i].updated_price;
+                                    this.prodData[i].image = this.prodData[i].sku_row[0].sku_images[0].sku_image;
+                                    this.prodData[i].skid = this.prodData[i].sku_row[0].skid;
+                                    this.skid = this.prodData[i].sku_row[0].skid;
+                                }
+
+                            }
+                            this.noData1 = false;
+                            this.noData = false;
+                        }
+                    }
+
+                })
+                // }
+            }
+
         }
     }
     getAllCountries() {

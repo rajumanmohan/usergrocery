@@ -499,7 +499,7 @@
 								<i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"
 									(click)="delWish(wish.wishlist_id)"></i>
 								<button type="button" class="btn cart-btn"
-									(click)="checkProdQuty(wish.product_id,wish.skid,wish.selling_price,wish.vendorid_as_owner,wish.vendor_product_id,wish.updated_discount)">Add
+									(click)="checkProdQuty(wish.product_id,wish.sku_id,wish.selling_price,wish.vendorid_as_owner,wish.vendor_product_id,wish.updated_discount)">Add
 									To
 									cart</button>
 							</td>
@@ -696,7 +696,7 @@
 									</thead>
 									<tbody class="cust-tbody">
 										<tr class="cst-topad"
-											*ngFor="let ord of orders | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 3, currentPage: p };let i =index"
+											*ngFor="let ord of orders | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 9, currentPage: p };let i =index"
 											(click)="showBukedOrderDetails(ord.order_id)">
 											<!-- <th scope="row">{{i+1}}</th> -->
 											<td>
@@ -906,20 +906,26 @@
 					<tr>
 						<td style="font-size: 16px;">Delivery Charges</td>
 						<td class="prod-price">
-							<strong>BD ***</strong>
+							<strong> (+) BD {{orderDet.Delivery_charge}}</strong>
+						</td>
+					</tr>
+					<tr>
+						<td style="font-size: 16px;">Discount</td>
+						<td class="prod-price">
+							<strong>(-) BD {{orderDet.Coupon_Discount}}</strong>
 						</td>
 					</tr>
 					<tr>
 						<td style="font-size: 16px;">Sub Total</td>
 						<td class="prod-price">(COD)
-							<strong>BD {{count}}</strong>
+							<strong>BD {{orderDet.Final_amount}}</strong>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-			<div style="float:right;">
+			<!-- <div style="float:right;">
 				<button type="button" class="btn invoice-btn">Email Invoice</button>
-			</div>
+			</div> -->
 		</div>
 
 		<!-- offer zone -->

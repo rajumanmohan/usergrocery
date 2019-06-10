@@ -25,6 +25,7 @@ export class UseraccountComponent implements OnInit {
   skid;
   noticationData = [];
   prodData = [];
+  Orddetails = []
   // addressForm: FormGroup,
   // productForm: FormGroup
   constructor(
@@ -356,7 +357,7 @@ export class UseraccountComponent implements OnInit {
           for (var j = 0; j < this.wishData[i].products.sku_details.length; j++) {
             this.wishData[i].selling_price = this.wishData[i].products.sku_details[j].selling_price;
             this.wishData[i].size = this.wishData[i].products.sku_details[j].size;
-            this.wishData[i].skid = this.wishData[i].products.sku_details[j].skid;
+            // this.wishData[i].skid = this.wishData[i].sku_id;
             this.wishData[i].product_image = this.wishData[i].products.sku_details[j].sku_images[0].sku_image;
             this.wishData[i].vendorid_as_owner = this.wishData[i].products.vendorid_as_owner;
             this.wishData[i].vendor_product_id = this.wishData[i].products.vendor_product_id;
@@ -687,6 +688,7 @@ export class UseraccountComponent implements OnInit {
     })
   }
   checkProdQuty(prodId, skuId, price, venId, vProdID, udisc) {
+    alert(skuId)
     this.appService.checkQuty(prodId, skuId, 0, venId, vProdID).subscribe(res => {
       if (res.json().status === 200) {
         this.addtoCart(prodId, skuId, price, venId, vProdID, udisc);
