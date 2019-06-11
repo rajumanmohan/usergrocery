@@ -11,23 +11,20 @@
                 <img *ngFor="let img of prodImages" [src]="img" class="prod-images" (click)="showBigImage(img)">
             </div>
         </div> -->
+        <div class="col-md-1"></div>
         <div class="col-md-5">
-            <div class="offer-label">
-                <!-- <img src="assets/images/percentage.png">
-                <p class="discount-per"></p> -->
-            </div>
-            <div class="wish-list" (click)="addtoWish()">
-                <a><i class="fas fa-heart wish" [ngStyle]="{'color':wish_list=='true'?'#7fba00':'gray'}"></i></a>
-            </div>
-            <img id="myImg" src="{{product_image}}" alt="Snow" [imageZoom]="zoomedImageSrc">
-            <div class="col-md-9">
-                <div class="img">
-                    <img *ngFor="let img of prodImages" [src]="img.sku_image" class="prod-images"
-                        (click)="showBigImage(img.sku_image)">
+            <img id="myImg" src="{{product_image}}" [imageZoom]="zoomedImageSrc" alt="Snow">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="img">
+                        <img *ngFor="let img of prodImages" [src]="img.sku_image" class="prod-images"
+                            (click)="showBigImage(img.sku_image)">
+                    </div>
                 </div>
             </div>
+
         </div>
-        <div class="col-md-7 details">
+        <div class="col-md-6 details">
             <h4>{{prodName}} </h4>
             <div class="row">
                 <div class="col-md-6">

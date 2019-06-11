@@ -40,6 +40,11 @@ export class MycartComponent implements OnInit {
     Newbilling;
     disAmt;
     payAmt;
+    cartData = [];
+    skuData = [];
+    skuArr = [];
+    offer_price;
+    cartCount;
     constructor(public dialog: MatDialog, public appService: appService, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
@@ -131,9 +136,14 @@ export class MycartComponent implements OnInit {
     // }
 
     showCart() {
-        this.showCartItems = !this.showCartItems;
+        if(this.cartData.length!=0){
+            this.showCartItems = !this.showCartItems;
         this.showDeliveryAddress = false;
         this.showPaymentMethode = false;
+        }else {
+            this.showCartItems = false;   
+        }
+        
     }
     itemIncrease(cartId) {
 
@@ -272,24 +282,18 @@ export class MycartComponent implements OnInit {
             this.getSlots();
         })
     }
-    cartData = [];
-    cartCount;
-    billing;
-    skuData = [];
-    skuArr = [];
-    offer_price;
-    changeData(prodId) {
-        this.getCart();
-        for (var i = 0; i < this.cartData.length; i++) {
-            // for(var j = 0;j<this.cartData[i].products;j++){
-            for (var k = 0; k < this.cartData[i].products.sku_details.length; k++) {
-                if (parseInt(prodId) === this.cartData[i].products.sku_details[k].skid) {
-                    this.skuData = this.cartData[i].products.sku_details[k];
-                    this.offer_price = this.cartData[i].products.sku_details[k].offer_price;
-                }
-            }
-        }
-    }
+    // changeData(prodId) {
+    //     this.getCart();
+    //     for (var i = 0; i < this.cartData.length; i++) {
+    //         // for(var j = 0;j<this.cartData[i].products;j++){
+    //         for (var k = 0; k < this.cartData[i].products.sku_details.length; k++) {
+    //             if (parseInt(prodId) === this.cartData[i].products.sku_details[k].skid) {
+    //                 this.skuData = this.cartData[i].products.sku_details[k];
+    //                 this.offer_price = this.cartData[i].products.sku_details[k].offer_price;
+    //             }
+    //         }
+    //     }
+    // }
     getAddData = [];
     testData = [];
     getAdd() {
@@ -299,7 +303,18 @@ export class MycartComponent implements OnInit {
 
         })
     };
+    billing;;
     cartArr = [];
+
+    delCart(cartId) {
+        var inData = cartId;
+        this.appService.delCart(inData).subscribe(res => {
+            this.getCart();
+            swal(res.json().message, "", "success");
+        }, err => {
+
+        })
+    }
     getCart() {
         var inData = sessionStorage.getItem('userId');
         this.appService.getCart(inData).subscribe(res => {
@@ -326,26 +341,8 @@ export class MycartComponent implements OnInit {
                     // this.cartArr.push(this.cartData[i].products);
                 }
             }
-            // this.cartArr.sort(function (a, b) {
-            //     var keyA = a.product_name,
-            //         keyB = b.product_name;
-            //     // Compare the 2 dates
-            //     if (keyA < keyB) return -1;
-            //     if (keyA > keyB) return 1;
-            //     return 0;
-            // });
-            // console.log(this.cartArr);
             this.cartCount = res.json().count;
             this.billing = res.json().selling_Price_bill;
-        }, err => {
-
-        })
-    }
-    delCart(cartId) {
-        var inData = cartId;
-        this.appService.delCart(inData).subscribe(res => {
-            swal(res.json().message, "", "success");
-            this.getCart();
         }, err => {
 
         })
@@ -423,8 +420,15 @@ export class MycartComponent implements OnInit {
         this.slotId = slot;
     }
     checkout() {
-        this.showCartItems = false;
-        this.showDeliveryAddress = true;
+        this.getCart();
+        if (this.cartData.length == 0) {
+            swal("Your cart is empty", "", "warning");
+            this.showCartItems = false;
+            this.showDeliveryAddress = false;
+        } else {
+            this.showCartItems = false;
+            this.showDeliveryAddress = true;
+        }
     }
     //items popup
     showItems() {

@@ -80,7 +80,7 @@
                                 <tr class="text-right">
 
                                     <td>Total</td>
-                                    <td> : BD.{{billing}}</td>
+                                    <td> : BD.{{billing || 0}}</td>
                                 </tr>
                                 <tr class="text-right">
                                     <td>Discount </td>
@@ -93,7 +93,7 @@
                                 <hr />
                                 <tr class="text-right">
                                     <td>Total Amount </td>
-                                    <td> : BD.{{(billing) - (disAmt || 0)  }}</td>
+                                    <td> : BD.{{[(billing) - (disAmt || 0)] || 0  }}</td>
                                 </tr>
                             </tbody>
                         </table>
