@@ -152,7 +152,7 @@ export class ProductdetailsComponent implements OnInit {
               this.prodData[i].actual_price = this.prodData[i].updated_price;
               this.prodData[i].image = this.prodData[i].sku_row[0].sku_images[0].sku_image;
               this.prodData[i].skid = this.prodData[i].sku_row[0].skid;
-              this.skid = this.prodData[i].sku_row[0].skid;
+              // this.skid = this.prodData[i].sku_row[0].skid;
             }
 
           }

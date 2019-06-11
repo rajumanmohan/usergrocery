@@ -213,7 +213,7 @@
                 </p>
                 <div class="sort">
                   <select (change)="changeSize($event.target.value)">
-                    <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}}-BD
+                    <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}} {{sku.size_measuring_unit=='undefined'?'':sku.size_measuring_unit}}-BD
                       {{data?.selling_price}}
                     </option>
                   </select>
@@ -258,7 +258,7 @@
                 </p>
                 <div class="sort">
                   <select (change)="changeSize($event.target.value)">
-                    <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}}-BD
+                    <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}} {{sku.size_measuring_unit=='undefined'?'':sku.size_measuring_unit}}-BD
                       {{data?.selling_price}}
                     </option>
                   </select>
@@ -336,7 +336,7 @@
                 </p>
                 <div class="sort">
                   <select (change)="changeSize($event.target.value)">
-                    <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}}-BD
+                    <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}} {{sku.size_measuring_unit=='undefined'?'':sku.size_measuring_unit}}-BD
                       {{data?.selling_price}}
                     </option>
                   </select>
@@ -381,7 +381,7 @@
                 </p>
                 <div class="sort">
                   <select (change)="changeSize($event.target.value)">
-                    <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}}-BD
+                    <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}} {{sku.size_measuring_unit=='undefined'?'':sku.size_measuring_unit}}-BD
                       {{data?.selling_price}}
                     </option>
                   </select>

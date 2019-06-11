@@ -31,7 +31,8 @@
                     <div class="quantity-price text-center">
                         <select (change)="changeSize($event.target.value)">
                             <option *ngFor="let sku of skuData" [value]="sku.skid" data-icon="images/sample-1.jpg"
-                                class="left">{{sku.size}} {{sku.size_measuring_unit}}
+                                class="left">{{sku.size}} {{sku.size_measuring_unit=='undefined'?'':sku.size_measuring_unit}}
+
                                 - BD {{selling_price}}
                             </option>
                             <!-- <option value="" data-icon="images/office.jpg" class="left">1000gms-Rs 40.80</option>
@@ -151,8 +152,8 @@
     <div class="row desription">
         <!-- <h5>More Products Related Your Search</h5> -->
         <br />
-        <div class="col-md-3  item more-products" *ngFor="let data of prodData">
-            <div class="wrapper">
+        <div class="col-md-3  item more-products" *ngFor="let data of prodData;let i=index">
+            <div class="wrapper" *ngIf="i<4">
                 <div class="card">
                     <img src="assets/images/background-img.png" class="cream-layer bg-layer ">
                     <img class="img-fluid gro-img" [src]="data.image" alt="Card image cap"
