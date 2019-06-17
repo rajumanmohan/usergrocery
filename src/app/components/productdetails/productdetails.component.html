@@ -31,7 +31,8 @@
                     <div class="quantity-price text-center">
                         <select (change)="changeSize($event.target.value)">
                             <option *ngFor="let sku of skuData" [value]="sku.skid" data-icon="images/sample-1.jpg"
-                                class="left">{{sku.size}} {{sku.size_measuring_unit=='undefined'?'':sku.size_measuring_unit}}
+                                class="left">{{sku.size}}
+                                {{sku.size_measuring_unit=='undefined'?'':sku.size_measuring_unit}}
 
                                 - BD {{selling_price}}
                             </option>
@@ -166,7 +167,8 @@
                         </p>
                         <div class="sort">
                             <select (change)="changeSize($event.target.value)">
-                                <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}}-BD
+                                <option *ngFor="let sku of data.sku_row" [value]="sku?.skid">{{sku?.size}}
+                                    {{sku.size_measuring_unit=='undefined'?'':sku.size_measuring_unit}}-BD
                                     {{data?.selling_price}}
                                 </option>
                             </select>

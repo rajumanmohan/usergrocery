@@ -8,7 +8,8 @@
 				<h4 class="account-header">MY ACCOUNT</h4>
 				<hr>
 				<li [ngClass]="{'active':showProfile || editUserProfile}" (click)="profile()">Profile Details</li>
-				<li [ngClass]="{'active':showDeliveryAddress || showAddAddress|| showEditAddress}" (click)="deliveryAddress()">
+				<li [ngClass]="{'active':showDeliveryAddress || showAddAddress|| showEditAddress}"
+					(click)="deliveryAddress()">
 					Delivery
 					Address</li>
 				<li [ngClass]="{'active':showWishlist}" (click)="wishList()">Wishlist</li>
@@ -58,7 +59,8 @@
 			</div>
 			<div class="row">
 				<div class="col align-self-center">
-					<button type="button" class="btn edit-btn cust-editpro" (click)="editProfile()">Edit Profile</button>
+					<button type="button" class="btn edit-btn cust-editpro" (click)="editProfile()">Edit
+						Profile</button>
 				</div>
 			</div>
 		</div>
@@ -80,8 +82,8 @@
 						<span class="float-right">:</span>
 					</label>
 					<div class="col-sm-9">
-						<input alphabetsOnly type="text" class="form-control input-feild" id="inputname1" name="first_name"
-							[(ngModel)]="profileData.first_name" ngControl="passwordCtrl" required>
+						<input alphabetsOnly type="text" class="form-control input-feild" id="inputname1"
+							name="first_name" [(ngModel)]="profileData.first_name" ngControl="passwordCtrl" required>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -89,8 +91,8 @@
 						<span class="float-right">:</span>
 					</label>
 					<div class="col-sm-9">
-						<input alphabetsOnly type="text" class="form-control input-feild" id="inputname1" name="last_name"
-							[(ngModel)]="profileData.last_name" ngControl="passwordCtrl" required>
+						<input alphabetsOnly type="text" class="form-control input-feild" id="inputname1"
+							name="last_name" [(ngModel)]="profileData.last_name" ngControl="passwordCtrl" required>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -98,8 +100,9 @@
 						<span class="float-right">:</span>
 					</label>
 					<div class="col-sm-9">
-						<input type="email" class="form-control input-feild" id="inputEmail3" placeholder="tarunkumar321@gmail.com"
-							name="email" [(ngModel)]="profileData.email" ngControl="passwordCtrl" ngControl="email" required
+						<input type="email" class="form-control input-feild" id="inputEmail3"
+							placeholder="tarunkumar321@gmail.com" name="email" [(ngModel)]="profileData.email"
+							ngControl="passwordCtrl" ngControl="email" required
 							pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
 					</div>
 				</div>
@@ -111,8 +114,9 @@
 						<div class="input-group-prepend group">
 							<button class="input-button" type="button" id="button-addon1">+973</button>
 						</div>
-						<input myNumberOnly type="text" class="form-control input-feild" id="inputphoneno" placeholder="+973"
-							[(ngModel)]="profileData.mobile_number" name="mobile_number" ngControl="passwordCtrl" required>
+						<input myNumberOnly type="text" class="form-control input-feild" id="inputphoneno"
+							placeholder="+973" [(ngModel)]="profileData.mobile_number" name="mobile_number"
+							ngControl="passwordCtrl" required>
 					</div>
 				</div>
 				<!-- <div class="form-group row">
@@ -130,7 +134,8 @@
 					</label>
 					<div class="col-sm-9">
 						<input type="text" class="form-control input-feild" id="inputhouseno"
-							placeholder="Unispace Bussiness Center #143" name="bussiness_area" [(ngModel)]="profileData.area">
+							placeholder="Unispace Bussiness Center #143" name="bussiness_area"
+							[(ngModel)]="profileData.area">
 					</div>
 				</div>
 				<div class="form-group row">
@@ -154,7 +159,8 @@
 						<span class="float-right">:</span>
 					</label>
 					<div class="col-sm-9">
-						<input myNumberOnly type="text" class="form-control input-feild" id="inputpincode" placeholder="500038">
+						<input myNumberOnly type="text" class="form-control input-feild" id="inputpincode"
+							placeholder="500038">
 						<div class="row justify-content-center">
 							<div class="col-sm-5 col-lg-5">
 								<button type="button" class="btn save-btn" [disabled]="!formCtrl.form.valid"
@@ -281,8 +287,8 @@
                       <option selected>Choose City</option>
                       <option *ngFor="let city of Cities" [ngValue]="city">{{city}}</option>
                   </select> -->
-						<input alphabetsOnly type="text" class="form-control input-feild" id="inputpincode" formControlName="city"
-							[ngClass]="{ 'is-invalid': city_error }">
+						<input alphabetsOnly type="text" class="form-control input-feild" id="inputpincode"
+							formControlName="city" [ngClass]="{ 'is-invalid': city_error }">
 						<div *ngIf="city_error" class="invalid-feedback">
 							<div *ngIf="city_error">City is required</div>
 						</div>
@@ -296,8 +302,8 @@
                       <option selected>Choose State</option>
                       <option *ngFor="let state of States" [ngValue]="state">{{state}}</option>
                   </select> -->
-						<input alphabetsOnly type="text" class="form-control input-feild" id="inputpincode1" formControlName="state"
-							[ngClass]="{ 'is-invalid': state_errors }">
+						<input alphabetsOnly type="text" class="form-control input-feild" id="inputpincode1"
+							formControlName="state" [ngClass]="{ 'is-invalid': state_errors }">
 						<div *ngIf="state_errors" class="invalid-feedback">
 							<div *ngIf="state_errors">state is required</div>
 						</div>
@@ -354,8 +360,8 @@
 						<div class="input-group-prepend group">
 							<button class="input-button" type="button" id="button-addon1">+973</button>
 						</div>
-						<input myNumberOnly type="text" class="form-control input-feild" id="inputNumber" name="mobile_number"
-							[(ngModel)]="editAddData.mobile_number">
+						<input myNumberOnly type="text" class="form-control input-feild" id="inputNumber"
+							name="mobile_number" [(ngModel)]="editAddData.mobile_number">
 						<!-- <div *ngIf="submitted && f1.mobile_number.errors" class="invalid-feedback">
           <div *ngIf="f1.mobile_number.errors.required">Mobile Number is required</div>
       </div> -->
@@ -419,8 +425,8 @@
 					</label>
 					<div class="col-sm-4">
 
-						<input myNumberOnly type="text" class="form-control input-feild" id="inputpincode2" name="pin_code"
-							[(ngModel)]="editAddData.pin_code">
+						<input myNumberOnly type="text" class="form-control input-feild" id="inputpincode2"
+							name="pin_code" [(ngModel)]="editAddData.pin_code">
 						<!-- <div *ngIf="submitted && f1.pin_code.errors" class="invalid-feedback">
           <div *ngIf="f1.pin_code.errors.required">Pin-Code is required</div>
       </div> -->
@@ -452,14 +458,15 @@
 					<thead>
 						<tr class="table-headers wishlist-items">
 							<th scope="col" width="40%">Item Name</th>
-							<th scope="col" width="20%">Quantity</th>
+							<!-- <th scope="col" width="20%">Quantity</th> -->
 							<th scope="col" width="15%">Price</th>
 							<th scope="col" width="25%">Add To Cart</th>
-							<th></th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="wish-table" *ngFor="let wish of wishData | paginate: { itemsPerPage: 3, currentPage: p };">
+						<tr class="wish-table"
+							*ngFor="let wish of wishData | paginate: { itemsPerPage: 3, currentPage: p };">
 							<td>
 								<div class="row align-items-center">
 									<div class="col-md-4">
@@ -476,32 +483,36 @@
 									</div>
 								</div>
 							</td>
-							<td class="pt-5">
+							<!-- <td class="pt-5">
 								<div class="quantity">
-									<button class="minus-btn" type="button" name="button" (click)="itemDecrease(wish.wishlist_id)">
+									<button class="minus-btn" type="button" name="button"
+										(click)="itemDecrease(wish.wishlist_id)">
 										<i class="fa fa-minus " aria-hidden="true"></i>
 									</button>
 									<input type="text" name="quantity" [(ngModel)]="wish.quantity" readonly="readonly"
 										value="{{wish.quantity}}" />
-									<button class="plus-btn" type="button" name="button" (click)="itemIncrease(wish.wishlist_id)">
+									<button class="plus-btn" type="button" name="button"
+										(click)="itemIncrease(wish.wishlist_id)">
 										<i class="fa fa-plus" aria-hidden="true"></i>
 									</button>
 								</div>
-							</td>
+							</td> -->
 							<td>
 								<div class="prod-details">
 									<span>
-										<strong>BD {{wish.selling_price * wish.quantity}}</strong>
+										<strong>BD {{wish.selling_price}}</strong>
 									</span>
 								</div>
 							</td>
 							<td>
-								<i class="fa fa-times-circle-o" aria-hidden="true" style="float:right"
-									(click)="delWish(wish.wishlist_id)"></i>
 								<button type="button" class="btn cart-btn"
 									(click)="checkProdQuty(wish.product_id,wish.sku_id,wish.selling_price,wish.vendorid_as_owner,wish.vendor_product_id,wish.updated_discount)">Add
 									To
 									cart</button>
+							</td>
+							<td>
+								<i class="fa fa-times-circle-o" aria-hidden="true"
+									(click)="delWish(wish.wishlist_id)"></i>
 							</td>
 						</tr>
 						<!-- <tr>
@@ -587,7 +598,8 @@
 					</tbody>
 				</table>
 			</div>
-			<pagination-controls class="my-pagination" (pageChange)="p = $event" style="float:right;"></pagination-controls>
+			<pagination-controls class="my-pagination" (pageChange)="p = $event" style="float:right;">
+			</pagination-controls>
 			<!-- <div class="row arrow-btns">
         <button class="icon-btn">
           <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
@@ -638,7 +650,8 @@
 							[ngClass]="{ 'is-invalid': submitted && f.retype_password.errors }" />
 						<div *ngIf="submitted && f.retype_password.errors" class="invalid-feedback">
 							<div *ngIf="f.retype_password.errors.required">Confirm Password is required</div>
-							<div *ngIf="f.retype_password.errors.minlength">Confirm Password must be at least 6 characters
+							<div *ngIf="f.retype_password.errors.minlength">Confirm Password must be at least 6
+								characters
 							</div>
 						</div>
 					</div>
@@ -678,8 +691,8 @@
 							<div class="col-lg-3 col-md-3 col-sm-3">
 								<form class="form-inline form-rt">
 									<i class="fa fa-search item-search" aria-hidden="true"></i>
-									<input class="form-control mr-sm-2 placeholder-padding" type="search" placeholder="Search Id"
-										aria-label="Search" [(ngModel)]="filter" name="filter">
+									<input class="form-control mr-sm-2 placeholder-padding" type="search"
+										placeholder="Search Id" aria-label="Search" [(ngModel)]="filter" name="filter">
 								</form>
 							</div>
 							<div class="table-responsive my-4">
@@ -702,7 +715,7 @@
 											<td>
 												{{ord.order_id}}
 											</td>
-											<td>1</td>
+											<td>-</td>
 											<td>
 												{{ord.ordered_on}} </td>
 											<td>BD.{{ord.billing_amount}}</td>
@@ -710,7 +723,8 @@
 										</tr>
 									</tbody>
 								</table>
-								<pagination-controls class="my-pagination" (pageChange)="p = $event" style="float:right;">
+								<pagination-controls class="my-pagination" (pageChange)="p = $event"
+									style="float:right;">
 								</pagination-controls>
 							</div>
 						</div>
@@ -978,7 +992,8 @@
 						</ul>
 						<ul class="expand-button2 expand-button-2">
 							<li><a (click)="addtoWish(data.product_id,data.skid)"><i class="fas fa-heart"
-										[ngStyle]="{'color':data.wish_list == 'true' ? 'yellow'  :  '#dfdfdf'}"></i></a></li>
+										[ngStyle]="{'color':data.wish_list == 'true' ? 'yellow'  :  '#dfdfdf'}"></i></a>
+							</li>
 						</ul>
 					</div>
 
@@ -1010,9 +1025,11 @@
 			<div class="notification-bar1"
 				*ngFor="let data of noticationData|paginate: { itemsPerPage: 10, currentPage: p };">
 				<p>
-					<i class="fa fa-bell" aria-hidden="true" style="color:#a7a3a2;"></i>&nbsp;&nbsp; {{data.notification}}</p>
+					<i class="fa fa-bell" aria-hidden="true" style="color:#a7a3a2;"></i>&nbsp;&nbsp;
+					{{data.notification}}</p>
 			</div>
-			<pagination-controls class="my-pagination" (pageChange)="p = $event" style="float:right;"></pagination-controls>
+			<pagination-controls class="my-pagination" (pageChange)="p = $event" style="float:right;">
+			</pagination-controls>
 			<!-- <div class="notification-bar2">
 				<p>
 					<i class="fa fa-bell" aria-hidden="true" style="color:#a7a3a2;"></i>&nbsp;&nbsp;&nbsp; Shop Upto 10000/- and

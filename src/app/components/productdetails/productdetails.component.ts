@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { ProductsData } from '../../services/productsdata';
 import { ProductService } from '../../services/productservice';
 import { appService } from './../../services/mahaliServices/mahali.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 declare var jQuery: any;
 declare var $: any;
 @Component({
@@ -13,10 +16,11 @@ declare var $: any;
 
 export class ProductdetailsComponent implements OnInit {
   product: ProductsData;
-  constructor(private route: ActivatedRoute, public productService: ProductService, private appService: appService) {
+  constructor(private route: ActivatedRoute,private router: Router, public productService: ProductService, private appService: appService,private spinnerService: Ng4LoadingSpinnerService) {
     this.route.queryParams.subscribe(params => {
       this.prodId = params.prodId;
       this.venId1 = params.venId1;
+    this.getProductById();
     });
   }
   cartData = [];
@@ -40,7 +44,6 @@ export class ProductdetailsComponent implements OnInit {
     this.sub = this.route
       .data
       .subscribe(v => console.log(v));
-    this.getProductById();
     this.getCart();
     this.getWish();
   }
@@ -95,11 +98,14 @@ export class ProductdetailsComponent implements OnInit {
   //   })
   // }
   getProductById() {
-    this.getWish();
+    this.spinnerService.show();
     this.skuData = [];
+    this.prodImages = [];
+    this.prodsData= [];
     this.appService.getProductById(this.prodId).subscribe(res => {
       this.prodId = res.json().product_id;
       this.prodsData = res.json().vendor_products;
+      setTimeout(()=>this.spinnerService.hide(),2000);
       // var uniq = {}
       // var arrFiltered = []
       // if (this.prodsData.length > 0) {
@@ -373,4 +379,7 @@ export class ProductdetailsComponent implements OnInit {
 
   //   })
   // }
+  showProduxtDetails(prodId, venId1) {
+    this.router.navigate(['/productdetails'], { queryParams: { prodId: prodId } });
+}
 }

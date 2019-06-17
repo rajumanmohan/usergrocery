@@ -221,12 +221,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  addtoWish(Id, skId) {
+  addtoWish(Id, skId,venProdId) {
     var inData = {
       "user_id": (sessionStorage.userId),
       "product_id": Id,
       "sku_id": skId,
-      "item_type": "grocery"
+      "item_type": "grocery",
+      "vendor_productid":venProdId
     }
     this.appService.addToWish(inData).subscribe(res => {
       if (sessionStorage.userId === undefined) {

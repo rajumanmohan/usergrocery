@@ -41,6 +41,7 @@ import { OrderplacedComponent } from './components/orderplaced/orderplaced.compo
 import { UseraccountComponent } from './components/useraccount/useraccount.component';
 import { MysavedlistComponent } from './components/mysavedlist/mysavedlist.component';
 import { PromocodesComponent } from './components/promocodes/promocodes.component';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 // directive
 import { NumberOnlyDirective } from './directives/number';
@@ -155,6 +156,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         MatRadioModule,
         SocialLoginModule,
         // DateTimePickerComponent,
+        Ng4LoadingSpinnerModule,
         OwlDateTimeModule,
         OwlNativeDateTimeModule,
         MDBBootstrapModule.forRoot(),

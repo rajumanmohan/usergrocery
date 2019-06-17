@@ -407,6 +407,7 @@ export class HeaderComponent implements OnInit {
     showSubCat(Id) {
         this.subId = Id;
         this.subCatData = [];
+        this.productArr= [];
         this.showSubCats = true;
         for (var i = 0; i < this.category.length; i++) {
             for (var j = 0; j < this.category[i].subcategory.length; j++) {
@@ -414,7 +415,14 @@ export class HeaderComponent implements OnInit {
                     this.category[i].subcategory[j].cat_name = this.category[i].category_name;
                     this.subCatData.push(this.category[i].subcategory[j]);
                 }
+                for (var k = 0; k < this.category[i].subcategory[j].products.length; k++) {
+                    if (Id == this.category[i].subcategory[j].category_id) {
+                        this.productsData = this.category[i].subcategory[j].products[k];
+                        this.productArr.push(this.productsData);
+                    }
+                }
             }
+            
         }
     }
     showProds(Id) {

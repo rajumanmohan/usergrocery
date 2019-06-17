@@ -355,13 +355,15 @@ export class UseraccountComponent implements OnInit {
           this.wishData[i].product_name = this.wishData[i].products.product_name;
           this.wishData[i].product_id = this.wishData[i].products.product_id;
           for (var j = 0; j < this.wishData[i].products.sku_details.length; j++) {
-            this.wishData[i].selling_price = this.wishData[i].products.sku_details[j].selling_price;
+            this.wishData[i].selling_price = this.wishData[i].products.updated_price - this.wishData[i].products.updated_discount;
             this.wishData[i].size = this.wishData[i].products.sku_details[j].size;
             // this.wishData[i].skid = this.wishData[i].sku_id;
             this.wishData[i].product_image = this.wishData[i].products.sku_details[j].sku_images[0].sku_image;
             this.wishData[i].vendorid_as_owner = this.wishData[i].products.vendorid_as_owner;
             this.wishData[i].vendor_product_id = this.wishData[i].products.vendor_product_id;
             this.wishData[i].updated_discount = this.wishData[i].products.updated_discount;
+            this.wishData[i].updated_price = this.wishData[i].products.updated_price;
+
           }
           // this.wishData[i].sku_details.skid = this.wishData[i].sku_details.skid;
           // this.wishData[i].product_image = this.wishData[i].products.product_name;
@@ -501,10 +503,20 @@ export class UseraccountComponent implements OnInit {
     })
   }
   delAdd(delId) {
-    this.appService.delAddress(delId).subscribe(res => {
-      swal(res.json().message, "", "success");
-      this.getAdd();
-    })
+    swal("Do you want to delete?", "", "warning", {
+      buttons: ["Cancel!", "Okay!"],
+    }).then((value) => {
+      if (value === true) {
+        this.appService.delAddress(delId).subscribe(res => {
+          swal(res.json().message, "", "success");
+          this.getAdd();
+        })
+      } else {
+        return;
+      }
+    });
+
+
   }
   seleOpt;
   addId;
@@ -688,7 +700,6 @@ export class UseraccountComponent implements OnInit {
     })
   }
   checkProdQuty(prodId, skuId, price, venId, vProdID, udisc) {
-    alert(skuId)
     this.appService.checkQuty(prodId, skuId, 0, venId, vProdID).subscribe(res => {
       if (res.json().status === 200) {
         this.addtoCart(prodId, skuId, price, venId, vProdID, udisc);
